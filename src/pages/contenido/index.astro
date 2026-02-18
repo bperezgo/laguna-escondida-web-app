@@ -1,0 +1,61 @@
+---
+// src/pages/contenido/index.astro — Blog home
+
+import ContenidoLayout from '@/layouts/ContenidoLayout.astro';
+import ArchiveTemplate from '@/components/templates/blog/ArchiveTemplate.astro';
+import type { BlogPost } from '@/types/blog';
+
+// Placeholder posts until Strapi is connected
+const posts: BlogPost[] = [
+  {
+    id: '1',
+    title: 'Los Mejores Spots de Pesca en la Laguna',
+    slug: 'mejores-spots-pesca',
+    excerpt: 'Descubre los rincones secretos donde los peces abundan en nuestra laguna encantada.',
+    content: '',
+    author: { id: '1', name: 'Equipo Laguna Escondida' },
+    category: { id: '1', name: 'Pesca', slug: 'pesca' },
+    tags: ['pesca', 'naturaleza'],
+    publishedAt: '2026-02-01',
+    readingTime: 5,
+    coverImage: '/images/blog-pesca.jpg',
+  },
+  {
+    id: '2',
+    title: 'Cómo Organizar una Boda Perfecta en la Naturaleza',
+    slug: 'boda-perfecta-naturaleza',
+    excerpt: 'Guía completa para planificar tu boda soñada rodeada de naturaleza y paisajes únicos.',
+    content: '',
+    author: { id: '1', name: 'Equipo Laguna Escondida' },
+    category: { id: '2', name: 'Eventos', slug: 'eventos' },
+    tags: ['bodas', 'eventos'],
+    publishedAt: '2026-01-15',
+    readingTime: 7,
+    coverImage: '/images/blog-boda.jpg',
+  },
+  {
+    id: '3',
+    title: 'Receta: Trucha al Ajillo con Hierbas del Campo',
+    slug: 'receta-trucha-ajillo',
+    excerpt: 'Una deliciosa receta con la trucha recién pescada en nuestras aguas cristalinas.',
+    content: '',
+    author: { id: '1', name: 'Equipo Laguna Escondida' },
+    category: { id: '3', name: 'Recetas', slug: 'recetas' },
+    tags: ['recetas', 'trucha'],
+    publishedAt: '2026-01-05',
+    readingTime: 4,
+    coverImage: '/images/blog-receta.jpg',
+  },
+];
+---
+
+<ContenidoLayout
+  title="Blog"
+  description="Artículos sobre pesca, recetas, naturaleza y eventos en Laguna Escondida."
+>
+  <ArchiveTemplate
+    posts={posts}
+    title="Nuestro Blog"
+    description="Historias, consejos y recetas desde el corazón de la naturaleza."
+  />
+</ContenidoLayout>

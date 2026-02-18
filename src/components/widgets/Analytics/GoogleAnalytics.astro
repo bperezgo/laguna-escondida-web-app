@@ -1,0 +1,21 @@
+---
+// src/components/widgets/Analytics/GoogleAnalytics.astro
+
+import { ANALYTICS } from '@/config/analytics';
+
+const { ga4MeasurementId } = ANALYTICS;
+const enabled = ga4MeasurementId && !import.meta.env.DEV;
+---
+
+{enabled && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`} is:inline />
+    <script is:inline define:vars={{ measurementId: ga4MeasurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', measurementId, { anonymize_ip: true });
+    </script>
+  </>
+)}

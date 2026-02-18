@@ -1,0 +1,29 @@
+---
+// src/components/molecules/NavLink.astro
+
+export interface Props {
+  href: string;
+  class?: string;
+  active?: boolean;
+}
+
+const { href, class: className = '', active } = Astro.props;
+
+// Support Astro's built-in active URL detection or explicit prop
+const currentPath = Astro.url.pathname;
+const isActive = active ?? (currentPath === href || (href !== '/' && currentPath.startsWith(href)));
+---
+
+<a
+  href={href}
+  class={[
+    'text-sm font-medium transition-colors duration-150 px-3 py-2 rounded-md',
+    isActive
+      ? 'text-primary-600 bg-primary-50'
+      : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50',
+    className,
+  ].join(' ')}
+  aria-current={isActive ? 'page' : undefined}
+>
+  <slot />
+</a>

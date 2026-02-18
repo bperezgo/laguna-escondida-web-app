@@ -1,0 +1,109 @@
+---
+// src/pages/reservas/paquetes.astro — Funnel step 3: Paquetes & Precios
+
+import ReservasLayout from '@/layouts/ReservasLayout.astro';
+import PricingTable from '@/components/organisms/PricingTable.astro';
+import Button from '@/components/atoms/Button.astro';
+import { ADDONS } from '@/lib/utils/constants';
+import { formatPrice } from '@/lib/utils/formatters';
+
+const faqs = [
+  {
+    q: '¿El precio incluye decoración?',
+    a: 'Los paquetes Estándar en adelante incluyen iluminación festiva. La decoración temática personalizada está disponible como complemento adicional.',
+  },
+  {
+    q: '¿Puedo agregar más invitados después de la reserva?',
+    a: 'Sí, puedes agregar invitados hasta 15 días antes del evento, sujeto a disponibilidad. Se aplica un costo adicional por persona.',
+  },
+  {
+    q: '¿Cuál es la política de cancelación?',
+    a: 'Cancelaciones con más de 30 días de anticipación reciben el 80% del depósito. Con menos de 30 días, se retiene el depósito completo.',
+  },
+  {
+    q: '¿Hay estacionamiento disponible?',
+    a: 'Sí, contamos con estacionamiento gratuito para todos los paquetes. Capacidad para más de 100 vehículos.',
+  },
+  {
+    q: '¿Puedo traer mi propio catering?',
+    a: 'Sí, en los paquetes Básico y Estándar puedes traer tu proveedor de catering. Para los paquetes Premium y Exclusivo, se recomienda usar nuestros aliados certificados.',
+  },
+];
+---
+
+<ReservasLayout
+  title="Paquetes y Precios"
+  description="Encuentra el paquete perfecto para tu evento en Laguna Escondida. Precios claros, sin sorpresas."
+>
+  <!-- Pricing table -->
+  <section class="section bg-neutral-50">
+    <div class="container">
+      <div class="text-center mb-12">
+        <p class="text-overline text-accent-500 mb-3">Elige el tuyo</p>
+        <h1 class="font-heading text-4xl md:text-5xl text-gray-800 mb-4">Paquetes y Precios</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Precios transparentes. Sin costos ocultos. Personaliza con nuestros complementos.
+        </p>
+      </div>
+
+      <PricingTable highlightId="premium" />
+    </div>
+  </section>
+
+  <!-- Addons -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="text-center mb-10">
+        <h2 class="font-heading text-3xl text-gray-800 mb-3">Complementos Disponibles</h2>
+        <p class="text-gray-600">Agrega servicios adicionales a cualquier paquete</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        {ADDONS.map((addon) => (
+          <div class="p-4 rounded-xl bg-neutral-50 border border-neutral-200 text-center">
+            <p class="font-medium text-gray-800 text-sm mb-1">{addon.name}</p>
+            <p class="text-primary-600 font-bold text-sm">{formatPrice(addon.price)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="section bg-neutral-50">
+    <div class="container max-w-3xl">
+      <div class="text-center mb-10">
+        <h2 class="font-heading text-3xl text-gray-800 mb-3">Preguntas Frecuentes</h2>
+      </div>
+
+      <div class="flex flex-col gap-4" id="faqs">
+        {faqs.map((faq, i) => (
+          <details class="bg-white rounded-xl border border-neutral-200 overflow-hidden group">
+            <summary class="flex items-center justify-between px-6 py-4 cursor-pointer font-medium text-gray-800 hover:text-primary-700 transition-colors list-none">
+              {faq.q}
+              <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-neutral-100">
+              <p class="pt-4">{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-primary-600 text-white">
+    <div class="container text-center">
+      <h2 class="font-heading text-3xl font-bold mb-4">¿Elegiste tu Paquete?</h2>
+      <p class="text-white/80 mb-8">
+        Completa el formulario en menos de 5 minutos y recibe confirmación de disponibilidad.
+      </p>
+      <Button href="/reservas/formulario" variant="accent" size="lg" data-analytics-event="pricing_cta_click">
+        Reservar Ahora →
+      </Button>
+    </div>
+  </section>
+</ReservasLayout>

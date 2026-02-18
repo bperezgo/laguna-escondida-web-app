@@ -1,0 +1,33 @@
+---
+// src/pages/contenido/categoria/[slug].astro — Category archive
+
+import ContenidoLayout from '@/layouts/ContenidoLayout.astro';
+import ArchiveTemplate from '@/components/templates/blog/ArchiveTemplate.astro';
+import { BLOG_CATEGORIES } from '@/lib/utils/constants';
+import type { BlogPost } from '@/types/blog';
+
+export async function getStaticPaths() {
+  return BLOG_CATEGORIES.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { slug } = Astro.params;
+const { category } = Astro.props;
+
+// TODO: Replace with strapi.getBlogPosts({ filters: { 'category.slug': categoria } })
+const posts: BlogPost[] = [];
+---
+
+<ContenidoLayout
+  title={`${category.label} | Blog`}
+  description={`Artículos sobre ${category.label.toLowerCase()} en Laguna Escondida.`}
+>
+  <ArchiveTemplate
+    posts={posts}
+    title={category.label}
+    description={`Todo sobre ${category.label.toLowerCase()} en Laguna Escondida.`}
+    activeCategory={slug}
+  />
+</ContenidoLayout>

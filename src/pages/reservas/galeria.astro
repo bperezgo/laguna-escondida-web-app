@@ -1,0 +1,45 @@
+---
+// src/pages/reservas/galeria.astro — Funnel step 2: Galería
+
+import ReservasLayout from '@/layouts/ReservasLayout.astro';
+import GalleryGrid from '@/components/organisms/GalleryGrid.astro';
+import Button from '@/components/atoms/Button.astro';
+import type { GalleryImage } from '@/components/organisms/GalleryGrid.astro';
+
+// Placeholder images until real media is loaded
+const images: GalleryImage[] = [
+  { src: '/images/gallery/boda-01.jpg', alt: 'Boda en el jardín de la laguna', category: 'Bodas' },
+  { src: '/images/gallery/boda-02.jpg', alt: 'Ceremonia junto al agua', category: 'Bodas' },
+  { src: '/images/gallery/quince-01.jpg', alt: 'Quinceaños temático', category: 'Quinceaños' },
+  { src: '/images/gallery/cumple-01.jpg', alt: 'Cumpleaños en la naturaleza', category: 'Cumpleaños' },
+  { src: '/images/gallery/corp-01.jpg', alt: 'Evento corporativo', category: 'Corporativo' },
+  { src: '/images/gallery/lago-01.jpg', alt: 'Vista del lago al atardecer', category: 'Lugar' },
+  { src: '/images/gallery/lago-02.jpg', alt: 'Área de fogata', category: 'Lugar' },
+  { src: '/images/gallery/lago-03.jpg', alt: 'Muelle de madera', category: 'Lugar' },
+];
+---
+
+<ReservasLayout
+  title="Galería de Eventos"
+  description="Inspírate con nuestras fotos de bodas, quinceaños, cumpleaños y más eventos realizados en Laguna Escondida."
+>
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <p class="text-overline text-accent-500 mb-3">Momentos Únicos</p>
+        <h1 class="font-heading text-4xl md:text-5xl text-gray-800 mb-4">Galería de Eventos</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Cada foto cuenta una historia. Inspírate y empieza a imaginar tu evento perfecto aquí.
+        </p>
+      </div>
+
+      <GalleryGrid images={images} class="mb-12" />
+
+      <div class="text-center">
+        <Button href="/reservas/paquetes" variant="primary" size="lg" data-analytics-event="gallery_cta_click">
+          Ver Paquetes y Precios →
+        </Button>
+      </div>
+    </div>
+  </section>
+</ReservasLayout>

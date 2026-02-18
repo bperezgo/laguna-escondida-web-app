@@ -1,0 +1,72 @@
+---
+// src/components/organisms/PricingTable.astro
+
+import Button from '@/components/atoms/Button.astro';
+import Badge from '@/components/atoms/Badge.astro';
+import PriceTag from '@/components/molecules/PriceTag.astro';
+import { PACKAGES } from '@/lib/utils/constants';
+import type { Package } from '@/types/reserva';
+
+export interface Props {
+  packages?: Package[];
+  highlightId?: string;
+  class?: string;
+}
+
+const {
+  packages = PACKAGES,
+  highlightId = 'premium',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 ${className}`}>
+  {packages.map((pkg) => {
+    const isHighlighted = pkg.id === highlightId;
+    return (
+      <div
+        class={[
+          'flex flex-col rounded-2xl p-6 border-2 transition-all duration-250',
+          isHighlighted
+            ? 'border-primary-500 bg-primary-50 shadow-xl scale-[1.02]'
+            : 'border-neutral-200 bg-white shadow-md hover:shadow-lg hover:border-primary-300',
+        ].join(' ')}
+      >
+        {isHighlighted && (
+          <div class="mb-4">
+            <Badge variant="primary">Más Popular</Badge>
+          </div>
+        )}
+
+        <h3 class="font-heading text-2xl font-bold text-gray-800 mb-2">{pkg.name}</h3>
+
+        <PriceTag amount={pkg.basePrice} class="mb-4" />
+
+        <p class="text-sm text-gray-500 mb-6">
+          Hasta <strong>{pkg.maxGuests} invitados</strong> incluidos
+        </p>
+
+        <ul class="flex flex-col gap-2.5 mb-8 flex-1">
+          {pkg.features.map((feature) => (
+            <li class="flex items-start gap-2 text-sm text-gray-700">
+              <svg class="w-4 h-4 text-primary-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <Button
+          href={`/reservas/formulario?paquete=${pkg.id}`}
+          variant={isHighlighted ? 'primary' : 'outline'}
+          size="md"
+          class="w-full"
+          data-analytics-event={`package_${pkg.id}_selected`}
+        >
+          Elegir {pkg.name}
+        </Button>
+      </div>
+    );
+  })}
+</div>

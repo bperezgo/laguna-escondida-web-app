@@ -1,0 +1,109 @@
+---
+// src/components/templates/reservas/LandingTemplate.astro
+
+import HeroSection from '@/components/organisms/HeroSection.astro';
+import Button from '@/components/atoms/Button.astro';
+import Card from '@/components/molecules/Card.astro';
+import { EVENT_TYPES } from '@/lib/utils/constants';
+
+export interface Props {
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroDescription?: string;
+  heroImage?: string;
+}
+
+const {
+  heroTitle = 'Tu Evento Perfecto en la Naturaleza',
+  heroSubtitle = 'Laguna Escondida',
+  heroDescription = 'Celebra tus momentos más especiales rodeado de naturaleza, agua cristalina y paisajes únicos.',
+  heroImage,
+} = Astro.props;
+---
+
+<!-- Hero -->
+<HeroSection
+  title={heroTitle}
+  subtitle={heroSubtitle}
+  description={heroDescription}
+  backgroundImage={heroImage}
+  primaryCta={{ label: 'Ver Paquetes', href: '/reservas/paquetes', analyticsEvent: 'landing_hero_cta_primary' }}
+  secondaryCta={{ label: 'Ver Galería', href: '/reservas/galeria' }}
+  size="lg"
+/>
+
+<!-- Tipos de evento -->
+<section class="section bg-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <p class="text-overline text-accent-500 mb-3">¿Cuál es tu ocasión?</p>
+      <h2 class="font-heading text-4xl text-gray-800">Tipos de Eventos</h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {EVENT_TYPES.slice(0, 6).map((event) => (
+        <a
+          href={`/reservas/formulario?tipo=${event.value}`}
+          class="group flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-neutral-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-center"
+          data-analytics-event={`event_type_${event.value}_selected`}
+        >
+          <span class="text-3xl">
+            {event.value === 'boda' && '💍'}
+            {event.value === 'quinceanos' && '🎀'}
+            {event.value === 'cumpleanos' && '🎂'}
+            {event.value === 'corporativo' && '💼'}
+            {event.value === 'graduacion' && '🎓'}
+            {event.value === 'otro' && '🌟'}
+          </span>
+          <span class="font-medium text-gray-700 group-hover:text-primary-700 transition-colors">
+            {event.label}
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Por qué elegirnos -->
+<section class="section bg-neutral-100">
+  <div class="container">
+    <div class="text-center mb-12">
+      <p class="text-overline text-accent-500 mb-3">Nuestras Ventajas</p>
+      <h2 class="font-heading text-4xl text-gray-800">¿Por Qué Laguna Escondida?</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {[
+        { icon: '🌿', title: 'Naturaleza Única', desc: 'Un entorno natural privilegiado, lejos del ruido de la ciudad, para crear momentos memorables.' },
+        { icon: '✨', title: 'Experiencia Total', desc: 'Coordinamos cada detalle de tu evento para que solo te preocupes por disfrutar.' },
+        { icon: '🤝', title: 'Atención Personalizada', desc: 'Un equipo dedicado que trabaja contigo desde la planificación hasta el último momento.' },
+      ].map((item) => (
+        <div class="text-center p-6">
+          <span class="text-5xl block mb-4">{item.icon}</span>
+          <h3 class="font-heading text-xl font-semibold text-gray-800 mb-3">{item.title}</h3>
+          <p class="text-gray-600 leading-relaxed">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="section bg-primary-600 text-white">
+  <div class="container text-center">
+    <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">
+      ¿Listo para hacer tu evento realidad?
+    </h2>
+    <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto">
+      Consulta disponibilidad y recibe una cotización personalizada sin compromiso.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <Button href="/reservas/formulario" variant="accent" size="lg" data-analytics-event="landing_bottom_cta">
+        Hacer una Reserva
+      </Button>
+      <Button href="/reservas/galeria" variant="outline" size="lg" class="border-white text-white hover:bg-white/10">
+        Ver Galería
+      </Button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,98 @@
+---
+// src/components/templates/blog/PostTemplate.astro
+
+import Badge from '@/components/atoms/Badge.astro';
+import SocialShare from '@/components/molecules/SocialShare.astro';
+import NewsletterBox from '@/components/organisms/NewsletterBox.astro';
+import { formatDate } from '@/lib/utils/formatters';
+import type { BlogPost } from '@/types/blog';
+
+export interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="section">
+  <div class="container max-w-3xl">
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-6">
+        <Badge variant="primary">{post.category.name}</Badge>
+        {post.readingTime && (
+          <span class="text-sm text-gray-500">{post.readingTime} min de lectura</span>
+        )}
+      </div>
+
+      <h1 class="font-heading text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+        {post.title}
+      </h1>
+
+      <p class="text-xl text-gray-600 leading-relaxed mb-8">{post.excerpt}</p>
+
+      <!-- Author + date -->
+      <div class="flex items-center justify-between flex-wrap gap-4 pb-8 border-b border-neutral-200">
+        <div class="flex items-center gap-3">
+          {post.author.avatar ? (
+            <img
+              src={post.author.avatar}
+              alt={post.author.name}
+              class="w-10 h-10 rounded-full object-cover"
+            />
+          ) : (
+            <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold">
+              {post.author.name[0]}
+            </div>
+          )}
+          <div>
+            <p class="text-sm font-medium text-gray-800">{post.author.name}</p>
+            <p class="text-xs text-gray-500">
+              {formatDate(post.publishedAt)}
+            </p>
+          </div>
+        </div>
+
+        <SocialShare title={post.title} />
+      </div>
+    </header>
+
+    <!-- Cover image -->
+    {post.coverImage && (
+      <div class="rounded-2xl overflow-hidden mb-10 aspect-video">
+        <img
+          src={post.coverImage}
+          alt={post.title}
+          class="w-full h-full object-cover"
+          loading="eager"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none prose-headings:font-heading prose-a:text-primary-600">
+      <slot />
+    </div>
+
+    <!-- Footer tags -->
+    {post.tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mt-10 pt-8 border-t border-neutral-200">
+        {post.tags.map((tag) => (
+          <Badge variant="neutral" size="sm">#{tag}</Badge>
+        ))}
+      </div>
+    )}
+
+    <!-- Share bottom -->
+    <div class="mt-8">
+      <SocialShare title={post.title} />
+    </div>
+  </div>
+</article>
+
+<!-- Newsletter -->
+<section class="section-sm bg-neutral-100">
+  <div class="container max-w-2xl">
+    <NewsletterBox />
+  </div>
+</section>
