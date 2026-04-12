@@ -1,0 +1,56 @@
+---
+import speciesData from '../data/species.json';
+---
+
+<section class="py-20 px-4 bg-lake-50" id="especies">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4">
+      Por que Laguna Escondida tiene mas variedad que cualquier truchera?
+    </h2>
+    <p class="text-center text-lg text-neutral mb-12 max-w-3xl mx-auto font-body">
+      Mientras la mayoria de trucheras en el Oriente Antioqueno solo ofrecen trucha, en Laguna Escondida puedes pescar 5 especies diferentes. Esta variedad hace que cada visita sea una experiencia distinta — para pescadores de todos los niveles.
+    </p>
+
+    <!-- Grid de especies -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
+      {speciesData.map((species) => (
+        <div class="card bg-white shadow-brand text-center p-6">
+          <figure class="mb-4">
+            <img
+              src={species.image}
+              alt={species.alt}
+              class="w-24 h-24 object-cover rounded-full mx-auto border-4 border-lake-50"
+              loading="lazy"
+            />
+          </figure>
+          <h3 class="font-display text-lg text-lake-700">{species.name}</h3>
+          <div class={`badge ${species.badgeClass} badge-outline mt-2 font-body`}>{species.difficulty}</div>
+          <p class="text-sm text-neutral mt-2 font-body">{species.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Comparativa visual -->
+    <div class="bg-white rounded-brand p-8 shadow-brand max-w-2xl mx-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-center flex-1">
+          <p class="text-4xl font-bold text-lake-500 font-body">5</p>
+          <p class="text-sm text-neutral font-body">especies en<br/><strong>Laguna Escondida</strong></p>
+        </div>
+        <div class="text-3xl text-neutral/30 font-body">vs</div>
+        <div class="text-center flex-1">
+          <p class="text-4xl font-bold text-neutral/40 font-body">1</p>
+          <p class="text-sm text-neutral font-body">especie en<br/>trucheras tipicas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-10">
+      <a href="/experiencias/pesca-deportiva/"
+         class="btn btn-primary btn-lg text-white font-body font-semibold">
+        Conoce la pesca deportiva &rarr;
+      </a>
+    </div>
+  </div>
+</section>

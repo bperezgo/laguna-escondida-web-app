@@ -1,0 +1,47 @@
+---
+---
+<div class="navbar bg-sand-100 sticky top-0 z-50 shadow-brand border-b border-lake-50">
+  <div class="navbar-start">
+    <a href="/" class="text-2xl font-display text-lake-700 tracking-tight">
+      Laguna Escondida
+    </a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1 font-body text-lake-700">
+      <li><a href="#experiencias">Experiencias</a></li>
+      <li><a href="#especies">Pesca</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#resenas">Resenas</a></li>
+      <li><a href="#ubicacion">Como llegar</a></li>
+    </ul>
+  </div>
+  <div class="navbar-end gap-2">
+    <a href="https://wa.me/57XXXXXXXXXX?text=Hola%2C%20quiero%20reservar%20en%20Laguna%20Escondida"
+       class="btn btn-primary text-white hidden sm:inline-flex"
+       data-event="whatsapp_click" data-location="navbar">
+      Reservar visita
+    </a>
+    <!-- Mobile menu -->
+    <div class="dropdown dropdown-end lg:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </div>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-brand bg-sand-100 rounded-brand w-52">
+        <li><a href="#experiencias">Experiencias</a></li>
+        <li><a href="#especies">Pesca</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#resenas">Resenas</a></li>
+        <li><a href="#ubicacion">Como llegar</a></li>
+        <li>
+          <a href="https://wa.me/57XXXXXXXXXX?text=Hola%2C%20quiero%20reservar%20en%20Laguna%20Escondida"
+             class="btn btn-primary btn-sm text-white mt-2"
+             data-event="whatsapp_click" data-location="navbar-mobile">
+            Reservar visita
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

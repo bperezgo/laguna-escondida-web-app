@@ -1,75 +1,133 @@
 ---
-// src/layouts/BaseLayout.astro
-
-import '@/styles/global.css';
-import GoogleAnalytics from '@/components/widgets/Analytics/GoogleAnalytics.astro';
-import CustomTracker from '@/components/widgets/Analytics/CustomTracker.astro';
-import { SITE } from '@/config/site';
-
-export interface Props {
-  title?: string;
-  description?: string;
+interface Props {
+  title: string;
+  description: string;
   image?: string;
-  noindex?: boolean;
-  class?: string;
 }
 
-const {
-  title,
-  description = SITE.description,
-  image = SITE.openGraph.image,
-  noindex = false,
-  class: className = '',
-} = Astro.props;
-
-const pageTitle = title ? `${title} | ${SITE.name}` : SITE.name;
-const canonicalUrl = new URL(Astro.url.pathname, SITE.url).toString();
+const { title, description, image = '/images/hero/lago-comedor-vista.jpg' } = Astro.props;
+import '../styles/global.css';
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
+<!DOCTYPE html>
+<html lang="es-CO" data-theme="laguna">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content="pesca deportiva Antioquia, restaurante campestre Marinilla, truchera Medellin, pesca Yamu, Tilapia Roja, lago pesca Colombia" />
+  <link rel="canonical" href="https://lagunaescondida.com.co/" />
 
-    <!-- SEO -->
-    <title>{pageTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <!-- Google Tag Manager -->
+  <script is:inline>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
+  <!-- End Google Tag Manager -->
 
-    <!-- Open Graph -->
-    <meta property="og:type" content={SITE.openGraph.type} />
-    <meta property="og:locale" content={SITE.openGraph.locale} />
-    <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={new URL(image, SITE.url).toString()} />
+  <!-- Preconnect para fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, SITE.url).toString()} />
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:url" content="https://lagunaescondida.com.co/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <!-- Schema.org - Restaurant -->
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Laguna Escondida",
+    "description": "Restaurante campestre con pesca deportiva. 5 especies de peces: Yamu, Doradas, Cachama, Tilapia Roja y Tilapia Nilotica.",
+    "image": "https://lagunaescondida.com.co/images/hero/lago-comedor-vista.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Vereda La Primavera",
+      "addressLocality": "Marinilla",
+      "addressRegion": "Antioquia",
+      "addressCountry": "CO"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "6.1774",
+      "longitude": "-75.3358"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.6",
+      "reviewCount": "12"
+    },
+    "servesCuisine": ["Pescados", "Comida Campestre", "Comida Colombiana"],
+    "priceRange": "$50,000 - $90,000 COP",
+    "url": "https://lagunaescondida.com.co",
+    "telephone": "+57XXXXXXXXXX",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    ],
+    "hasMenu": {
+      "@type": "Menu",
+      "hasMenuSection": [
+        {
+          "@type": "MenuSection",
+          "name": "Pescados",
+          "hasMenuItem": [
+            {"@type": "MenuItem", "name": "Yamu Frito"},
+            {"@type": "MenuItem", "name": "Tilapia Roja"},
+            {"@type": "MenuItem", "name": "Trucha"}
+          ]
+        }
+      ]
+    },
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Pesca Deportiva", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Parqueadero", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Eventos Privados", "value": true}
+    ]
+  }
+  </script>
 
-    <!-- Preconnect for Google Fonts (loaded in typography.css) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-    <!-- Analytics (GA4 — only in production) -->
-    <GoogleAnalytics />
-  </head>
+</head>
+<body class="bg-sand-100 text-neutral font-body">
 
-  <body class={className}>
-    <slot />
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Custom tracker (exposes window.trackEvent) -->
-    <CustomTracker />
-  </body>
+  <slot />
+
+  <!-- DataLayer event pusher -->
+  <script is:inline>
+    document.addEventListener('click', function(e) {
+      var target = e.target.closest('[data-event]');
+      if (target) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': target.getAttribute('data-event'),
+          'event_location': target.getAttribute('data-location') || 'unknown'
+        });
+      }
+    });
+  </script>
+</body>
 </html>

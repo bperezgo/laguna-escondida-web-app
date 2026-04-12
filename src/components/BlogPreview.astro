@@ -1,0 +1,68 @@
+---
+const articles = [
+  {
+    href: '/blog/pesca/como-pescar-yamu-guia-principiantes/',
+    image: '/images/blog/yamu-pesca.jpg',
+    alt: 'Como pescar Yamu - guia para principiantes',
+    badge: 'Pesca',
+    badgeClass: 'badge-primary',
+    title: 'Como pescar Yamu: guia completa para principiantes',
+    excerpt: 'El Yamu es uno de los peces nativos colombianos mas emocionantes de pescar. Aprende que carnada usar, cuando ir, y como prepararlo.',
+  },
+  {
+    href: '/blog/gastronomia/yamu-frito-receta/',
+    image: '/images/blog/yamu-frito.jpg',
+    alt: 'Receta de Yamu frito estilo campestre',
+    badge: 'Gastronomia',
+    badgeClass: 'badge-secondary',
+    title: 'Receta de Yamu frito estilo Laguna Escondida',
+    excerpt: 'El secreto de un buen Yamu frito esta en la frescura. Te compartimos como lo preparamos directamente del lago al plato.',
+  },
+  {
+    href: '/blog/experiencias/planes-marinilla-familia/',
+    image: '/images/blog/planes-marinilla.jpg',
+    alt: '5 planes para hacer en Marinilla con la familia',
+    badge: 'Experiencias',
+    badgeClass: 'badge-accent',
+    title: '5 planes para hacer en Marinilla con toda la familia',
+    excerpt: 'Marinilla tiene mas que parque principal. Pesca, gastronomia campestre y naturaleza a minutos de Medellin.',
+  },
+];
+---
+
+<section class="py-20 px-4 bg-lake-50" id="blog">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4">
+      Aprende sobre pesca y gastronomia campestre
+    </h2>
+    <p class="text-center text-lg text-neutral mb-12 max-w-2xl mx-auto font-body">
+      Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {articles.map((article) => (
+        <a href={article.href} class="card bg-white shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-1">
+          <figure>
+            <img
+              src={article.image}
+              alt={article.alt}
+              class="w-full h-48 object-cover rounded-t-brand"
+              loading="lazy"
+            />
+          </figure>
+          <div class="card-body">
+            <div class={`badge ${article.badgeClass} badge-outline font-body`}>{article.badge}</div>
+            <h3 class="card-title font-display text-lg text-lake-700">{article.title}</h3>
+            <p class="font-body text-neutral text-sm">{article.excerpt}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="/blog/" class="btn btn-outline btn-primary font-body font-semibold">
+        Ver todo el blog &rarr;
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Tilapia Roja",
+    "difficulty": "Facil",
+    "badgeClass": "badge-primary",
+    "description": "La mas popular. Ideal para principiantes y ninos.",
+    "image": "/images/species/tilapia-roja.jpg",
+    "alt": "Tilapia Roja - especie de pesca disponible en Laguna Escondida"
+  },
+  {
+    "name": "Tilapia Nilotica",
+    "difficulty": "Facil",
+    "badgeClass": "badge-primary",
+    "description": "Mas grande que la roja. Excelente en el plato.",
+    "image": "/images/species/tilapia-nilotica.jpg",
+    "alt": "Tilapia Nilotica - pesca deportiva en Marinilla"
+  },
+  {
+    "name": "Yamu",
+    "difficulty": "Media",
+    "badgeClass": "badge-secondary",
+    "description": "Pez nativo colombiano. Pelea fuerte y sabe delicioso frito.",
+    "image": "/images/species/yamu.jpg",
+    "alt": "Yamu - pez nativo colombiano en Laguna Escondida"
+  },
+  {
+    "name": "Doradas",
+    "difficulty": "Dificil",
+    "badgeClass": "badge-accent",
+    "description": "La mas combativa. Reto para pescadores con experiencia.",
+    "image": "/images/species/doradas.jpg",
+    "alt": "Doradas - pesca deportiva variada en Antioquia"
+  },
+  {
+    "name": "Cachama",
+    "difficulty": "Media",
+    "badgeClass": "badge-secondary",
+    "description": "Crece grande. Buena pelea y carne abundante.",
+    "image": "/images/species/cachama.jpg",
+    "alt": "Cachama - especie de agua dulce en lago de Marinilla"
+  }
+]

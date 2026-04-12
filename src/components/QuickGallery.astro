@@ -1,0 +1,42 @@
+---
+const images = [
+  { src: '/images/gallery/lago-panoramico.jpg', alt: 'Vista panoramica del lago de pesca en Laguna Escondida, Marinilla', class: 'col-span-2 row-span-2', imgClass: 'w-full h-full object-cover' },
+  { src: '/images/gallery/plato-vista-lago.jpg', alt: 'Plato de Yamu frito con vista al lago - restaurante campestre Marinilla', class: '', imgClass: 'w-full h-48 object-cover' },
+  { src: '/images/gallery/ninos-pescando.jpg', alt: 'Ninos pescando Tilapia Roja en lago de Laguna Escondida', class: '', imgClass: 'w-full h-48 object-cover' },
+  { src: '/images/gallery/guadua-interior.jpg', alt: 'Comedor en guadua rustico del restaurante campestre en Marinilla', class: '', imgClass: 'w-full h-48 object-cover' },
+  { src: '/images/gallery/familia-comedor.jpg', alt: 'Familia almorzando con vista al lago en el Oriente Antioqueno', class: '', imgClass: 'w-full h-48 object-cover' },
+  { src: '/images/gallery/pez-recien-pescado.jpg', alt: 'Yamu recien pescado en lago de pesca deportiva Antioquia', class: 'col-span-2', imgClass: 'w-full h-48 object-cover' },
+  { src: '/images/gallery/atardecer-lago.jpg', alt: 'Atardecer sobre el lago de Laguna Escondida en la Vereda La Primavera', class: 'col-span-2', imgClass: 'w-full h-48 object-cover' },
+];
+---
+
+<section class="py-20 px-4 bg-sand-100" id="galeria">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4">
+      Como es un dia en Laguna Escondida?
+    </h2>
+    <p class="text-center text-lg text-neutral mb-12 max-w-2xl mx-auto font-body">
+      Construccion en guadua, lago rodeado de naturaleza, y platos frescos servidos con vista al agua. Esto es Laguna Escondida en Marinilla, Antioquia.
+    </p>
+
+    <!-- Grid de fotos -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {images.map((img) => (
+        <div class={img.class}>
+          <img
+            src={img.src}
+            alt={img.alt}
+            class={`${img.imgClass} rounded-brand shadow-brand`}
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="/galeria/" class="btn btn-outline btn-primary font-body font-semibold">
+        Ver galeria completa &rarr;
+      </a>
+    </div>
+  </div>
+</section>

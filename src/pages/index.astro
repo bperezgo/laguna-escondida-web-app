@@ -1,169 +1,29 @@
 ---
-// src/pages/index.astro — Home / Landing principal
-
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Navbar from '@/components/organisms/Navbar.astro';
-import Footer from '@/components/organisms/Footer.astro';
-import HeroSection from '@/components/organisms/HeroSection.astro';
-import BlogPostList from '@/components/organisms/BlogPostList.astro';
-import Button from '@/components/atoms/Button.astro';
-import { SITE } from '@/config/site';
-import type { BlogPost } from '@/types/blog';
-
-// Placeholder posts until Strapi is connected
-const featuredPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: 'Los Mejores Spots de Pesca en la Laguna',
-    slug: 'mejores-spots-pesca',
-    excerpt: 'Descubre los rincones secretos donde los peces abundan en nuestra laguna encantada.',
-    content: '',
-    author: { id: '1', name: 'Equipo Laguna Escondida' },
-    category: { id: '1', name: 'Pesca', slug: 'pesca' },
-    tags: ['pesca', 'naturaleza'],
-    publishedAt: '2026-02-01',
-    readingTime: 5,
-    coverImage: '/images/blog-pesca.jpg',
-  },
-  {
-    id: '2',
-    title: 'Cómo Organizar una Boda Perfecta en la Naturaleza',
-    slug: 'boda-perfecta-naturaleza',
-    excerpt: 'Guía completa para planificar tu boda soñada rodeada de naturaleza y paisajes únicos.',
-    content: '',
-    author: { id: '1', name: 'Equipo Laguna Escondida' },
-    category: { id: '2', name: 'Eventos', slug: 'eventos' },
-    tags: ['bodas', 'eventos'],
-    publishedAt: '2026-01-15',
-    readingTime: 7,
-    coverImage: '/images/blog-boda.jpg',
-  },
-  {
-    id: '3',
-    title: 'Receta: Trucha al Ajillo con Hierbas del Campo',
-    slug: 'receta-trucha-ajillo',
-    excerpt: 'Una deliciosa receta con la trucha recién pescada en nuestras aguas cristalinas.',
-    content: '',
-    author: { id: '1', name: 'Equipo Laguna Escondida' },
-    category: { id: '3', name: 'Recetas', slug: 'recetas' },
-    tags: ['recetas', 'trucha'],
-    publishedAt: '2026-01-05',
-    readingTime: 4,
-    coverImage: '/images/blog-receta.jpg',
-  },
-];
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import ExperienceCards from '../components/ExperienceCards.astro';
+import FishSpecies from '../components/FishSpecies.astro';
+import QuickGallery from '../components/QuickGallery.astro';
+import Reviews from '../components/Reviews.astro';
+import LocationMap from '../components/LocationMap.astro';
+import BlogPreview from '../components/BlogPreview.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<BaseLayout description={SITE.description}>
+<BaseLayout
+  title="Laguna Escondida — Pesca Deportiva y Restaurante Campestre en Marinilla, Antioquia"
+  description="Pesca 5 especies de peces y come frente al lago. Restaurante campestre con Yamu, Doradas, Cachama, Tilapia Roja y Nilotica en Marinilla. A 45 min de Medellin."
+>
   <Navbar />
-
-  <!-- Hero -->
-  <HeroSection
-    title="Tu Escape en la Naturaleza"
-    subtitle={SITE.name}
-    description="El lugar perfecto para celebrar bodas, quinceaños, cumpleaños y eventos corporativos rodeados de naturaleza única."
-    primaryCta={{ label: 'Planifica tu Evento', href: '/reservas', analyticsEvent: 'home_hero_cta' }}
-    secondaryCta={{ label: 'Ver Blog', href: '/contenido' }}
-    size="full"
-  />
-
-  <!-- ¿Qué ofrecemos? -->
-  <section class="section bg-white">
-    <div class="container">
-      <div class="text-center mb-14">
-        <p class="text-overline text-accent-500 mb-3">Nuestros Servicios</p>
-        <h2 class="font-heading text-4xl text-gray-800 mb-4">Un Lugar, Mil Posibilidades</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Laguna Escondida es el escenario ideal para los momentos que recordarás por siempre.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
-          {
-            icon: '🎪',
-            title: 'Eventos Sociales',
-            desc: 'Bodas, quinceaños, cumpleaños y reuniones familiares en un entorno mágico.',
-            href: '/reservas',
-          },
-          {
-            icon: '🎣',
-            title: 'Pesca Deportiva',
-            desc: 'Vive la experiencia de pescar en nuestras aguas ricas en trucha y otras especies.',
-            href: '/contenido/pesca',
-          },
-          {
-            icon: '🌿',
-            title: 'Conexión con la Naturaleza',
-            desc: 'Senderismo, observación de aves y actividades al aire libre en un ecosistema único.',
-            href: '/contenido/naturaleza',
-          },
-        ].map((item) => (
-          <a href={item.href} class="group flex flex-col items-center text-center p-8 rounded-2xl bg-neutral-50 hover:bg-primary-50 border-2 border-transparent hover:border-primary-200 transition-all">
-            <span class="text-5xl mb-5">{item.icon}</span>
-            <h3 class="font-heading text-xl font-semibold text-gray-800 group-hover:text-primary-700 mb-3 transition-colors">{item.title}</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats / social proof -->
-  <section class="section bg-primary-600 text-white">
-    <div class="container">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        {[
-          { value: '500+', label: 'Eventos Realizados' },
-          { value: '98%', label: 'Clientes Satisfechos' },
-          { value: '10+', label: 'Años de Experiencia' },
-          { value: '1.200', label: 'Hectáreas Naturales' },
-        ].map((stat) => (
-          <div>
-            <p class="font-heading text-4xl font-bold text-white mb-2">{stat.value}</p>
-            <p class="text-white/70 text-sm">{stat.label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Blog preview -->
-  <section class="section bg-white">
-    <div class="container">
-      <div class="flex items-center justify-between mb-10">
-        <div>
-          <p class="text-overline text-accent-500 mb-2">Del Blog</p>
-          <h2 class="font-heading text-3xl text-gray-800">Últimos Artículos</h2>
-        </div>
-        <Button href="/contenido" variant="outline" size="sm">
-          Ver todos
-        </Button>
-      </div>
-
-      <BlogPostList posts={featuredPosts} columns={3} />
-    </div>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="section bg-neutral-100">
-    <div class="container max-w-3xl text-center">
-      <h2 class="font-heading text-4xl text-gray-800 mb-4">
-        ¿Listo para Crear Recuerdos Inolvidables?
-      </h2>
-      <p class="text-lg text-gray-600 mb-10">
-        Contacta con nosotros y empieza a planificar el evento de tus sueños.
-      </p>
-      <div class="flex flex-wrap gap-4 justify-center">
-        <Button href="/reservas/formulario" variant="primary" size="lg" data-analytics-event="home_bottom_cta">
-          Hacer una Reserva
-        </Button>
-        <Button href={`https://wa.me/${SITE.whatsapp}`} variant="outline" size="lg">
-          Contactar por WhatsApp
-        </Button>
-      </div>
-    </div>
-  </section>
-
+  <main>
+    <Hero />
+    <ExperienceCards />
+    <FishSpecies />
+    <QuickGallery />
+    <Reviews />
+    <LocationMap />
+    <BlogPreview />
+  </main>
   <Footer />
 </BaseLayout>

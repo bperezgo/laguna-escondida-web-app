@@ -1,143 +1,49 @@
-/* src/styles/global.css
-   Entry point for all styles.
-   Tailwind v4 uses @theme for design token integration.
-   NOTE: Google Fonts @import must be first (before any CSS rules).
-*/
-
-/* Google Fonts — must precede all rules */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap');
-
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: laguna --default;
+}
 
-/* Design system */
-@import "./design-system/tokens.css";
-@import "./design-system/typography.css";
-@import "./design-system/animations.css";
-
-/* Tailwind v4 theme — maps design tokens to Tailwind utilities */
+/* ── Brand colors ── */
 @theme {
-  /* Colors */
-  --color-primary-50: var(--color-primary-50);
-  --color-primary-100: var(--color-primary-100);
-  --color-primary-200: var(--color-primary-200);
-  --color-primary-300: var(--color-primary-300);
-  --color-primary-400: var(--color-primary-400);
-  --color-primary-500: var(--color-primary-500);
-  --color-primary-600: var(--color-primary-600);
-  --color-primary-700: var(--color-primary-700);
-  --color-primary-800: var(--color-primary-800);
-  --color-primary-900: var(--color-primary-900);
+  --color-lake-50: #D8F3DC;
+  --color-lake-100: #B7E4C7;
+  --color-lake-500: #2D6A4F;
+  --color-lake-700: #1B4332;
 
-  --color-secondary-50: var(--color-secondary-50);
-  --color-secondary-100: var(--color-secondary-100);
-  --color-secondary-200: var(--color-secondary-200);
-  --color-secondary-300: var(--color-secondary-300);
-  --color-secondary-400: var(--color-secondary-400);
-  --color-secondary-500: var(--color-secondary-500);
-  --color-secondary-600: var(--color-secondary-600);
-  --color-secondary-700: var(--color-secondary-700);
-  --color-secondary-800: var(--color-secondary-800);
-  --color-secondary-900: var(--color-secondary-900);
+  --color-earth-300: #D4A843;
+  --color-earth-500: #8B6914;
 
-  --color-accent-50: var(--color-accent-50);
-  --color-accent-100: var(--color-accent-100);
-  --color-accent-200: var(--color-accent-200);
-  --color-accent-300: var(--color-accent-300);
-  --color-accent-400: var(--color-accent-400);
-  --color-accent-500: var(--color-accent-500);
-  --color-accent-600: var(--color-accent-600);
-  --color-accent-700: var(--color-accent-700);
-  --color-accent-800: var(--color-accent-800);
-  --color-accent-900: var(--color-accent-900);
+  --color-sand-100: #FAFAF5;
+  --color-sand-200: #E8DCC8;
 
-  --color-neutral-50: var(--color-neutral-50);
-  --color-neutral-100: var(--color-neutral-100);
-  --color-neutral-200: var(--color-neutral-200);
-  --color-neutral-300: var(--color-neutral-300);
-  --color-neutral-400: var(--color-neutral-400);
-  --color-neutral-500: var(--color-neutral-500);
-  --color-neutral-600: var(--color-neutral-600);
-  --color-neutral-700: var(--color-neutral-700);
-  --color-neutral-800: var(--color-neutral-800);
-  --color-neutral-900: var(--color-neutral-900);
+  --color-terra: #C45D3E;
 
-  --color-success: var(--color-success);
-  --color-warning: var(--color-warning);
-  --color-error: var(--color-error);
-  --color-info: var(--color-info);
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
 
-  /* Fonts */
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
+  --radius-brand: 12px;
+
+  --shadow-brand: 0 4px 12px rgba(27, 67, 50, 0.1);
+  --shadow-brand-lg: 0 8px 30px rgba(27, 67, 50, 0.12);
 }
 
-/* Tailwind typography plugin */
-@plugin "@tailwindcss/typography";
-
-/* ========================================
-   GLOBAL BASE STYLES
-   ======================================== */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--color-neutral-50);
-  min-height: 100vh;
-}
-
-img, video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Focus visible for accessibility */
-:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
-}
-
-/* Container utility */
-.container {
-  width: 100%;
-  max-width: var(--container-xl);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-.container-sm  { max-width: var(--container-sm); }
-.container-md  { max-width: var(--container-md); }
-.container-lg  { max-width: var(--container-lg); }
-.container-xl  { max-width: var(--container-xl); }
-.container-2xl { max-width: var(--container-2xl); }
-
-/* Section spacing */
-.section {
-  padding-block: var(--space-16);
-}
-
-.section-sm {
-  padding-block: var(--space-10);
-}
-
-/* Visually hidden (accessibility) */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+/* ── DaisyUI theme ── */
+@plugin "daisyui/theme" {
+  name: "laguna";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-primary: #2D6A4F;
+  --color-primary-content: #FFFFFF;
+  --color-secondary: #D4A843;
+  --color-secondary-content: #1B4332;
+  --color-accent: #C45D3E;
+  --color-neutral: #2D2D2D;
+  --color-base-100: #FAFAF5;
+  --color-base-200: #E8DCC8;
+  --color-base-300: #D8F3DC;
+  --color-info: #2D6A4F;
+  --color-success: #2D6A4F;
+  --color-warning: #D4A843;
+  --color-error: #C45D3E;
 }
