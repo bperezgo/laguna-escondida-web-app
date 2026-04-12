@@ -22,9 +22,15 @@ export default defineConfig({
               .child(
                 S.document().schemaType('siteSettings').documentId('siteSettings'),
               ),
+            S.listItem()
+              .title('Hero')
+              .id('heroSection')
+              .child(
+                S.document().schemaType('heroSection').documentId('heroSection'),
+              ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (listItem) => !['siteSettings'].includes(listItem.getId()!),
+              (listItem) => !['siteSettings', 'heroSection'].includes(listItem.getId()!),
             ),
           ]),
     }),

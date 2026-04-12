@@ -5,6 +5,7 @@ import blogPost from './blogPost'
 import experience from './experience'
 import galleryImage from './galleryImage'
 import siteSettings from './siteSettings'
+import heroSection from './heroSection'
 
 export const schemaTypes = [
   fishSpecies,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   experience,
   galleryImage,
   siteSettings,
+  heroSection,
 ]
