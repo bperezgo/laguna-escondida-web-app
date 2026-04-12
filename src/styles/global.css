@@ -2,48 +2,4 @@
 @plugin "daisyui" {
   themes: laguna --default;
 }
-
-/* ── Brand colors ── */
-@theme {
-  --color-lake-50: #D8F3DC;
-  --color-lake-100: #B7E4C7;
-  --color-lake-500: #2D6A4F;
-  --color-lake-700: #1B4332;
-
-  --color-earth-300: #D4A843;
-  --color-earth-500: #8B6914;
-
-  --color-sand-100: #FAFAF5;
-  --color-sand-200: #E8DCC8;
-
-  --color-terra: #C45D3E;
-
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Inter", system-ui, sans-serif;
-
-  --radius-brand: 12px;
-
-  --shadow-brand: 0 4px 12px rgba(27, 67, 50, 0.1);
-  --shadow-brand-lg: 0 8px 30px rgba(27, 67, 50, 0.12);
-}
-
-/* ── DaisyUI theme ── */
-@plugin "daisyui/theme" {
-  name: "laguna";
-  default: true;
-  prefersdark: false;
-  color-scheme: light;
-  --color-primary: #2D6A4F;
-  --color-primary-content: #FFFFFF;
-  --color-secondary: #D4A843;
-  --color-secondary-content: #1B4332;
-  --color-accent: #C45D3E;
-  --color-neutral: #2D2D2D;
-  --color-base-100: #FAFAF5;
-  --color-base-200: #E8DCC8;
-  --color-base-300: #D8F3DC;
-  --color-info: #2D6A4F;
-  --color-success: #2D6A4F;
-  --color-warning: #D4A843;
-  --color-error: #C45D3E;
-}
+@import "./theme.css";
