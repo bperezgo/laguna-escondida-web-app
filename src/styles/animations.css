@@ -41,28 +41,6 @@
   .hero-animate-delay-3 { animation-delay: 0.45s; }
 }
 
-/* ── Mobile nav dropdown entrance ── */
-.dropdown-content {
-  opacity: 0;
-  transform: translateY(-8px) scale(0.95);
-  transition:
-    opacity 0.2s ease-out,
-    transform 0.2s ease-out,
-    display 0.2s allow-discrete,
-    overlay 0.2s allow-discrete;
-}
-
-.dropdown-content:popover-open {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-@starting-style {
-  .dropdown-content:popover-open {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.95);
-  }
-}
 
 /* ── Accessibility ── */
 @media (prefers-reduced-motion: reduce) {
@@ -79,7 +57,4 @@
     transform: none !important;
   }
 
-  .dropdown-content {
-    transition: none !important;
-  }
 }
