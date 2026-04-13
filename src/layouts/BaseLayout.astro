@@ -148,5 +148,27 @@ import '../styles/global.css';
       });
     })();
   </script>
+
+  <!-- Section view tracking -->
+  <script is:inline>
+    (function() {
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              'event': 'section_view',
+              'section_name': entry.target.getAttribute('data-section')
+            });
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      document.querySelectorAll('[data-section]').forEach(function(el) {
+        sectionObserver.observe(el);
+      });
+    })();
+  </script>
 </body>
 </html>
