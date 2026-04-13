@@ -1,16 +1,16 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity';
+import { sanityClient, responsiveImage } from '../lib/sanity';
 import { BLOG_PREVIEW_QUERY } from '../lib/queries/blog';
 
 const posts = await sanityClient.fetch(BLOG_PREVIEW_QUERY);
 ---
 
-<section class="py-20 px-4 bg-lake-50" id="blog">
+<section class="py-12 sm:py-20 px-4 bg-lake-50" id="blog">
   <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4">
+    <h2 class="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-lake-700 text-center mb-4">
       Aprende sobre pesca y gastronomia campestre
     </h2>
-    <p class="text-center text-lg text-neutral mb-12 max-w-2xl mx-auto font-body">
+    <p class="text-center text-base sm:text-lg text-neutral mb-8 sm:mb-12 max-w-2xl mx-auto font-body">
       Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.
     </p>
 
@@ -19,12 +19,23 @@ const posts = await sanityClient.fetch(BLOG_PREVIEW_QUERY);
         {posts.map((post: any) => (
           <a href={`/contenido/${post.slug.current}`} class="card bg-white shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-1">
             <figure>
-              <img
-                src={urlFor(post.featuredImage).width(400).height(200).url()}
-                alt={post.featuredImage?.alt || post.title}
-                class="w-full h-48 object-cover rounded-t-brand"
-                loading="lazy"
-              />
+              {(() => {
+                const imgAttrs = responsiveImage(
+                  post.featuredImage,
+                  [400, 800],
+                  '(max-width: 640px) 100vw, 33vw',
+                );
+                return (
+                  <img
+                    src={imgAttrs.src}
+                    srcset={imgAttrs.srcset}
+                    sizes={imgAttrs.sizes}
+                    alt={post.featuredImage?.alt || post.title}
+                    class="w-full h-48 object-cover rounded-t-brand"
+                    loading="lazy"
+                  />
+                );
+              })()}
             </figure>
             <div class="card-body">
               <div class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}>{post.category?.title}</div>

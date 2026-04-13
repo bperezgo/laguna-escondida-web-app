@@ -1,12 +1,12 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity';
+import { sanityClient, urlFor, responsiveImage } from '../lib/sanity';
 import { HERO_SECTION_QUERY } from '../lib/queries/heroSection';
 
 const hero = await sanityClient.fetch(HERO_SECTION_QUERY);
 
-const bgImage = hero?.backgroundImage
-  ? urlFor(hero.backgroundImage).width(1920).quality(80).url()
-  : '/images/hero/lago-comedor-vista.jpg';
+const heroImg = hero?.backgroundImage
+  ? responsiveImage(hero.backgroundImage, [640, 1024, 1600, 1920], '100vw')
+  : { src: '/images/hero/lago-comedor-vista.jpg', srcset: '', sizes: '' };
 const bgAlt = hero?.backgroundImage?.alt
   || 'Vista del lago de pesca deportiva desde el comedor de Laguna Escondida en Marinilla, Antioquia';
 
@@ -24,11 +24,13 @@ const ctaPrimary = hero?.ctaPrimaryText || 'Reservar visita';
 const ctaSecondary = hero?.ctaSecondaryText || 'Ver experiencias';
 const trustBadge = hero?.trustBadgeText || '4.6 en Google Maps · Marinilla, Antioquia';
 ---
-<section class="hero min-h-[85vh] relative" id="inicio">
+<section class="hero min-h-[70vh] sm:min-h-[85vh] relative" id="inicio">
   <!-- Background: foto del lago con comedor -->
   <div class="absolute inset-0">
     <img
-      src={bgImage}
+      src={heroImg.src}
+      srcset={heroImg.srcset}
+      sizes={heroImg.sizes}
       alt={bgAlt}
       class="w-full h-full object-cover"
       loading="eager"
@@ -37,17 +39,17 @@ const trustBadge = hero?.trustBadgeText || '4.6 en Google Maps · Marinilla, Ant
     <div class="absolute inset-0 bg-linear-to-t from-lake-700/70 via-lake-700/30 to-transparent"></div>
   </div>
 
-  <div class="hero-content text-center relative z-10 py-20 px-4 max-w-4xl mx-auto">
+  <div class="hero-content text-center relative z-10 py-12 sm:py-20 px-4 max-w-4xl xl:max-w-5xl mx-auto">
     <div class="flex flex-col items-center gap-6">
       <!-- Headline principal -->
-      <h1 class="font-display text-4xl md:text-6xl text-white leading-tight">
+      <h1 class="font-display text-3xl sm:text-4xl md:text-6xl xl:text-7xl text-white leading-tight">
         {line1}<br/>
         {line2}<br/>
         <span class="text-earth-300">{line3}</span>
       </h1>
 
       <!-- Subheadline -->
-      <p class="text-xl md:text-2xl text-white/90 font-body max-w-2xl">
+      <p class="text-lg sm:text-xl md:text-2xl text-white/90 font-body max-w-2xl">
         {subheadline}
       </p>
 

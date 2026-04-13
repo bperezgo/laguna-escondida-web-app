@@ -1,19 +1,19 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity';
+import { sanityClient, responsiveImage } from '../lib/sanity';
 import { GALLERY_QUERY } from '../lib/queries/gallery';
 
 const galleryImages = await sanityClient.fetch(GALLERY_QUERY);
 
 const gridSizeClasses: Record<string, { container: string; imgClass: string }> = {
   featured: { container: 'col-span-2 row-span-2', imgClass: 'w-full h-full object-cover' },
-  wide: { container: 'col-span-2', imgClass: 'w-full h-48 object-cover' },
-  standard: { container: '', imgClass: 'w-full h-48 object-cover' },
+  wide: { container: 'col-span-2', imgClass: 'w-full h-36 sm:h-48 xl:h-56 object-cover' },
+  standard: { container: '', imgClass: 'w-full h-36 sm:h-48 xl:h-56 object-cover' },
 };
 ---
 
-<section class="py-20 px-4 bg-sand-100" id="galeria">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4">
+<section class="py-12 sm:py-20 px-4 bg-sand-100" id="galeria">
+  <div class="max-w-6xl xl:max-w-7xl mx-auto">
+    <h2 class="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-lake-700 text-center mb-4">
       Como es un dia en Laguna Escondida?
     </h2>
     <p class="text-center text-lg text-neutral mb-12 max-w-2xl mx-auto font-body">
@@ -21,15 +21,23 @@ const gridSizeClasses: Record<string, { container: string; imgClass: string }> =
     </p>
 
     <!-- Grid de fotos -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
       {galleryImages.map((img: any) => {
         const styles = gridSizeClasses[img.gridSize] || gridSizeClasses.standard;
-        const src = urlFor(img.image).width(800).quality(80).auto('format').url();
+        const imgAttrs = responsiveImage(
+          img.image,
+          img.gridSize === 'featured' ? [400, 800, 1200, 1600] : [400, 800, 1200],
+          img.gridSize === 'featured'
+            ? '(max-width: 640px) 100vw, 50vw'
+            : '(max-width: 640px) 50vw, 25vw',
+        );
         const alt = img.image?.alt || img.caption || '';
         return (
           <div class={styles.container}>
             <img
-              src={src}
+              src={imgAttrs.src}
+              srcset={imgAttrs.srcset}
+              sizes={imgAttrs.sizes}
               alt={alt}
               class={`${styles.imgClass} rounded-brand shadow-brand`}
               loading="lazy"
