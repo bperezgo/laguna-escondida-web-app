@@ -4,6 +4,7 @@ import Navbar from '../../../components/Navbar.astro';
 import Footer from '../../../components/Footer.astro';
 import { sanityClient, responsiveImage } from '../../../lib/sanity';
 import type { BlogCategory, BlogPostListItem } from '../../../lib/queries/blog';
+import { useTranslations, getDateLocale, type Locale } from '../../../i18n';
 
 export async function getStaticPaths() {
   const categories = await sanityClient.fetch<BlogCategory[]>(`*[_type == "blogCategory" && defined(slug.current)] {
@@ -30,21 +31,24 @@ export async function getStaticPaths() {
 }
 
 const { category, posts } = Astro.props as { category: BlogCategory; posts: BlogPostListItem[] };
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
+const dateLocale = getDateLocale(locale);
 ---
 
 <BaseLayout
-  title={`${category.title} — Blog Laguna Escondida`}
-  description={`Articulos sobre ${category.title.toLowerCase()} en Laguna Escondida.`}
+  title={`${category.title} ${t.meta.categoryTitleSuffix}`}
+  description={`${t.meta.categoryDescriptionPrefix} ${category.title.toLowerCase()} ${t.meta.categoryDescriptionSuffix}`}
 >
   <Navbar />
   <main class="section-padding bg-sand-gradient min-h-screen">
     <div class="section-container">
       <a href="/contenido" class="inline-flex items-center gap-1 text-lake-500 hover:text-lake-700 font-body text-sm mb-6 transition-colors">
-        &larr; Volver al blog
+        &larr; {t.blog.backToBlog}
       </a>
       <h1 class="section-heading">{category.title}</h1>
       <p class="section-subtitle">
-        Todos los articulos en la categoria <strong>{category.title}</strong>.
+        {t.blog.allArticlesIn} <strong>{category.title}</strong>.
       </p>
 
       {posts.length > 0 ? (
@@ -73,7 +77,7 @@ const { category, posts } = Astro.props as { category: BlogCategory; posts: Blog
                       {post.category?.title}
                     </span>
                     <time class="text-xs text-neutral/50 font-body" datetime={post.publishedAt}>
-                      {new Date(post.publishedAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      {new Date(post.publishedAt).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })}
                     </time>
                   </div>
                   <h2 class="card-title font-display text-lg text-lake-700 group-hover:text-lake-500 transition-colors duration-300">
@@ -86,7 +90,7 @@ const { category, posts } = Astro.props as { category: BlogCategory; posts: Blog
           })}
         </div>
       ) : (
-        <p class="text-center text-neutral/60 font-body">No hay articulos en esta categoria aun.</p>
+        <p class="text-center text-neutral/60 font-body">{t.blog.categoryEmptyState}</p>
       )}
     </div>
   </main>

@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "locale": "en",
+    "dateLocale": "en-US",
+    "homeTitle": "Laguna Escondida — Sport Fishing & Country Restaurant in Marinilla, Antioquia",
+    "homeDescription": "Fish 5 species and dine by the lake. Country restaurant with Yamu, Doradas, Cachama, Red Tilapia and Nilotica in Marinilla. 45 min from Medellin.",
+    "blogTitle": "Blog — Laguna Escondida | Fishing, Food & Nature",
+    "blogDescription": "Fishing guides, fresh fish recipes and things to do in Eastern Antioquia. Learn about sport fishing and country cuisine.",
+    "categoryTitleSuffix": "— Laguna Escondida Blog",
+    "categoryDescriptionPrefix": "Articles about",
+    "categoryDescriptionSuffix": "at Laguna Escondida.",
+    "postTitleSuffix": "— Laguna Escondida"
+  },
+  "navbar": {
+    "experiences": "Experiences",
+    "fishing": "Fishing",
+    "gallery": "Gallery",
+    "reviews": "Reviews",
+    "directions": "Directions",
+    "reserve": "Book a visit",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "brandName": "Laguna Escondida"
+  },
+  "hero": {
+    "line1": "Fish 5 different species.",
+    "line2": "Dine by the lake.",
+    "line3": "45 minutes from Medellin.",
+    "subheadline": "Country restaurant and sport fishing in Marinilla, Antioquia. Yamu, Doradas, Cachama, Red Tilapia and Nilotica — all in one place.",
+    "ctaPrimary": "Book a visit",
+    "ctaSecondary": "See experiences",
+    "trustBadge": "4.6 on Google Maps · Marinilla, Antioquia",
+    "bgAlt": "View of the sport fishing lake from the dining area at Laguna Escondida in Marinilla, Antioquia",
+    "waMessage": "Hi, I'd like to book a visit at Laguna Escondida"
+  },
+  "experiences": {
+    "heading": "What can you do at Laguna Escondida?",
+    "subtitle": "Laguna Escondida is a country restaurant with a sport fishing lake located in Vereda La Primavera, Marinilla. It offers three experiences in one destination: fish, eat and celebrate.",
+    "cards": [
+      {
+        "title": "Fish",
+        "description": "Lake with 5 fish species: Yamu, Doradas, Cachama, Red Tilapia and Nile Tilapia. The widest variety in Eastern Antioquia.",
+        "cta": "Learn more"
+      },
+      {
+        "title": "Eat",
+        "description": "Country restaurant overlooking the lake. Fried Yamu, Tilapia, Trout and more. Bamboo construction, authentic rustic atmosphere.",
+        "cta": "See menu"
+      },
+      {
+        "title": "Celebrate",
+        "description": "Birthdays, gender reveals and gatherings with a private kiosk. Country venue for up to 60 guests by the lake.",
+        "cta": "Get a quote"
+      }
+    ]
+  },
+  "fishSpecies": {
+    "heading": "Why does Laguna Escondida have more variety than any trout farm?",
+    "subtitle": "While most trout farms in Eastern Antioquia only offer trout, at Laguna Escondida you can fish 5 different species. This variety makes every visit a unique experience — for anglers of all levels.",
+    "speciesIn": "species at",
+    "brandName": "Laguna Escondida",
+    "specieIn": "species at",
+    "typicalTrout": "typical trout farms",
+    "cta": "Discover sport fishing",
+    "difficulty": {
+      "Facil": "Easy",
+      "Media": "Medium",
+      "Dificil": "Hard"
+    }
+  },
+  "gallery": {
+    "heading": "What's a day like at Laguna Escondida?",
+    "subtitle": "Bamboo construction, a lake surrounded by nature, and fresh dishes served with a view of the water. This is Laguna Escondida in Marinilla, Antioquia.",
+    "cta": "View full gallery"
+  },
+  "reviews": {
+    "heading": "What do our visitors say?",
+    "viewOnMaps": "View on Google Maps",
+    "leaveReview": "Leave a review on Google",
+    "items": [
+      {
+        "text": "Excellent place, the food was delicious and the fishing was incredible. The kids didn't want to leave. We'll be back soon.",
+        "author": "Google Maps customer",
+        "stars": 5
+      },
+      {
+        "text": "I had never fished Yamu before. It was a unique experience being able to fish something other than trout. The place is beautiful and peaceful.",
+        "author": "Google Maps customer",
+        "stars": 5
+      },
+      {
+        "text": "We celebrated my son's birthday at the private kiosk. First-class service, delicious food and the kids fished all day.",
+        "author": "Google Maps customer",
+        "stars": 5
+      }
+    ]
+  },
+  "location": {
+    "heading": "How to get to Laguna Escondida?",
+    "subtitle": "Laguna Escondida is located in Vereda La Primavera, Marinilla, Antioquia. It's 45 minutes from Medellin and 15 minutes from Rionegro via the Medellin-Bogota highway.",
+    "mapTitle": "Laguna Escondida location on Google Maps",
+    "fromMedellin": "From Medellin",
+    "fromMedellinDesc": "Take the Medellin-Bogota highway. Pass the Santa Elena toll. In Marinilla, take the exit toward Vereda La Primavera. Estimated time: <strong>45 minutes</strong>.",
+    "fromRionegro": "From Rionegro",
+    "fromRionegroDesc": "Straight along the road to Marinilla. Arrive in <strong>15 minutes</strong> without traffic.",
+    "hours": "Hours",
+    "hoursSatSun": "Saturdays and Sundays:",
+    "hoursSatSunTime": "9:00 AM - 6:00 PM",
+    "hoursHolidays": "Holidays:",
+    "hoursHolidaysTime": "9:00 AM - 6:00 PM",
+    "hoursWeekdays": "Weekdays:",
+    "hoursWeekdaysTime": "By reservation only",
+    "openInMaps": "Open in Google Maps"
+  },
+  "blog": {
+    "heading": "Learn about fishing and country cuisine",
+    "subtitle": "Fishing guides, fresh fish recipes and things to do in Eastern Antioquia.",
+    "viewAll": "View all posts",
+    "backToBlog": "Back to blog",
+    "by": "By",
+    "emptyState": "Articles coming soon.",
+    "categoryEmptyState": "No articles in this category yet.",
+    "allArticlesIn": "All articles in the category"
+  },
+  "footer": {
+    "brandName": "Laguna Escondida",
+    "description": "Country restaurant and sport fishing in Marinilla, Antioquia. 5 fish species, fresh food and events by the lake.",
+    "experiencesTitle": "Experiences",
+    "sportFishing": "Sport fishing",
+    "restaurant": "Restaurant",
+    "events": "Events",
+    "gallery": "Gallery",
+    "blogLink": "Blog",
+    "contactTitle": "Contact",
+    "address1": "Vereda La Primavera, Marinilla",
+    "address2": "Antioquia, Colombia",
+    "whatsappLabel": "WhatsApp: +57 319 431 3781",
+    "schedule": "Sat-Sun: 9:00 AM - 6:00 PM",
+    "followTitle": "Follow us",
+    "copyright": "© 2026 Laguna Escondida. All rights reserved.",
+    "privacy": "Privacy policy",
+    "waFloatingLabel": "Contact via WhatsApp"
+  }
+}

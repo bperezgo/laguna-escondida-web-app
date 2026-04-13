@@ -1,12 +1,15 @@
 ---
-import reviewsData from '../data/reviews.json';
 import StarRating from './StarRating.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 ---
 
 <section class="section-padding bg-lake-gradient" id="resenas" data-section="resenas">
   <div class="section-container">
     <h2 class="section-heading reveal">
-      Que dicen quienes nos han visitado?
+      {t.reviews.heading}
     </h2>
 
     <!-- Rating badge -->
@@ -17,13 +20,13 @@ import StarRating from './StarRating.astro';
          class="text-lake-500 underline font-body"
          target="_blank" rel="noopener"
          data-event="maps_click" data-location="reviews">
-        Ver en Google Maps
+        {t.reviews.viewOnMaps}
       </a>
     </div>
 
     <!-- Testimonios -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
-      {reviewsData.map((review) => (
+      {t.reviews.items.map((review) => (
         <div class="card-standard">
           <StarRating count={review.stars} size="sm" class="mb-3" />
           <p class="font-body text-neutral italic mb-4">"{review.text}"</p>
@@ -38,7 +41,7 @@ import StarRating from './StarRating.astro';
          class="section-cta"
          target="_blank" rel="noopener"
          data-event="maps_click" data-location="leave-review">
-        Dejar una resena en Google &rarr;
+        {t.reviews.leaveReview} &rarr;
       </a>
     </div>
   </div>

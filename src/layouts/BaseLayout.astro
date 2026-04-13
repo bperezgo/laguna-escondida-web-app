@@ -1,4 +1,7 @@
 ---
+import { useTranslations, type Locale } from '../i18n';
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description: string;
@@ -6,11 +9,12 @@ interface Props {
 }
 
 const { title, description, image = '/images/hero/lago-comedor-vista.jpg' } = Astro.props;
-import '../styles/global.css';
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 ---
 
 <!DOCTYPE html>
-<html lang="es-CO" data-theme="laguna">
+<html lang={t.meta.locale} data-theme="laguna">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

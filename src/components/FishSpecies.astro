@@ -1,6 +1,10 @@
 ---
 import { sanityClient, urlFor } from '../lib/sanity';
 import { FISH_SPECIES_QUERY } from '../lib/queries/fishSpecies';
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 
 const speciesData = await sanityClient.fetch(FISH_SPECIES_QUERY);
 
@@ -14,10 +18,10 @@ const difficultyBadge: Record<string, string> = {
 <section class="section-padding bg-lake-gradient" id="especies" data-section="especies">
   <div class="section-container">
     <h2 class="section-heading reveal">
-      Por que Laguna Escondida tiene mas variedad que cualquier truchera?
+      {t.fishSpecies.heading}
     </h2>
     <p class="section-subtitle max-w-3xl reveal stagger-1">
-      Mientras la mayoria de trucheras en el Oriente Antioqueno solo ofrecen trucha, en Laguna Escondida puedes pescar 5 especies diferentes. Esta variedad hace que cada visita sea una experiencia distinta — para pescadores de todos los niveles.
+      {t.fishSpecies.subtitle}
     </p>
 
     <!-- Grid de especies -->
@@ -33,7 +37,9 @@ const difficultyBadge: Record<string, string> = {
             />
           </figure>
           <h3 class="font-display text-lg text-lake-700">{species.name}</h3>
-          <div class={`badge ${difficultyBadge[species.difficulty] || 'badge-primary'} badge-outline mt-2 font-body`}>{species.difficulty}</div>
+          <div class={`badge ${difficultyBadge[species.difficulty] || 'badge-primary'} badge-outline mt-2 font-body`}>
+            {t.fishSpecies.difficulty[species.difficulty as keyof typeof t.fishSpecies.difficulty] || species.difficulty}
+          </div>
           <p class="text-sm text-neutral mt-2 font-body">{species.description}</p>
         </div>
       ))}
@@ -44,12 +50,12 @@ const difficultyBadge: Record<string, string> = {
       <div class="flex items-center justify-between mb-4">
         <div class="text-center flex-1">
           <p class="text-4xl font-bold text-lake-500 font-body" data-counter="5">5</p>
-          <p class="text-sm text-neutral font-body">especies en<br/><strong>Laguna Escondida</strong></p>
+          <p class="text-sm text-neutral font-body">{t.fishSpecies.speciesIn}<br/><strong>{t.fishSpecies.brandName}</strong></p>
         </div>
         <div class="text-3xl text-neutral/30 font-body">vs</div>
         <div class="text-center flex-1">
           <p class="text-4xl font-bold text-neutral/40 font-body" data-counter="1">1</p>
-          <p class="text-sm text-neutral font-body">especie en<br/>trucheras tipicas</p>
+          <p class="text-sm text-neutral font-body">{t.fishSpecies.specieIn}<br/>{t.fishSpecies.typicalTrout}</p>
         </div>
       </div>
     </div>
@@ -58,7 +64,7 @@ const difficultyBadge: Record<string, string> = {
     <div class="text-center mt-10">
       <a href="/experiencias/pesca-deportiva/"
          class="btn btn-primary btn-lg text-white font-body font-semibold">
-        Conoce la pesca deportiva &rarr;
+        {t.fishSpecies.cta} &rarr;
       </a>
     </div>
   </div>

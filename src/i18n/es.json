@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "locale": "es-CO",
+    "dateLocale": "es-CO",
+    "homeTitle": "Laguna Escondida — Pesca Deportiva y Restaurante Campestre en Marinilla, Antioquia",
+    "homeDescription": "Pesca 5 especies de peces y come frente al lago. Restaurante campestre con Yamu, Doradas, Cachama, Tilapia Roja y Nilotica en Marinilla. A 45 min de Medellin.",
+    "blogTitle": "Blog — Laguna Escondida | Pesca, Gastronomia y Naturaleza",
+    "blogDescription": "Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno. Aprende sobre pesca deportiva y gastronomia campestre.",
+    "categoryTitleSuffix": "— Blog Laguna Escondida",
+    "categoryDescriptionPrefix": "Articulos sobre",
+    "categoryDescriptionSuffix": "en Laguna Escondida.",
+    "postTitleSuffix": "— Laguna Escondida"
+  },
+  "navbar": {
+    "experiences": "Experiencias",
+    "fishing": "Pesca",
+    "gallery": "Galeria",
+    "reviews": "Reseñas",
+    "directions": "Como llegar",
+    "reserve": "Reservar visita",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "brandName": "Laguna Escondida"
+  },
+  "hero": {
+    "line1": "Pesca 5 especies de peces.",
+    "line2": "Come frente al lago.",
+    "line3": "A 45 minutos de Medellin.",
+    "subheadline": "Restaurante campestre y pesca deportiva en Marinilla, Antioquia. Yamu, Doradas, Cachama, Tilapia Roja y Nilotica — todo en un solo lugar.",
+    "ctaPrimary": "Reservar visita",
+    "ctaSecondary": "Ver experiencias",
+    "trustBadge": "4.6 en Google Maps · Marinilla, Antioquia",
+    "bgAlt": "Vista del lago de pesca deportiva desde el comedor de Laguna Escondida en Marinilla, Antioquia",
+    "waMessage": "Hola, quiero reservar en Laguna Escondida"
+  },
+  "experiences": {
+    "heading": "Que puedes hacer en Laguna Escondida?",
+    "subtitle": "Laguna Escondida es un restaurante campestre con lago de pesca deportiva ubicado en la Vereda La Primavera de Marinilla. Ofrece tres experiencias en un solo destino: pescar, comer y celebrar.",
+    "cards": [
+      {
+        "title": "Pescar",
+        "description": "Lago con 5 especies de peces: Yamu, Doradas, Cachama, Tilapia Roja y Tilapia Nilotica. La mayor variedad del Oriente Antioqueno.",
+        "cta": "Conocer mas"
+      },
+      {
+        "title": "Comer",
+        "description": "Restaurante campestre con vista al lago. Yamu frito, Tilapia, Trucha y mas. Construccion en guadua, ambiente rustico autentico.",
+        "cta": "Ver menu"
+      },
+      {
+        "title": "Celebrar",
+        "description": "Cumpleanos, revelaciones de genero y reuniones con kiosco privado. Espacio campestre para hasta 60 personas frente al lago.",
+        "cta": "Cotizar evento"
+      }
+    ]
+  },
+  "fishSpecies": {
+    "heading": "Por que Laguna Escondida tiene mas variedad que cualquier truchera?",
+    "subtitle": "Mientras la mayoria de trucheras en el Oriente Antioqueno solo ofrecen trucha, en Laguna Escondida puedes pescar 5 especies diferentes. Esta variedad hace que cada visita sea una experiencia distinta — para pescadores de todos los niveles.",
+    "speciesIn": "especies en",
+    "brandName": "Laguna Escondida",
+    "specieIn": "especie en",
+    "typicalTrout": "trucheras tipicas",
+    "cta": "Conoce la pesca deportiva",
+    "difficulty": {
+      "Facil": "Facil",
+      "Media": "Media",
+      "Dificil": "Dificil"
+    }
+  },
+  "gallery": {
+    "heading": "Como es un dia en Laguna Escondida?",
+    "subtitle": "Construccion en guadua, lago rodeado de naturaleza, y platos frescos servidos con vista al agua. Esto es Laguna Escondida en Marinilla, Antioquia.",
+    "cta": "Ver galeria completa"
+  },
+  "reviews": {
+    "heading": "Que dicen quienes nos han visitado?",
+    "viewOnMaps": "Ver en Google Maps",
+    "leaveReview": "Dejar una resena en Google",
+    "items": [
+      {
+        "text": "Excelente lugar, la comida riquisima y la pesca fue increible. Los ninos no querian irse. Volveremos pronto.",
+        "author": "Cliente de Google Maps",
+        "stars": 5
+      },
+      {
+        "text": "Nunca habia pescado Yamu. Fue una experiencia unica poder pescar algo diferente a trucha. El lugar es hermoso y tranquilo.",
+        "author": "Cliente de Google Maps",
+        "stars": 5
+      },
+      {
+        "text": "Celebramos el cumpleanos de mi hijo en el kiosco privado. Atencion de primera, comida deliciosa y los ninos pescaron todo el dia.",
+        "author": "Cliente de Google Maps",
+        "stars": 5
+      }
+    ]
+  },
+  "location": {
+    "heading": "Como llegar a Laguna Escondida?",
+    "subtitle": "Laguna Escondida esta ubicada en la Vereda La Primavera, Marinilla, Antioquia. Queda a 45 minutos desde Medellin y a 15 minutos desde Rionegro por la autopista Medellin-Bogota.",
+    "mapTitle": "Ubicación de Laguna Escondida en Google Maps",
+    "fromMedellin": "Desde Medellin",
+    "fromMedellinDesc": "Toma la autopista Medellin-Bogota. Pasa el peaje de Santa Elena. En Marinilla, toma la salida hacia la Vereda La Primavera. Tiempo estimado: <strong>45 minutos</strong>.",
+    "fromRionegro": "Desde Rionegro",
+    "fromRionegroDesc": "Directo por la via hacia Marinilla. Llega en <strong>15 minutos</strong> sin trafico.",
+    "hours": "Horarios",
+    "hoursSatSun": "Sabados y domingos:",
+    "hoursSatSunTime": "9:00 AM - 6:00 PM",
+    "hoursHolidays": "Festivos:",
+    "hoursHolidaysTime": "9:00 AM - 6:00 PM",
+    "hoursWeekdays": "Entre semana:",
+    "hoursWeekdaysTime": "Con reserva previa",
+    "openInMaps": "Abrir en Google Maps"
+  },
+  "blog": {
+    "heading": "Aprende sobre pesca y gastronomia campestre",
+    "subtitle": "Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.",
+    "viewAll": "Ver todo el blog",
+    "backToBlog": "Volver al blog",
+    "by": "Por",
+    "emptyState": "Proximamente publicaremos articulos aqui.",
+    "categoryEmptyState": "No hay articulos en esta categoria aun.",
+    "allArticlesIn": "Todos los articulos en la categoria"
+  },
+  "footer": {
+    "brandName": "Laguna Escondida",
+    "description": "Restaurante campestre y pesca deportiva en Marinilla, Antioquia. 5 especies de peces, comida fresca y eventos frente al lago.",
+    "experiencesTitle": "Experiencias",
+    "sportFishing": "Pesca deportiva",
+    "restaurant": "Restaurante",
+    "events": "Eventos",
+    "gallery": "Galeria",
+    "blogLink": "Blog",
+    "contactTitle": "Contacto",
+    "address1": "Vereda La Primavera, Marinilla",
+    "address2": "Antioquia, Colombia",
+    "whatsappLabel": "WhatsApp: +57 319 431 3781",
+    "schedule": "Sab-Dom: 9:00 AM - 6:00 PM",
+    "followTitle": "Siguenos",
+    "copyright": "© 2026 Laguna Escondida. Todos los derechos reservados.",
+    "privacy": "Politica de privacidad",
+    "waFloatingLabel": "Contactar por WhatsApp"
+  }
+}

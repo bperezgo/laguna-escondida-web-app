@@ -9,11 +9,15 @@ import Reviews from '../components/Reviews.astro';
 import LocationMap from '../components/LocationMap.astro';
 import BlogPreview from '../components/BlogPreview.astro';
 import Footer from '../components/Footer.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 ---
 
 <BaseLayout
-  title="Laguna Escondida — Pesca Deportiva y Restaurante Campestre en Marinilla, Antioquia"
-  description="Pesca 5 especies de peces y come frente al lago. Restaurante campestre con Yamu, Doradas, Cachama, Tilapia Roja y Nilotica en Marinilla. A 45 min de Medellin."
+  title={t.meta.homeTitle}
+  description={t.meta.homeDescription}
 >
   <Navbar />
   <main>

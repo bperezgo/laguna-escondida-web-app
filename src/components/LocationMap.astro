@@ -1,12 +1,16 @@
 ---
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 ---
 <section class="section-padding bg-sand-gradient" id="ubicacion" data-section="ubicacion">
   <div class="max-w-6xl mx-auto">
     <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4 reveal">
-      Como llegar a Laguna Escondida?
+      {t.location.heading}
     </h2>
     <p class="text-center text-lg text-neutral mb-12 max-w-2xl mx-auto font-body reveal stagger-1">
-      Laguna Escondida esta ubicada en la Vereda La Primavera, Marinilla, Antioquia. Queda a 45 minutos desde Medellin y a 15 minutos desde Rionegro por la autopista Medellin-Bogota.
+      {t.location.subtitle}
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start reveal stagger-2">
@@ -21,32 +25,28 @@
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          title="Ubicación de Laguna Escondida en Google Maps">
+          title={t.location.mapTitle}>
         </iframe>
       </div>
 
       <!-- Info de ubicacion -->
       <div class="space-y-6">
         <div class="card bg-white shadow-brand p-6">
-          <h3 class="font-display text-xl text-lake-700 mb-3">Desde Medellin</h3>
-          <p class="font-body text-neutral">
-            Toma la autopista Medellin-Bogota. Pasa el peaje de Santa Elena. En Marinilla, toma la salida hacia la Vereda La Primavera. Tiempo estimado: <strong>45 minutos</strong>.
-          </p>
+          <h3 class="font-display text-xl text-lake-700 mb-3">{t.location.fromMedellin}</h3>
+          <p class="font-body text-neutral" set:html={t.location.fromMedellinDesc} />
         </div>
 
         <div class="card bg-white shadow-brand p-6">
-          <h3 class="font-display text-xl text-lake-700 mb-3">Desde Rionegro</h3>
-          <p class="font-body text-neutral">
-            Directo por la via hacia Marinilla. Llega en <strong>15 minutos</strong> sin trafico.
-          </p>
+          <h3 class="font-display text-xl text-lake-700 mb-3">{t.location.fromRionegro}</h3>
+          <p class="font-body text-neutral" set:html={t.location.fromRionegroDesc} />
         </div>
 
         <div class="card bg-white shadow-brand p-6">
-          <h3 class="font-display text-xl text-lake-700 mb-3">Horarios</h3>
+          <h3 class="font-display text-xl text-lake-700 mb-3">{t.location.hours}</h3>
           <ul class="font-body text-neutral space-y-1">
-            <li><strong>Sabados y domingos:</strong> 9:00 AM - 6:00 PM</li>
-            <li><strong>Festivos:</strong> 9:00 AM - 6:00 PM</li>
-            <li><strong>Entre semana:</strong> Con reserva previa</li>
+            <li><strong>{t.location.hoursSatSun}</strong> {t.location.hoursSatSunTime}</li>
+            <li><strong>{t.location.hoursHolidays}</strong> {t.location.hoursHolidaysTime}</li>
+            <li><strong>{t.location.hoursWeekdays}</strong> {t.location.hoursWeekdaysTime}</li>
           </ul>
         </div>
 
@@ -54,7 +54,7 @@
            class="btn btn-primary btn-lg w-full text-white font-body font-semibold"
            target="_blank" rel="noopener"
            data-event="maps_click" data-location="directions">
-          Abrir en Google Maps &rarr;
+          {t.location.openInMaps} &rarr;
         </a>
       </div>
     </div>

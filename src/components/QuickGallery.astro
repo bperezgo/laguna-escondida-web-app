@@ -1,6 +1,10 @@
 ---
 import { sanityClient, responsiveImage } from '../lib/sanity';
 import { GALLERY_QUERY } from '../lib/queries/gallery';
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 
 const galleryImages = await sanityClient.fetch(GALLERY_QUERY);
 
@@ -14,10 +18,10 @@ const gridSizeClasses: Record<string, { container: string; imgClass: string }> =
 <section class="section-padding bg-sand-gradient" id="galeria" data-section="galeria">
   <div class="section-container xl:max-w-7xl">
     <h2 class="section-heading reveal">
-      Como es un dia en Laguna Escondida?
+      {t.gallery.heading}
     </h2>
     <p class="section-subtitle mb-12 reveal stagger-1">
-      Construccion en guadua, lago rodeado de naturaleza, y platos frescos servidos con vista al agua. Esto es Laguna Escondida en Marinilla, Antioquia.
+      {t.gallery.subtitle}
     </p>
 
     <!-- Grid de fotos -->
@@ -49,7 +53,7 @@ const gridSizeClasses: Record<string, { container: string; imgClass: string }> =
 
     <div class="text-center mt-10">
       <a href="/galeria/" class="section-cta">
-        Ver galeria completa &rarr;
+        {t.gallery.cta} &rarr;
       </a>
     </div>
   </div>

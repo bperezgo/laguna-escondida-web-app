@@ -1,29 +1,31 @@
 ---
 import StarRating from './StarRating.astro';
-import { sanityClient, urlFor, responsiveImage } from '../lib/sanity';
+import { sanityClient, responsiveImage } from '../lib/sanity';
 import { HERO_SECTION_QUERY } from '../lib/queries/heroSection';
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
 
 const hero = await sanityClient.fetch(HERO_SECTION_QUERY);
 
 const heroImg = hero?.backgroundImage
   ? responsiveImage(hero.backgroundImage, [640, 1024, 1600, 1920], '100vw')
   : { src: '/images/hero/lago-comedor-vista.jpg', srcset: '', sizes: '' };
-const bgAlt = hero?.backgroundImage?.alt
-  || 'Vista del lago de pesca deportiva desde el comedor de Laguna Escondida en Marinilla, Antioquia';
+const bgAlt = hero?.backgroundImage?.alt || t.hero.bgAlt;
 
-const line1 = hero?.headline?.line1 || 'Pesca 5 especies de peces.';
-const line2 = hero?.headline?.line2 || 'Come frente al lago.';
-const line3 = hero?.headline?.line3 || 'A 45 minutos de Medellin.';
-const subheadline = hero?.subheadline
-  || 'Restaurante campestre y pesca deportiva en Marinilla, Antioquia. Yamu, Doradas, Cachama, Tilapia Roja y Nilotica — todo en un solo lugar.';
+const line1 = hero?.headline?.line1 || t.hero.line1;
+const line2 = hero?.headline?.line2 || t.hero.line2;
+const line3 = hero?.headline?.line3 || t.hero.line3;
+const subheadline = hero?.subheadline || t.hero.subheadline;
 
 const waNumber = hero?.whatsappNumber || '57XXXXXXXXXX';
-const waMessage = hero?.whatsappMessage || 'Hola, quiero reservar en Laguna Escondida';
+const waMessage = hero?.whatsappMessage || t.hero.waMessage;
 const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
-const ctaPrimary = hero?.ctaPrimaryText || 'Reservar visita';
-const ctaSecondary = hero?.ctaSecondaryText || 'Ver experiencias';
-const trustBadge = hero?.trustBadgeText || '4.6 en Google Maps · Marinilla, Antioquia';
+const ctaPrimary = hero?.ctaPrimaryText || t.hero.ctaPrimary;
+const ctaSecondary = hero?.ctaSecondaryText || t.hero.ctaSecondary;
+const trustBadge = hero?.trustBadgeText || t.hero.trustBadge;
 ---
 <section class="hero min-h-[85vh] sm:min-h-[85vh] relative" id="inicio" data-section="hero">
   <!-- Background: foto del lago con comedor -->

@@ -4,20 +4,25 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { sanityClient, responsiveImage } from '../../lib/sanity';
 import { BLOG_LIST_QUERY, type BlogPostListItem } from '../../lib/queries/blog';
+import { useTranslations, getDateLocale, type Locale } from '../../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
+const dateLocale = getDateLocale(locale);
 
 const posts = await sanityClient.fetch<BlogPostListItem[]>(BLOG_LIST_QUERY);
 ---
 
 <BaseLayout
-  title="Blog — Laguna Escondida | Pesca, Gastronomia y Naturaleza"
-  description="Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno. Aprende sobre pesca deportiva y gastronomia campestre."
+  title={t.meta.blogTitle}
+  description={t.meta.blogDescription}
 >
   <Navbar />
   <main class="section-padding bg-sand-gradient min-h-screen">
     <div class="section-container">
       <h1 class="section-heading">Blog</h1>
       <p class="section-subtitle">
-        Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.
+        {t.blog.subtitle}
       </p>
 
       {posts.length > 0 ? (
@@ -49,7 +54,7 @@ const posts = await sanityClient.fetch<BlogPostListItem[]>(BLOG_LIST_QUERY);
                       {post.category?.title}
                     </a>
                     <time class="text-xs text-neutral/50 font-body" datetime={post.publishedAt}>
-                      {new Date(post.publishedAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      {new Date(post.publishedAt).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })}
                     </time>
                   </div>
                   <h2 class="card-title font-display text-lg text-lake-700 group-hover:text-lake-500 transition-colors duration-300">
@@ -62,7 +67,7 @@ const posts = await sanityClient.fetch<BlogPostListItem[]>(BLOG_LIST_QUERY);
           })}
         </div>
       ) : (
-        <p class="text-center text-neutral/60 font-body">Proximamente publicaremos articulos aqui.</p>
+        <p class="text-center text-neutral/60 font-body">{t.blog.emptyState}</p>
       )}
     </div>
   </main>

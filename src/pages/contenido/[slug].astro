@@ -6,6 +6,7 @@ import { PortableText } from 'astro-portabletext';
 import { sanityClient, responsiveImage, urlFor } from '../../lib/sanity';
 import PortableImage from '../../components/portable-text/Image.astro';
 import type { BlogPost } from '../../lib/queries/blog';
+import { useTranslations, getDateLocale, type Locale } from '../../i18n';
 
 export async function getStaticPaths() {
   const posts = await sanityClient.fetch<BlogPost[]>(`*[_type == "blogPost" && defined(slug.current)] {
@@ -25,13 +26,16 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
+const dateLocale = getDateLocale(locale);
 
 const imgAttrs = responsiveImage(post.featuredImage, [600, 1200, 1600], '(max-width: 768px) 100vw, 800px');
 const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
 ---
 
 <BaseLayout
-  title={`${post.title} — Laguna Escondida`}
+  title={`${post.title} ${t.meta.postTitleSuffix}`}
   description={post.excerpt}
   image={ogImage}
 >
@@ -39,7 +43,7 @@ const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
   <main class="section-padding bg-sand-gradient min-h-screen">
     <article class="max-w-3xl mx-auto">
       <a href="/contenido" class="inline-flex items-center gap-1 text-lake-500 hover:text-lake-700 font-body text-sm mb-6 transition-colors">
-        &larr; Volver al blog
+        &larr; {t.blog.backToBlog}
       </a>
 
       <header class="mb-8">
@@ -51,14 +55,14 @@ const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
             {post.category?.title}
           </a>
           <time class="text-sm text-neutral/50 font-body" datetime={post.publishedAt}>
-            {new Date(post.publishedAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {new Date(post.publishedAt).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })}
           </time>
         </div>
         <h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-lake-700 mb-4">
           {post.title}
         </h1>
         {post.author && (
-          <p class="font-body text-neutral/60 text-sm">Por {post.author}</p>
+          <p class="font-body text-neutral/60 text-sm">{t.blog.by} {post.author}</p>
         )}
       </header>
 
