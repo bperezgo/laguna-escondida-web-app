@@ -1,0 +1,85 @@
+/* ── Animations & transitions ── */
+
+/* Keyframes */
+@keyframes heroSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  /* ── Scroll-reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays for reveal children */
+  .stagger-1 { transition-delay: 0.1s; }
+  .stagger-2 { transition-delay: 0.2s; }
+  .stagger-3 { transition-delay: 0.3s; }
+  .stagger-4 { transition-delay: 0.4s; }
+
+  /* ── Hero page-load stagger ── */
+  .hero-animate {
+    animation: heroSlideUp 0.8s ease-out both;
+  }
+
+  .hero-animate-delay-1 { animation-delay: 0.15s; }
+  .hero-animate-delay-2 { animation-delay: 0.3s; }
+  .hero-animate-delay-3 { animation-delay: 0.45s; }
+}
+
+/* ── Mobile nav dropdown entrance ── */
+.dropdown-content {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.95);
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out,
+    display 0.2s allow-discrete,
+    overlay 0.2s allow-discrete;
+}
+
+.dropdown-content:popover-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@starting-style {
+  .dropdown-content:popover-open {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+}
+
+/* ── Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-animate {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .dropdown-content {
+    transition: none !important;
+  }
+}

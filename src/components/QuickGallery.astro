@@ -13,15 +13,15 @@ const gridSizeClasses: Record<string, { container: string; imgClass: string }> =
 
 <section class="section-padding bg-sand-100" id="galeria">
   <div class="section-container xl:max-w-7xl">
-    <h2 class="section-heading">
+    <h2 class="section-heading reveal">
       Como es un dia en Laguna Escondida?
     </h2>
-    <p class="section-subtitle mb-12">
+    <p class="section-subtitle mb-12 reveal stagger-1">
       Construccion en guadua, lago rodeado de naturaleza, y platos frescos servidos con vista al agua. Esto es Laguna Escondida en Marinilla, Antioquia.
     </p>
 
     <!-- Grid de fotos -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 reveal stagger-2">
       {galleryImages.map((img: any) => {
         const styles = gridSizeClasses[img.gridSize] || gridSizeClasses.standard;
         const imgAttrs = responsiveImage(

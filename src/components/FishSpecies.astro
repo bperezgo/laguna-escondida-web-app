@@ -13,15 +13,15 @@ const difficultyBadge: Record<string, string> = {
 
 <section class="section-padding bg-lake-50" id="especies">
   <div class="section-container">
-    <h2 class="section-heading">
+    <h2 class="section-heading reveal">
       Por que Laguna Escondida tiene mas variedad que cualquier truchera?
     </h2>
-    <p class="section-subtitle max-w-3xl">
+    <p class="section-subtitle max-w-3xl reveal stagger-1">
       Mientras la mayoria de trucheras en el Oriente Antioqueno solo ofrecen trucha, en Laguna Escondida puedes pescar 5 especies diferentes. Esta variedad hace que cada visita sea una experiencia distinta — para pescadores de todos los niveles.
     </p>
 
     <!-- Grid de especies -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12 reveal stagger-2">
       {speciesData.map((species: any) => (
         <div class="card-standard text-center">
           <figure class="mb-4">
@@ -40,15 +40,15 @@ const difficultyBadge: Record<string, string> = {
     </div>
 
     <!-- Comparativa visual -->
-    <div class="bg-white rounded-brand p-8 shadow-brand max-w-2xl mx-auto">
+    <div class="bg-white rounded-brand p-8 shadow-brand max-w-2xl mx-auto reveal stagger-3" data-counter-box>
       <div class="flex items-center justify-between mb-4">
         <div class="text-center flex-1">
-          <p class="text-4xl font-bold text-lake-500 font-body">5</p>
+          <p class="text-4xl font-bold text-lake-500 font-body" data-counter="5">5</p>
           <p class="text-sm text-neutral font-body">especies en<br/><strong>Laguna Escondida</strong></p>
         </div>
         <div class="text-3xl text-neutral/30 font-body">vs</div>
         <div class="text-center flex-1">
-          <p class="text-4xl font-bold text-neutral/40 font-body">1</p>
+          <p class="text-4xl font-bold text-neutral/40 font-body" data-counter="1">1</p>
           <p class="text-sm text-neutral font-body">especie en<br/>trucheras tipicas</p>
         </div>
       </div>
@@ -63,3 +63,36 @@ const difficultyBadge: Record<string, string> = {
     </div>
   </div>
 </section>
+
+<script is:inline>
+  (function() {
+    var box = document.querySelector('[data-counter-box]');
+    if (!box) return;
+
+    function animateCounter(el, target) {
+      var start = null;
+      var duration = 1200;
+      function step(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        box.querySelectorAll('[data-counter]').forEach(function(el) {
+          var target = parseInt(el.dataset.counter, 10);
+          el.textContent = '0';
+          animateCounter(el, target);
+        });
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+
+    observer.observe(box);
+  })();
+</script>

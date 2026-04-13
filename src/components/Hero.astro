@@ -33,9 +33,10 @@ const trustBadge = hero?.trustBadgeText || '4.6 en Google Maps · Marinilla, Ant
       srcset={heroImg.srcset}
       sizes={heroImg.sizes}
       alt={bgAlt}
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover will-change-transform"
       loading="eager"
       fetchpriority="high"
+      data-parallax
     />
     <div class="absolute inset-0 bg-linear-to-t from-lake-700/70 via-lake-700/30 to-transparent"></div>
   </div>
@@ -43,19 +44,19 @@ const trustBadge = hero?.trustBadgeText || '4.6 en Google Maps · Marinilla, Ant
   <div class="hero-content text-center relative z-10 py-12 sm:py-20 px-4 max-w-4xl xl:max-w-5xl mx-auto">
     <div class="flex flex-col items-center gap-6">
       <!-- Headline principal -->
-      <h1 class="font-display text-3xl sm:text-4xl md:text-6xl xl:text-7xl text-white leading-tight">
+      <h1 class="font-display text-3xl sm:text-4xl md:text-6xl xl:text-7xl text-white leading-tight hero-animate">
         {line1}<br/>
         {line2}<br/>
         <span class="text-earth-300">{line3}</span>
       </h1>
 
       <!-- Subheadline -->
-      <p class="text-lg sm:text-xl md:text-2xl text-white/90 font-body max-w-2xl">
+      <p class="text-lg sm:text-xl md:text-2xl text-white/90 font-body max-w-2xl hero-animate hero-animate-delay-1">
         {subheadline}
       </p>
 
       <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row gap-4 mt-4">
+      <div class="flex flex-col sm:flex-row gap-4 mt-4 hero-animate hero-animate-delay-2">
         <a href={waHref}
            class="btn btn-lg bg-white text-lake-700 hover:bg-lake-50 border-0 font-body font-semibold text-lg px-8"
            data-event="whatsapp_click" data-location="hero">
@@ -69,10 +70,27 @@ const trustBadge = hero?.trustBadgeText || '4.6 en Google Maps · Marinilla, Ant
       </div>
 
       <!-- Trust badge -->
-      <div class="flex items-center gap-2 mt-4 text-white/80">
+      <div class="flex items-center gap-2 mt-4 text-white/80 hero-animate hero-animate-delay-3">
         <StarRating />
         <span>{trustBadge}</span>
       </div>
     </div>
   </div>
 </section>
+
+<script is:inline>
+  (function() {
+    var img = document.querySelector('[data-parallax]');
+    if (!img || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          img.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+</script>

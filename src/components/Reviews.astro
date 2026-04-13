@@ -5,12 +5,12 @@ import StarRating from './StarRating.astro';
 
 <section class="section-padding bg-lake-50" id="resenas">
   <div class="section-container">
-    <h2 class="section-heading">
+    <h2 class="section-heading reveal">
       Que dicen quienes nos han visitado?
     </h2>
 
     <!-- Rating badge -->
-    <div class="flex items-center justify-center gap-3 mb-8 sm:mb-12">
+    <div class="flex items-center justify-center gap-3 mb-8 sm:mb-12 reveal stagger-1">
       <StarRating size="lg" />
       <span class="text-2xl font-bold text-lake-700 font-body">4.6</span>
       <a href="https://g.page/r/XXXX/review"
@@ -22,7 +22,7 @@ import StarRating from './StarRating.astro';
     </div>
 
     <!-- Testimonios -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
       {reviewsData.map((review) => (
         <div class="card-standard">
           <StarRating count={review.stars} size="sm" class="mb-3" />

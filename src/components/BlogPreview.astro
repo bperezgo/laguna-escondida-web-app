@@ -7,15 +7,15 @@ const posts = await sanityClient.fetch(BLOG_PREVIEW_QUERY);
 
 <section class="section-padding bg-lake-50" id="blog">
   <div class="section-container">
-    <h2 class="section-heading">
+    <h2 class="section-heading reveal">
       Aprende sobre pesca y gastronomia campestre
     </h2>
-    <p class="section-subtitle">
+    <p class="section-subtitle reveal stagger-1">
       Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.
     </p>
 
     {posts.length > 0 && (
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
         {posts.map((post: any) => (
           <a href={`/contenido/${post.slug.current}`} class="card-hoverable group">
             <figure>

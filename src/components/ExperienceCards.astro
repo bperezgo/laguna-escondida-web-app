@@ -26,14 +26,14 @@ const experiences = [
 
 <section class="section-padding bg-sand-100" id="experiencias">
   <div class="section-container">
-    <h2 class="section-heading">
+    <h2 class="section-heading reveal">
       Que puedes hacer en Laguna Escondida?
     </h2>
-    <p class="section-subtitle">
+    <p class="section-subtitle reveal stagger-1">
       Laguna Escondida es un restaurante campestre con lago de pesca deportiva ubicado en la Vereda La Primavera de Marinilla. Ofrece tres experiencias en un solo destino: pescar, comer y celebrar.
     </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
       {experiences.map((exp) => (
         <a href={exp.href} class="card-hoverable group">
           <figure class="px-6 pt-6">
