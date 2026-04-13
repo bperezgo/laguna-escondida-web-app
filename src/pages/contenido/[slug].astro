@@ -70,7 +70,7 @@ const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
         class="w-full rounded-brand mb-10 aspect-video object-cover"
       />
 
-      <div class="prose prose-lg max-w-none font-body prose-headings:font-display prose-headings:text-lake-700 prose-a:text-lake-500 prose-a:underline-offset-2 prose-img:rounded-brand">
+      <div class="blog-content prose prose-lg max-w-none font-body prose-headings:font-display prose-headings:text-lake-700 prose-a:text-lake-500 prose-a:underline-offset-2 prose-img:rounded-brand">
         {Array.isArray(post.content) && (
           <PortableText
             value={post.content}
