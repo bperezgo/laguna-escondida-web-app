@@ -1,0 +1,57 @@
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    color: var(--color-neutral-700);
+    background-color: var(--color-neutral-50);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-neutral-900);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    line-height: 1.7;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-full
+           font-semibold text-white transition-all duration-200
+           hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg;
+    background-color: var(--color-primary);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full
+           font-semibold text-white transition-all duration-200
+           hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg;
+    background-color: #25D366;
+  }
+  .btn-whatsapp:hover {
+    background-color: #1da851;
+  }
+
+  .section-wrapper {
+    @apply w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+
+  .section-label {
+    @apply text-sm font-semibold tracking-widest uppercase;
+    color: var(--color-primary);
+  }
+}

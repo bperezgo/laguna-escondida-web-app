@@ -1,0 +1,30 @@
+---
+import Button from './ui/Button.astro';
+import SectionWrapper from './ui/SectionWrapper.astro';
+import { finalCta } from '../data/funnel';
+---
+
+<SectionWrapper id="reservar" background="dark">
+  <div class="max-w-3xl mx-auto text-center">
+
+    <h2 class="text-3xl md:text-5xl font-bold mb-6"
+      style="color: white; line-height: 1.1;">
+      {finalCta.headline}
+    </h2>
+
+    <p class="text-lg mb-10" style="color: rgb(255 255 255 / 0.75);">
+      {finalCta.subheadline}
+    </p>
+
+    <Button href={finalCta.ctaHref} variant="whatsapp" size="lg" target="_blank">
+      💬 {finalCta.ctaText}
+    </Button>
+
+    {finalCta.guarantee && (
+      <p class="mt-6 text-sm" style="color: rgb(255 255 255 / 0.5);">
+        🛡️ {finalCta.guarantee}
+      </p>
+    )}
+
+  </div>
+</SectionWrapper>

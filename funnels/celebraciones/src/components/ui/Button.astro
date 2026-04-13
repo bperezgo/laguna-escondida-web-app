@@ -1,0 +1,43 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'whatsapp' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  target?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'lg',
+  class: className = '',
+  target,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+
+const sizes: Record<string, string> = {
+  sm: 'px-5 py-2.5 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+const variants: Record<string, string> = {
+  primary: 'btn-primary text-white',
+  whatsapp: 'btn-whatsapp text-white',
+  secondary: 'border-2 font-semibold transition-colors hover:bg-neutral-50',
+  ghost: 'font-medium underline-offset-4 hover:underline',
+};
+---
+
+<Tag
+  href={href}
+  target={target}
+  rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+  class={`inline-flex items-center justify-center gap-2 font-semibold rounded-full
+          transition-all duration-200 cursor-pointer
+          ${sizes[size]} ${variants[variant]} ${className}`}
+>
+  <slot />
+</Tag>

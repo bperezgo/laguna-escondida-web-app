@@ -1,0 +1,72 @@
+---
+import Button from './ui/Button.astro';
+import { hero } from '../data/funnel';
+---
+
+<section class="relative w-full overflow-hidden"
+  style="background-color: var(--color-neutral-50); padding: 4rem 0 5rem;">
+
+  <!-- Subtle leaf pattern -->
+  <div class="absolute inset-0 opacity-[0.03]"
+    style="background-image: radial-gradient(var(--color-primary) 1px, transparent 1px);
+           background-size: 32px 32px;">
+  </div>
+
+  <div class="section-wrapper relative">
+    <div class="max-w-3xl mx-auto text-center">
+
+      {hero.credibilityPill && (
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6"
+          style="background: var(--color-primary-light); color: var(--color-primary);">
+          {hero.credibilityPill}
+        </div>
+      )}
+
+      <h1 class="font-bold leading-tight mb-6"
+        style="font-size: clamp(2rem, 5vw, var(--text-5xl));
+               color: var(--color-neutral-900);">
+        {hero.headline}
+      </h1>
+
+      <p class="mb-8 max-w-2xl mx-auto"
+        style="font-size: var(--text-xl); color: var(--color-neutral-700); line-height: 1.6;">
+        {hero.subheadline}
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+        <Button href={hero.ctaHref} variant="whatsapp" size="lg" target="_blank">
+          💬 {hero.ctaText}
+        </Button>
+        {hero.secondaryCta && (
+          <Button href={hero.secondaryHref} variant="ghost" size="lg">
+            {hero.secondaryCta}
+          </Button>
+        )}
+      </div>
+
+      {hero.trustNote && (
+        <p class="mt-4 text-sm" style="color: var(--color-neutral-500);">
+          {hero.trustNote}
+        </p>
+      )}
+
+    </div>
+
+    {hero.stats && hero.stats.length > 0 && (
+      <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+        {hero.stats.map((stat) => (
+          <div class="text-center">
+            <div class="text-3xl font-bold mb-1"
+              style="color: var(--color-primary);">
+              {stat.value}
+            </div>
+            <div class="text-sm" style="color: var(--color-neutral-500);">
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+
+  </div>
+</section>

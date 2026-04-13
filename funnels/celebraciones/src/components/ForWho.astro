@@ -1,0 +1,50 @@
+---
+import SectionWrapper from './ui/SectionWrapper.astro';
+import { forWho } from '../data/funnel';
+---
+
+<SectionWrapper id="para-quien" background="muted">
+  <div class="max-w-3xl mx-auto">
+
+    <p class="section-label text-center mb-3">{forWho.eyebrow}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+      {forWho.headline}
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Is for -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4" style="color: var(--color-primary);">
+          Es para ti si...
+        </h3>
+        <ul class="space-y-3">
+          {forWho.isFor.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 mt-0.5 text-lg" style="color: var(--color-primary);">✅</span>
+              <p style="color: var(--color-neutral-700);">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Not for -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4" style="color: var(--color-neutral-500);">
+          Tal vez no es para ti si...
+        </h3>
+        <ul class="space-y-3">
+          {forWho.notFor.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 mt-0.5 text-lg">❌</span>
+              <p style="color: var(--color-neutral-500);">{item}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-4 text-sm italic" style="color: var(--color-neutral-500);">
+          Ser honestos genera confianza. No queremos prometerte algo que no somos.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</SectionWrapper>

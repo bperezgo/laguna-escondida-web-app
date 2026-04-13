@@ -1,0 +1,55 @@
+---
+import FunnelLayout from '../layouts/FunnelLayout.astro';
+import Button from '../components/ui/Button.astro';
+import { whatsappLink } from '../data/funnel';
+---
+
+<FunnelLayout
+  title="¡Gracias por escribirnos! — Laguna Escondida"
+  description="Te respondemos pronto por WhatsApp."
+>
+  <section class="min-h-screen flex items-center justify-center py-20">
+    <div class="section-wrapper max-w-2xl text-center">
+      <div class="text-5xl mb-6">🎉</div>
+      <h1 class="text-4xl font-bold mb-4" style="color: var(--color-neutral-900);">
+        ¡Gracias por escribirnos!
+      </h1>
+      <p class="text-lg mb-4" style="color: var(--color-neutral-600);">
+        Revisa tu WhatsApp — te respondemos en menos de 1 hora.
+      </p>
+      <p class="text-base mb-8" style="color: var(--color-neutral-500);">
+        Si no te ha llegado respuesta, escríbenos de nuevo:
+      </p>
+      <Button href={whatsappLink} variant="whatsapp" size="lg" target="_blank">
+        💬 Escribir por WhatsApp
+      </Button>
+
+      <div class="mt-12 p-6 rounded-2xl text-left"
+        style="background: var(--color-neutral-100); border: 1px solid var(--color-neutral-200);">
+        <h2 class="font-bold mb-3" style="color: var(--color-neutral-900);">
+          Mientras tanto, esto te puede interesar:
+        </h2>
+        <ul class="space-y-2">
+          <li class="flex items-start gap-2">
+            <span style="color: var(--color-primary);">📍</span>
+            <span style="color: var(--color-neutral-700);">
+              <strong>Ubicación:</strong> Vereda La Primavera, Marinilla — 45 min de Medellín
+            </span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span style="color: var(--color-primary);">🌧️</span>
+            <span style="color: var(--color-neutral-700);">
+              <strong>Garantía de clima:</strong> Si llueve, reprogramamos sin costo
+            </span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span style="color: var(--color-primary);">👀</span>
+            <span style="color: var(--color-neutral-700);">
+              <strong>¿No conoces el lugar?</strong> Ven a almorzar un domingo y conoce antes de reservar
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</FunnelLayout>

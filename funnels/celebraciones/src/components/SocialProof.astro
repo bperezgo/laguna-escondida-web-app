@@ -1,0 +1,80 @@
+---
+import SectionWrapper from './ui/SectionWrapper.astro';
+import VideoGallery from './VideoGallery.astro';
+import { socialProof } from '../data/funnel';
+---
+
+<SectionWrapper id="testimonios" background="default">
+  <div class="max-w-5xl mx-auto">
+
+    <p class="section-label text-center mb-3">{socialProof.eyebrow}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">
+      {socialProof.headline}
+    </h2>
+
+    <!-- Credibility badges -->
+    <div class="flex flex-wrap gap-3 justify-center mb-14">
+      {socialProof.credibility.map((item) => (
+        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
+          style="background: var(--color-primary-light); color: var(--color-primary);">
+          {item}
+        </span>
+      ))}
+    </div>
+
+    <!-- Video testimonials -->
+    {socialProof.videos && socialProof.videos.length > 0 && (
+      <VideoGallery videos={socialProof.videos} />
+    )}
+
+    <!-- Testimonials -->
+    <div class="grid md:grid-cols-3 gap-6">
+      {socialProof.testimonials.map((t) => (
+        <div class="flex flex-col p-6 rounded-2xl"
+          style="border: 1px solid var(--color-neutral-200); background: white;">
+
+          <div class="flex gap-1 mb-4" style="color: var(--color-accent);">
+            ★★★★★
+          </div>
+
+          <blockquote class="flex-1 text-base leading-relaxed mb-6"
+            style="color: var(--color-neutral-700);">
+            "{t.quote}"
+          </blockquote>
+
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center
+                        text-sm font-bold text-white flex-shrink-0"
+              style="background: var(--color-primary);">
+              {t.name.charAt(0)}
+            </div>
+            <div>
+              <p class="font-semibold text-sm" style="color: var(--color-neutral-900);">
+                {t.name}
+              </p>
+              {t.role && (
+                <p class="text-xs" style="color: var(--color-neutral-500);">
+                  {t.role}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {t.result && (
+            <div class="mt-4 px-3 py-1.5 rounded-full text-xs font-semibold text-center"
+              style="background: var(--color-primary-light); color: var(--color-primary);">
+              {t.result}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    {socialProof.note && (
+      <p class="mt-8 text-center text-xs italic" style="color: var(--color-neutral-500);">
+        {socialProof.note}
+      </p>
+    )}
+
+  </div>
+</SectionWrapper>

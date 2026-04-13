@@ -1,0 +1,29 @@
+---
+import SectionWrapper from './ui/SectionWrapper.astro';
+import { guarantee } from '../data/funnel';
+---
+
+<SectionWrapper id="garantia" background="primary">
+  <div class="max-w-3xl mx-auto">
+
+    <p class="section-label text-center mb-3">{guarantee.eyebrow}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+      {guarantee.headline}
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {guarantee.guarantees.map((g) => (
+        <div class="p-6 rounded-2xl"
+          style="background: white; border: 1px solid var(--color-neutral-200);">
+          <h3 class="text-xl font-bold mb-3" style="color: var(--color-neutral-900);">
+            {g.title}
+          </h3>
+          <p style="color: var(--color-neutral-700); line-height: 1.7;">
+            {g.description}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</SectionWrapper>

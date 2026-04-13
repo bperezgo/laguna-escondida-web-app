@@ -1,0 +1,102 @@
+---
+import Button from './ui/Button.astro';
+import SectionWrapper from './ui/SectionWrapper.astro';
+import { offer } from '../data/funnel';
+---
+
+<SectionWrapper id="paquetes" background="default">
+  <div class="max-w-5xl mx-auto">
+
+    <p class="section-label text-center mb-3">{offer.eyebrow}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+      {offer.headline}
+    </h2>
+    <p class="text-lg text-center mb-14 max-w-2xl mx-auto"
+      style="color: var(--color-neutral-700);">
+      {offer.subheadline}
+    </p>
+
+    <!-- Packages grid -->
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+      {offer.packages.map((pkg) => (
+        <div
+          class={`flex flex-col rounded-2xl overflow-hidden ${
+            pkg.highlighted ? 'ring-2 scale-[1.02]' : ''
+          }`}
+          style={`border: 1px solid var(--color-neutral-200); background: white;
+                  ${pkg.highlighted ? `ring-color: var(--color-primary); border-color: var(--color-primary);` : ''}`}
+        >
+          {pkg.highlighted && (
+            <div class="px-4 py-2 text-center text-sm font-semibold text-white"
+              style="background: var(--color-primary);">
+              Más popular
+            </div>
+          )}
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-1" style="color: var(--color-neutral-900);">
+              {pkg.name}
+            </h3>
+            <div class="mb-1">
+              <span class="text-2xl font-bold" style="color: var(--color-primary);">
+                {pkg.price}
+              </span>
+              <span class="text-sm ml-1" style="color: var(--color-neutral-500);">COP</span>
+            </div>
+            <p class="text-sm mb-1 font-medium" style="color: var(--color-accent);">
+              {pkg.capacity}
+            </p>
+            <p class="text-sm mb-4" style="color: var(--color-neutral-600);">
+              {pkg.description}
+            </p>
+
+            <ul class="space-y-2 mb-6 flex-1">
+              {pkg.features.map((feature) => (
+                <li class="flex items-start gap-2 text-sm">
+                  <span class="flex-shrink-0 mt-0.5" style="color: var(--color-primary);">✓</span>
+                  <span style="color: var(--color-neutral-700);">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p class="text-xs mb-4" style="color: var(--color-neutral-500);">
+              Ideal para: {pkg.idealFor}
+            </p>
+
+            <Button
+              href={offer.ctaHref}
+              variant={pkg.highlighted ? 'whatsapp' : 'primary'}
+              size="md"
+              target="_blank"
+              class="w-full"
+            >
+              💬 {offer.ctaText}
+            </Button>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bonuses -->
+    <div class="rounded-2xl p-6"
+      style="background: var(--color-primary-light); border: 1px solid var(--color-primary);">
+      <h3 class="font-bold mb-3 text-center" style="color: var(--color-primary);">
+        Incluido en TODOS los paquetes:
+      </h3>
+      <div class="flex flex-col md:flex-row gap-4 justify-center">
+        {offer.bonuses.map((bonus) => (
+          <p class="text-center font-medium" style="color: var(--color-neutral-700);">
+            {bonus}
+          </p>
+        ))}
+      </div>
+    </div>
+
+    {offer.guarantee && (
+      <p class="mt-6 text-center text-sm" style="color: var(--color-neutral-500);">
+        🛡️ {offer.guarantee}
+      </p>
+    )}
+
+  </div>
+</SectionWrapper>

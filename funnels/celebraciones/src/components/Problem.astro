@@ -1,0 +1,37 @@
+---
+import SectionWrapper from './ui/SectionWrapper.astro';
+import { problem } from '../data/funnel';
+---
+
+<SectionWrapper id="problema" background="muted">
+  <div class="max-w-3xl mx-auto">
+
+    <p class="section-label text-center mb-3">{problem.eyebrow}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-6"
+      style="color: var(--color-neutral-900);">
+      {problem.headline}
+    </h2>
+    <p class="text-lg text-center mb-12"
+      style="color: var(--color-neutral-700); max-width: 36rem; margin-left: auto; margin-right: auto;">
+      {problem.intro}
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      {problem.painPoints.map((point) => (
+        <div class="flex items-start gap-3 p-5 rounded-xl"
+          style="background: white; border: 1px solid var(--color-neutral-200);">
+          <span class="mt-0.5 text-xl flex-shrink-0">❌</span>
+          <p style="color: var(--color-neutral-700);">{point}</p>
+        </div>
+      ))}
+    </div>
+
+    {problem.bridge && (
+      <p class="mt-10 text-center text-lg font-medium"
+        style="color: var(--color-primary);">
+        {problem.bridge}
+      </p>
+    )}
+
+  </div>
+</SectionWrapper>

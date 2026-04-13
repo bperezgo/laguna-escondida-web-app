@@ -1,0 +1,39 @@
+---
+import SectionWrapper from './ui/SectionWrapper.astro';
+import { solution } from '../data/funnel';
+---
+
+<SectionWrapper id="solucion" background="default">
+  <div class="max-w-4xl mx-auto">
+
+    <p class="section-label text-center mb-3">{solution.eyebrow}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4"
+      style="color: var(--color-neutral-900);">
+      {solution.headline}
+    </h2>
+    <p class="text-lg text-center mb-12 max-w-2xl mx-auto"
+      style="color: var(--color-neutral-700);">
+      {solution.intro}
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {solution.features.map((feature) => (
+        <div class="flex items-start gap-3 p-5 rounded-xl"
+          style="background: white; border: 1px solid var(--color-neutral-200);">
+          <span class="text-2xl flex-shrink-0">{feature.icon}</span>
+          <p class="font-medium" style="color: var(--color-neutral-700);">{feature.text}</p>
+        </div>
+      ))}
+    </div>
+
+    {solution.highlight && (
+      <div class="mt-10 p-6 rounded-2xl text-center"
+        style="background: var(--color-primary-light); border: 2px solid var(--color-primary);">
+        <p class="text-lg font-semibold" style="color: var(--color-primary);">
+          {solution.highlight}
+        </p>
+      </div>
+    )}
+
+  </div>
+</SectionWrapper>
