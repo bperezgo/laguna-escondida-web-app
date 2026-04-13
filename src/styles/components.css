@@ -1,7 +1,7 @@
 /* ── Utilities ── */
 
 @utility text-shadow-hero {
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 /* ── Reusable component patterns ── */
