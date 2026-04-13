@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { sanityClient, responsiveImage } from '../../lib/sanity';
+import { BLOG_LIST_QUERY, type BlogPostListItem } from '../../lib/queries/blog';
+
+const posts = await sanityClient.fetch<BlogPostListItem[]>(BLOG_LIST_QUERY);
+---
+
+<BaseLayout
+  title="Blog — Laguna Escondida | Pesca, Gastronomia y Naturaleza"
+  description="Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno. Aprende sobre pesca deportiva y gastronomia campestre."
+>
+  <Navbar />
+  <main class="section-padding bg-sand-gradient min-h-screen">
+    <div class="section-container">
+      <h1 class="section-heading">Blog</h1>
+      <p class="section-subtitle">
+        Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.
+      </p>
+
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => {
+            const imgAttrs = responsiveImage(
+              post.featuredImage,
+              [400, 800],
+              '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+            );
+            return (
+              <a href={`/contenido/${post.slug.current}`} class="card-hoverable group">
+                <figure>
+                  <img
+                    src={imgAttrs.src}
+                    srcset={imgAttrs.srcset}
+                    sizes={imgAttrs.sizes}
+                    alt={post.featuredImage?.alt || post.title}
+                    class="w-full h-48 object-cover rounded-t-brand"
+                    loading="lazy"
+                  />
+                </figure>
+                <div class="card-body">
+                  <div class="flex items-center gap-2">
+                    <a
+                      href={`/contenido/categoria/${post.category?.slug?.current}`}
+                      class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}
+                    >
+                      {post.category?.title}
+                    </a>
+                    <time class="text-xs text-neutral/50 font-body" datetime={post.publishedAt}>
+                      {new Date(post.publishedAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                  </div>
+                  <h2 class="card-title font-display text-lg text-lake-700 group-hover:text-lake-500 transition-colors duration-300">
+                    {post.title}
+                  </h2>
+                  <p class="font-body text-neutral text-sm">{post.excerpt}</p>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="text-center text-neutral/60 font-body">Proximamente publicaremos articulos aqui.</p>
+      )}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

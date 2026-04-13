@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { PortableText } from 'astro-portabletext';
+import { sanityClient, responsiveImage, urlFor } from '../../lib/sanity';
+import PortableImage from '../../components/portable-text/Image.astro';
+import type { BlogPost } from '../../lib/queries/blog';
+
+export async function getStaticPaths() {
+  const posts = await sanityClient.fetch<BlogPost[]>(`*[_type == "blogPost" && defined(slug.current)] {
+    title,
+    slug,
+    excerpt,
+    content,
+    featuredImage,
+    publishedAt,
+    author,
+    "category": category->{title, slug, badgeClass}
+  }`);
+  return posts.map((post) => ({
+    params: { slug: post.slug.current },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+const imgAttrs = responsiveImage(post.featuredImage, [600, 1200, 1600], '(max-width: 768px) 100vw, 800px');
+const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
+---
+
+<BaseLayout
+  title={`${post.title} — Laguna Escondida`}
+  description={post.excerpt}
+  image={ogImage}
+>
+  <Navbar />
+  <main class="section-padding bg-sand-gradient min-h-screen">
+    <article class="max-w-3xl mx-auto">
+      <a href="/contenido" class="inline-flex items-center gap-1 text-lake-500 hover:text-lake-700 font-body text-sm mb-6 transition-colors">
+        &larr; Volver al blog
+      </a>
+
+      <header class="mb-8">
+        <div class="flex items-center gap-3 mb-4">
+          <a
+            href={`/contenido/categoria/${post.category?.slug?.current}`}
+            class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}
+          >
+            {post.category?.title}
+          </a>
+          <time class="text-sm text-neutral/50 font-body" datetime={post.publishedAt}>
+            {new Date(post.publishedAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        </div>
+        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-lake-700 mb-4">
+          {post.title}
+        </h1>
+        {post.author && (
+          <p class="font-body text-neutral/60 text-sm">Por {post.author}</p>
+        )}
+      </header>
+
+      <img
+        src={imgAttrs.src}
+        srcset={imgAttrs.srcset}
+        sizes={imgAttrs.sizes}
+        alt={post.featuredImage?.alt || post.title}
+        class="w-full rounded-brand mb-10 aspect-video object-cover"
+      />
+
+      <div class="prose prose-lg max-w-none font-body prose-headings:font-display prose-headings:text-lake-700 prose-a:text-lake-500 prose-a:underline-offset-2 prose-img:rounded-brand">
+        {Array.isArray(post.content) && (
+          <PortableText
+            value={post.content}
+            components={{ type: { image: PortableImage } }}
+          />
+        )}
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

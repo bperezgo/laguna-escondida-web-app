@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import { sanityClient, responsiveImage } from '../../../lib/sanity';
+import type { BlogCategory, BlogPostListItem } from '../../../lib/queries/blog';
+
+export async function getStaticPaths() {
+  const categories = await sanityClient.fetch<BlogCategory[]>(`*[_type == "blogCategory" && defined(slug.current)] {
+    title,
+    slug,
+    badgeClass
+  }`);
+  const allPosts = await sanityClient.fetch<BlogPostListItem[]>(`*[_type == "blogPost"] | order(publishedAt desc) {
+    title,
+    slug,
+    excerpt,
+    featuredImage,
+    publishedAt,
+    author,
+    "category": category->{title, slug, badgeClass}
+  }`);
+  return categories.map((cat) => ({
+    params: { slug: cat.slug.current },
+    props: {
+      category: cat,
+      posts: allPosts.filter((p) => p.category?.slug?.current === cat.slug.current),
+    },
+  }));
+}
+
+const { category, posts } = Astro.props as { category: BlogCategory; posts: BlogPostListItem[] };
+---
+
+<BaseLayout
+  title={`${category.title} — Blog Laguna Escondida`}
+  description={`Articulos sobre ${category.title.toLowerCase()} en Laguna Escondida.`}
+>
+  <Navbar />
+  <main class="section-padding bg-sand-gradient min-h-screen">
+    <div class="section-container">
+      <a href="/contenido" class="inline-flex items-center gap-1 text-lake-500 hover:text-lake-700 font-body text-sm mb-6 transition-colors">
+        &larr; Volver al blog
+      </a>
+      <h1 class="section-heading">{category.title}</h1>
+      <p class="section-subtitle">
+        Todos los articulos en la categoria <strong>{category.title}</strong>.
+      </p>
+
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => {
+            const imgAttrs = responsiveImage(
+              post.featuredImage,
+              [400, 800],
+              '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+            );
+            return (
+              <a href={`/contenido/${post.slug.current}`} class="card-hoverable group">
+                <figure>
+                  <img
+                    src={imgAttrs.src}
+                    srcset={imgAttrs.srcset}
+                    sizes={imgAttrs.sizes}
+                    alt={post.featuredImage?.alt || post.title}
+                    class="w-full h-48 object-cover rounded-t-brand"
+                    loading="lazy"
+                  />
+                </figure>
+                <div class="card-body">
+                  <div class="flex items-center gap-2">
+                    <span class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}>
+                      {post.category?.title}
+                    </span>
+                    <time class="text-xs text-neutral/50 font-body" datetime={post.publishedAt}>
+                      {new Date(post.publishedAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                  </div>
+                  <h2 class="card-title font-display text-lg text-lake-700 group-hover:text-lake-500 transition-colors duration-300">
+                    {post.title}
+                  </h2>
+                  <p class="font-body text-neutral text-sm">{post.excerpt}</p>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="text-center text-neutral/60 font-body">No hay articulos en esta categoria aun.</p>
+      )}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

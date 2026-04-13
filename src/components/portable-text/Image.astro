@@ -1,0 +1,25 @@
+---
+import { responsiveImage } from '../../lib/sanity';
+
+const { node } = Astro.props;
+const hasAsset = node?.asset?._ref || node?.asset?._id;
+const imgAttrs = hasAsset ? responsiveImage(node, [400, 800, 1200]) : null;
+---
+
+{imgAttrs && (
+  <figure class="my-8">
+    <img
+      src={imgAttrs.src}
+      srcset={imgAttrs.srcset}
+      sizes={imgAttrs.sizes}
+      alt={node.alt || ''}
+      class="rounded-brand w-full"
+      loading="lazy"
+    />
+    {node.caption && (
+      <figcaption class="text-center text-sm text-neutral/60 mt-2 font-body">
+        {node.caption}
+      </figcaption>
+    )}
+  </figure>
+)}
