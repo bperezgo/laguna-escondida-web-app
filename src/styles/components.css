@@ -22,7 +22,7 @@
 @layer components {
   /* Section layout */
   .section-padding {
-    @apply py-12 sm:py-20 px-4;
+    @apply py-16 sm:py-28 px-4;
   }
 
   .section-container {
