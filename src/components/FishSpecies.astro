@@ -11,19 +11,19 @@ const difficultyBadge: Record<string, string> = {
 };
 ---
 
-<section class="py-12 sm:py-20 px-4 bg-lake-50" id="especies">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-lake-700 text-center mb-4">
+<section class="section-padding bg-lake-50" id="especies">
+  <div class="section-container">
+    <h2 class="section-heading">
       Por que Laguna Escondida tiene mas variedad que cualquier truchera?
     </h2>
-    <p class="text-center text-base sm:text-lg text-neutral mb-8 sm:mb-12 max-w-3xl mx-auto font-body">
+    <p class="section-subtitle max-w-3xl">
       Mientras la mayoria de trucheras en el Oriente Antioqueno solo ofrecen trucha, en Laguna Escondida puedes pescar 5 especies diferentes. Esta variedad hace que cada visita sea una experiencia distinta — para pescadores de todos los niveles.
     </p>
 
     <!-- Grid de especies -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
       {speciesData.map((species: any) => (
-        <div class="card bg-white shadow-brand text-center p-6">
+        <div class="card-standard text-center">
           <figure class="mb-4">
             <img
               src={urlFor(species.image).width(96).height(96).url()}

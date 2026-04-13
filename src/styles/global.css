@@ -3,3 +3,4 @@
   themes: laguna --default;
 }
 @import "./theme.css";
+@import "./components.css";

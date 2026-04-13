@@ -1,0 +1,35 @@
+/* ── Reusable component patterns ── */
+
+@layer components {
+  /* Section layout */
+  .section-padding {
+    @apply py-12 sm:py-20 px-4;
+  }
+
+  .section-container {
+    @apply max-w-6xl mx-auto;
+  }
+
+  /* Typography */
+  .section-heading {
+    @apply font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-lake-700 text-center mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-center text-base sm:text-lg text-neutral mb-8 sm:mb-12 max-w-2xl mx-auto font-body;
+  }
+
+  /* Cards */
+  .card-standard {
+    @apply card bg-white shadow-brand p-6;
+  }
+
+  .card-hoverable {
+    @apply card bg-white shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-1;
+  }
+
+  /* Buttons */
+  .section-cta {
+    @apply btn btn-outline btn-primary font-body font-semibold;
+  }
+}

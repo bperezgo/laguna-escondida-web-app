@@ -1,20 +1,17 @@
 ---
 import reviewsData from '../data/reviews.json';
+import StarRating from './StarRating.astro';
 ---
 
-<section class="py-12 sm:py-20 px-4 bg-lake-50" id="resenas">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-lake-700 text-center mb-4">
+<section class="section-padding bg-lake-50" id="resenas">
+  <div class="section-container">
+    <h2 class="section-heading">
       Que dicen quienes nos han visitado?
     </h2>
 
     <!-- Rating badge -->
     <div class="flex items-center justify-center gap-3 mb-8 sm:mb-12">
-      <div class="flex text-earth-300">
-        {Array.from({ length: 5 }).map(() => (
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        ))}
-      </div>
+      <StarRating size="lg" />
       <span class="text-2xl font-bold text-lake-700 font-body">4.6</span>
       <a href="https://g.page/r/XXXX/review"
          class="text-lake-500 underline font-body"
@@ -27,12 +24,8 @@ import reviewsData from '../data/reviews.json';
     <!-- Testimonios -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {reviewsData.map((review) => (
-        <div class="card bg-white shadow-brand p-6">
-          <div class="flex text-earth-300 mb-3">
-            {Array.from({ length: review.stars }).map(() => (
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            ))}
-          </div>
+        <div class="card-standard">
+          <StarRating count={review.stars} size="sm" class="mb-3" />
           <p class="font-body text-neutral italic mb-4">"{review.text}"</p>
           <p class="font-body text-sm text-lake-700 font-semibold">— {review.author}</p>
         </div>
@@ -42,7 +35,7 @@ import reviewsData from '../data/reviews.json';
     <!-- CTA dejar resena -->
     <div class="text-center mt-10">
       <a href="https://g.page/r/XXXX/review"
-         class="btn btn-outline btn-primary font-body font-semibold"
+         class="section-cta"
          target="_blank" rel="noopener"
          data-event="maps_click" data-location="leave-review">
         Dejar una resena en Google &rarr;

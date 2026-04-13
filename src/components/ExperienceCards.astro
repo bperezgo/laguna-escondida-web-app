@@ -24,21 +24,21 @@ const experiences = [
 ];
 ---
 
-<section class="py-12 sm:py-20 px-4 bg-sand-100" id="experiencias">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-lake-700 text-center mb-4">
+<section class="section-padding bg-sand-100" id="experiencias">
+  <div class="section-container">
+    <h2 class="section-heading">
       Que puedes hacer en Laguna Escondida?
     </h2>
-    <p class="text-center text-base sm:text-lg text-neutral mb-8 sm:mb-12 max-w-2xl mx-auto font-body">
+    <p class="section-subtitle">
       Laguna Escondida es un restaurante campestre con lago de pesca deportiva ubicado en la Vereda La Primavera de Marinilla. Ofrece tres experiencias en un solo destino: pescar, comer y celebrar.
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {experiences.map((exp) => (
-        <a href={exp.href} class="card bg-white shadow-brand hover:shadow-brand-lg transition-all duration-300 hover:-translate-y-1">
+        <a href={exp.href} class="card-hoverable group">
           <figure class="px-6 pt-6">
             <div class="w-16 h-16 bg-lake-50 rounded-full flex items-center justify-center">
-              <svg class="w-8 h-8 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-8 h-8 text-lake-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <Fragment set:html={exp.icon} />
               </svg>
             </div>
@@ -47,7 +47,7 @@ const experiences = [
             <h3 class="card-title font-display text-2xl text-lake-700">{exp.title}</h3>
             <p class="font-body text-neutral">{exp.description}</p>
             <div class="card-actions mt-4">
-              <span class="text-lake-500 font-semibold font-body">{exp.cta} &rarr;</span>
+              <span class="text-lake-500 font-semibold font-body group-hover:translate-x-1 transition-transform duration-300">{exp.cta} &rarr;</span>
             </div>
           </div>
         </a>
