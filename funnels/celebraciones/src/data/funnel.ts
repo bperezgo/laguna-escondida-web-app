@@ -188,9 +188,9 @@ export const socialProof: SocialProofData = {
   ],
   videos: [
     {
-      mp4: 'cdn.laguna-escondida.com/celebraciones/videos/cumple.mp4',
-      webm: 'cdn.laguna-escondida.com/celebraciones/videos/cumple.webm',
-      poster: 'cdn.laguna-escondida.com/celebraciones/videos/thumb-cumple.jpg',
+      mp4: 'https://cdn.laguna-escondida.com/celebraciones/cumple.mp4',
+      webm: 'https://cdn.laguna-escondida.com/celebraciones/cumple.webm',
+      poster: 'https://cdn.laguna-escondida.com/celebraciones/thumb-cumple.jpg',
       caption: 'Cumpleaños de 30 años',
       tag: 'Cumpleaños',
     },
