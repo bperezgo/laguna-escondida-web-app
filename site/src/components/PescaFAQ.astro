@@ -1,0 +1,70 @@
+---
+const faqs = [
+  {
+    q: '¿Necesito experiencia previa para pescar?',
+    a: 'No. Atendemos a principiantes absolutos todo el tiempo. Al llegar te orientamos sobre cómo usar la caña, lanzar y esperar. Si nunca has pescado, este es un buen lugar para empezar.',
+  },
+  {
+    q: '¿Los niños pueden pescar?',
+    a: 'Sí, desde los 4 años. Los niños pueden pescar con una caña adaptada y en las zonas más cercanas a la orilla, donde la Tilapia Roja es muy activa. Es una de las experiencias favoritas de las familias.',
+  },
+  {
+    q: '¿Qué pasa si no pesco nada?',
+    a: 'Pasa pocas veces, pero puede ocurrir — especialmente con el Yamu, que es el más difícil. Si eso pasa, el restaurante tiene todo su menú disponible con pescados frescos preparados en el lugar.',
+  },
+  {
+    q: '¿Puedo traer mi propio equipo de pesca?',
+    a: 'Sí, puedes traer tu propia caña y señuelos. La carnada básica la suministramos nosotros, aunque también puedes traer la tuya.',
+  },
+  {
+    q: '¿Cuánto tiempo dura la visita de pesca?',
+    a: 'No hay un tiempo fijo — puedes pescar todo el tiempo que quieras dentro del horario del lugar (9 AM – 6 PM). La mayoría de familias pasan entre 2 y 4 horas entre pesca y almuerzo.',
+  },
+  {
+    q: '¿El restaurante cocina lo que pescamos?',
+    a: 'Sí. Puedes llevar tu captura al restaurante y la preparan frita, al ajillo o como prefieras. El costo de preparación es adicional y se cobra según el peso.',
+  },
+  {
+    q: '¿Se necesita reserva previa?',
+    a: 'Los fines de semana y festivos puedes llegar sin reserva, aunque es recomendable avisar por WhatsApp si van más de 6 personas. Entre semana, la visita es con reserva previa.',
+  },
+  {
+    q: '¿Aceptan grupos grandes?',
+    a: 'Sí. Para grupos de más de 10 personas ofrecemos kiosco privado con espacio exclusivo frente al lago. Escríbenos por WhatsApp con anticipación para coordinar todo.',
+  },
+  {
+    q: '¿Dónde están ubicados y cómo llego?',
+    a: 'Estamos en la Vereda La Primavera, Marinilla, Antioquia — a 45 minutos de Medellín por la autopista Medellín–Bogotá y a 15 minutos de Rionegro. Escríbenos y te enviamos el pin de ubicación.',
+  },
+];
+---
+
+<section class="section-padding bg-sand-100" id="faq" data-section="pesca-faq">
+  <div class="section-container">
+    <h2 class="section-heading reveal">Preguntas frecuentes</h2>
+    <p class="section-subtitle reveal stagger-1">
+      Todo lo que necesitas saber antes de llegar.
+    </p>
+
+    <div class="max-w-3xl mx-auto flex flex-col gap-3 reveal stagger-2">
+      {faqs.map((item) => (
+        <details class="group bg-white rounded-brand shadow-brand overflow-hidden">
+          <summary class="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-display text-base text-lake-700 hover:text-lake-500 transition-colors select-none">
+            <span>{item.q}</span>
+            <svg
+              class="w-5 h-5 flex-shrink-0 text-earth-300 transition-transform duration-300 group-open:rotate-45"
+              fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+          </summary>
+          <div class="px-6 pb-5">
+            <p class="font-body text-neutral text-sm leading-relaxed border-t border-sand-200 pt-4">
+              {item.a}
+            </p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

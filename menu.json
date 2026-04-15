@@ -1,0 +1,294 @@
+{
+  "restaurant": {
+    "name": "Laguna Escondida",
+    "tagline": "Sabores auténticos junto a la laguna",
+    "currency": "COP"
+  },
+  "categories": [
+    {
+      "id": "entradas",
+      "name": "Entradas",
+      "order": 1,
+      "dishes": [
+        {
+          "id": "empanadas",
+          "name": "Empanadas",
+          "description": "Deliciosa entrada de 8 empanadas, con guacamole, ají o pico de gallo.",
+          "price": 15000,
+          "image": "https://picsum.photos/seed/empanadas-le/320/220"
+        },
+        {
+          "id": "canastas-platano",
+          "name": "Canastas de Plátano",
+          "description": "Cinco canastas de plátano maduro, rellenas de hogao, acompañado con nuestro dip de guacamole de la casa.",
+          "price": 15000,
+          "image": "https://picsum.photos/seed/canastas-le/320/220"
+        },
+        {
+          "id": "mini-tamales",
+          "name": "Mini tamales",
+          "description": "12 mini tamales",
+          "price": 20000,
+          "image": "https://picsum.photos/seed/tamales-le/320/220"
+        },
+        {
+          "id": "chorizos-cocteleros",
+          "name": "Chorizos cocteleros",
+          "description": "Deliciosos chorizos cocteleros",
+          "price": 15000,
+          "image": "https://picsum.photos/seed/chorizos-le/320/220"
+        }
+      ]
+    },
+    {
+      "id": "platos-fuertes",
+      "name": "Platos Fuertes",
+      "order": 2,
+      "dishes": [
+        {
+          "id": "tilapia-frita",
+          "name": "Tilapia Frita",
+          "description": "400g, acompañada de canastas de plátano maduro y ensalada de la casa.",
+          "price": 34000,
+          "image": "https://picsum.photos/seed/tilapia-le/320/220"
+        },
+        {
+          "id": "yamu-frito",
+          "name": "Yamú Frito",
+          "description": "400g, acompañada de canastas de plátano maduro y ensalada de la casa.",
+          "price": 34000,
+          "image": "https://picsum.photos/seed/yamu-le/320/220"
+        },
+        {
+          "id": "trucha-asada",
+          "name": "Trucha asada",
+          "description": "330g, acompañada de canastas de plátano maduro y arroz de la casa.",
+          "price": 34000,
+          "image": "https://picsum.photos/seed/trucha-le/320/220"
+        },
+        {
+          "id": "bagre-criolla",
+          "name": "Bagre en Salsa Criolla",
+          "description": "Rodaja en salsa criolla, con patacón, arepa y ensalada.",
+          "price": 28000,
+          "image": "https://picsum.photos/seed/bagre-le/320/220"
+        },
+        {
+          "id": "picada-dos",
+          "name": "Picada para Dos",
+          "description": "Chicharrón, carne de res, carne de cerdo, chorizo, papa cocida y tomate.",
+          "price": 50000,
+          "image": "https://picsum.photos/seed/picada-dos-le/320/220"
+        },
+        {
+          "id": "picada-familiar",
+          "name": "Picada Familiar",
+          "description": "Chicharrón, carne de res, carne de cerdo, chorizo, papa cocida y tomate (para cuatro personas).",
+          "price": 80000,
+          "image": "https://picsum.photos/seed/picada-fam-le/320/220"
+        },
+        {
+          "id": "cerdo-plancha",
+          "name": "Cerdo a la Plancha",
+          "description": "180g de carne de cerdo, con ensalada de la casa, papas al vapor o a la francesa.",
+          "price": 28000,
+          "image": "https://picsum.photos/seed/cerdo-le/320/220"
+        },
+        {
+          "id": "res-plancha",
+          "name": "Res a la Plancha",
+          "description": "180g de carne de res, con ensalada de la casa, papas al vapor o a la francesa.",
+          "price": 28000,
+          "image": "https://picsum.photos/seed/res-le/320/220"
+        },
+        {
+          "id": "pollo-plancha",
+          "name": "Pollo a la Plancha",
+          "description": "200g de pechuga de pollo, con ensalada de la casa, papas al vapor o a la francesa.",
+          "price": 28000,
+          "image": "https://picsum.photos/seed/pollo-le/320/220"
+        },
+        {
+          "id": "hamburguesa-casa",
+          "name": "Hamburguesa de la Casa",
+          "description": "De carne o pescado, con cebolla caramelizada, queso mozzarella, pan artesanal, lechuga y salsa de la casa.",
+          "price": 28000,
+          "image": "https://picsum.photos/seed/hamburguesa-le/320/220"
+        },
+        {
+          "id": "chorizo",
+          "name": "Chorizo",
+          "description": "Con papitas a la francesa, arepa gratinada y ensalada.",
+          "price": 20000,
+          "image": "https://picsum.photos/seed/chorizo-plato-le/320/220"
+        },
+        {
+          "id": "chicharron-plato",
+          "name": "Chicharrón",
+          "description": "200g de chicharrón, con ensalada de la casa, papas al vapor o a la francesa.",
+          "price": 28000,
+          "image": "https://picsum.photos/seed/chicharron-le/320/220"
+        }
+      ]
+    },
+    {
+      "id": "sopas",
+      "name": "Sopas",
+      "order": 3,
+      "dishes": [
+        {
+          "id": "sopa-costilla",
+          "name": "Sopa de Costilla",
+          "description": "Sopa tradicional.",
+          "price": 10000,
+          "image": "https://picsum.photos/seed/sopa-costilla-le/320/220"
+        },
+        {
+          "id": "sopa-albondiga",
+          "name": "Sopa de Albóndiga",
+          "description": "Sopa tradicional.",
+          "price": 10000,
+          "image": "https://picsum.photos/seed/sopa-albon-le/320/220"
+        },
+        {
+          "id": "consome-pescado",
+          "name": "Consomé de Pescado",
+          "description": "Caldo reconfortante de pescado.",
+          "price": 10000,
+          "image": "https://picsum.photos/seed/consome-le/320/220"
+        }
+      ]
+    },
+    {
+      "id": "menu-infantil",
+      "name": "Menú Infantil",
+      "order": 4,
+      "dishes": [
+        {
+          "id": "nuggets-pescado",
+          "name": "Nuggets de Pescado",
+          "description": "Ideales para niños.",
+          "price": 20000,
+          "image": "https://picsum.photos/seed/nuggets-pez-le/320/220"
+        },
+        {
+          "id": "nuggets-pollo",
+          "name": "Nuggets de Pollo",
+          "description": "Ideales para niños.",
+          "price": 20000,
+          "image": "https://picsum.photos/seed/nuggets-pollo-le/320/220"
+        },
+        {
+          "id": "salchipapas",
+          "name": "Salchipapas",
+          "description": "Clásico infantil.",
+          "price": 15000,
+          "image": "https://picsum.photos/seed/salchipapas-le/320/220"
+        }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "order": 5,
+      "dishes": [
+        {
+          "id": "soda-saborizada",
+          "name": "Sodas Saborizadas",
+          "description": "Frutos rojos, mango, fresa.",
+          "price": 10000
+        },
+        {
+          "id": "jugos",
+          "name": "Jugos Naturales",
+          "description": "En agua o leche: Guanábana, mora, fresa y maracuyá.",
+          "price": 10000
+        },
+        {
+          "id": "limonada",
+          "name": "Limonadas",
+          "description": "De Coco, cereza y natural.",
+          "price": 10000
+        },
+        {
+          "id": "cerveza-importada",
+          "name": "Cervezas Importadas",
+          "description": "",
+          "price": 10000
+        },
+        {
+          "id": "cerveza-nacional",
+          "name": "Cervezas Nacionales",
+          "description": "",
+          "price": 8000
+        },
+        {
+          "id": "malteada",
+          "name": "Malteadas",
+          "description": "",
+          "price": 12000
+        },
+        {
+          "id": "milo-frio",
+          "name": "Milo Frío",
+          "description": "",
+          "price": 10000
+        },
+        {
+          "id": "jarra-guandolo",
+          "name": "Jarra de Guandolo",
+          "description": "Refrescante bebida tradicional.",
+          "price": 28000
+        },
+        {
+          "id": "jarra-sangria",
+          "name": "Jarra de Sangría",
+          "description": "",
+          "price": 45000
+        },
+        {
+          "id": "vino-caliente",
+          "name": "Vino Caliente",
+          "description": "",
+          "price": 12000
+        },
+        {
+          "id": "copa-vino",
+          "name": "Copa de Vino",
+          "description": "",
+          "price": 12000
+        },
+        {
+          "id": "cafe-americano",
+          "name": "Café Americano",
+          "description": "",
+          "price": 7000
+        },
+        {
+          "id": "capuccino",
+          "name": "Cappuccino",
+          "description": "",
+          "price": 7000
+        },
+        {
+          "id": "cafe-latte",
+          "name": "Café Latte",
+          "description": "",
+          "price": 5000
+        },
+        {
+          "id": "milo-caliente",
+          "name": "Milo Caliente",
+          "description": "",
+          "price": 10000
+        },
+        {
+          "id": "aromatica",
+          "name": "Aromática de Frutos",
+          "description": "",
+          "price": 8000
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+---
+const preguntas = [
+  {
+    pregunta: '¿El espacio es completamente privado para nuestro evento?',
+    respuesta:
+      'Sí. Cuando reservas para un evento privado, el lugar es exclusivamente tuyo durante el tiempo acordado. No hay otras mesas ni visitantes del día.',
+  },
+  {
+    pregunta: '¿Tienen cocina o hay que contratar catering externo?',
+    respuesta:
+      'Contamos con cocina equipada y personal propio. El menú se pacta con anticipación — desde sancocho campestre hasta parrilladas completas. También puedes traer catering externo coordinado con nosotros.',
+  },
+  {
+    pregunta: '¿Qué pasa si el día del evento llueve?',
+    respuesta:
+      'La ramada principal es cubierta y tiene capacidad para todo el grupo, así que la lluvia no afecta el evento. Si llueve fuerte, simplemente todos disfrutan bajo techo con vista al lago.',
+  },
+  {
+    pregunta: '¿Se puede poner música y DJ?',
+    respuesta:
+      'Sí, algunos paquetes incluyen sistema de sonido. Para DJ externo o banda en vivo, hay que coordinarlo con anticipación. Respetamos horarios de uso de sonido hasta las 10 PM por normas de la vereda.',
+  },
+  {
+    pregunta: '¿Cuánto cuesta un evento?',
+    respuesta:
+      'Los precios varían según el número de personas, el menú y los servicios adicionales. En el funnel de celebraciones puedes ver los paquetes base desde $300.000 COP por persona. Para grupos grandes o eventos muy personalizados, te hacemos una cotización a medida.',
+  },
+  {
+    pregunta: '¿Con cuánta anticipación debo reservar?',
+    respuesta:
+      'Recomendamos reservar con al menos 3 semanas de anticipación, especialmente en temporada alta (diciembre, semana santa, vacaciones de mitad de año). Para fechas de fin de semana muy solicitadas, 4–6 semanas es ideal.',
+  },
+];
+---
+
+<section class="section-padding bg-sand-100" id="faq-eventos" data-section="eventos-faq">
+  <div class="section-container">
+
+    <h2 class="section-heading reveal">Preguntas frecuentes</h2>
+    <p class="section-subtitle reveal stagger-1">
+      Todo lo que necesitas saber antes de reservar.
+    </p>
+
+    <div class="max-w-3xl mx-auto space-y-3 reveal stagger-2">
+      {preguntas.map((faq) => (
+        <div class="collapse collapse-plus bg-white shadow-brand rounded-brand">
+          <input type="checkbox" />
+          <div class="collapse-title font-display text-base sm:text-lg text-lake-700 pr-10">
+            {faq.pregunta}
+          </div>
+          <div class="collapse-content">
+            <p class="font-body text-sm text-neutral leading-relaxed pt-1">
+              {faq.respuesta}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Preguntas adicionales -->
+    <p class="text-center mt-8 font-body text-sm text-neutral/60 reveal stagger-3">
+      ¿Tienes otra pregunta?{' '}
+      <a
+        href="https://wa.me/573194313781?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20eventos%20en%20Laguna%20Escondida"
+        class="text-lake-500 underline hover:text-lake-700 transition-colors"
+        data-event="whatsapp_click" data-location="faq"
+        target="_blank" rel="noopener"
+      >
+        Escríbenos por WhatsApp
+      </a>
+    </p>
+
+  </div>
+</section>

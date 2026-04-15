@@ -1,0 +1,62 @@
+---
+import StarRating from '../StarRating.astro';
+
+const testimonios = [
+  {
+    texto:
+      'Celebramos el cumpleaños de mi mamá con 45 personas y fue perfecto. El lago, la comida, la privacidad... todos se fueron encantados y ya me están pidiendo repetirlo el año que viene.',
+    autor: 'Marcela Ríos',
+    detalle: 'Cumpleaños 60 años · 45 personas',
+    estrellas: 5,
+  },
+  {
+    texto:
+      'Hicimos el team building de fin de año aquí y superó todas las expectativas. El ambiente natural hizo que la gente se soltara de una manera que en un salón de hotel nunca hubiera pasado.',
+    autor: 'Carlos Mejía',
+    detalle: 'Evento corporativo · 30 personas',
+    estrellas: 5,
+  },
+  {
+    texto:
+      'Mi quinceañera fue exactamente como siempre la soñé. Simple, especial, con las personas que quiero. El lago de fondo en todas las fotos es increíble.',
+    autor: 'Valentina Ospina',
+    detalle: 'Quinceañera · 60 personas',
+    estrellas: 5,
+  },
+];
+---
+
+<section class="section-padding bg-lake-gradient" id="testimonios-eventos" data-section="eventos-testimonios">
+  <div class="section-container">
+
+    <h2 class="section-heading reveal">Lo que dicen quienes ya celebraron</h2>
+    <p class="section-subtitle reveal stagger-1">
+      Familias y empresas que eligieron Laguna Escondida para sus momentos especiales.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
+      {testimonios.map((t) => (
+        <div class="card-standard flex flex-col gap-4">
+          <StarRating count={t.estrellas} size="sm" />
+          <p class="font-body text-neutral italic leading-relaxed flex-1">"{t.texto}"</p>
+          <div class="border-t border-sand-200 pt-4">
+            <p class="font-body text-sm font-semibold text-lake-700">— {t.autor}</p>
+            <p class="font-body text-xs text-neutral/55 mt-0.5">{t.detalle}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA secundario -->
+    <div class="text-center mt-10 reveal stagger-3">
+      <a
+        href="/f/celebraciones/"
+        class="section-cta"
+        data-event="eventos_ver_paquetes" data-location="testimonios"
+      >
+        Ver paquetes y disponibilidad →
+      </a>
+    </div>
+
+  </div>
+</section>

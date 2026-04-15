@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import EventosHero from '../../../components/eventos/EventosHero.astro';
+import EventosTipos from '../../../components/eventos/EventosTipos.astro';
+import EventosEspacio from '../../../components/eventos/EventosEspacio.astro';
+import EventosComoFunciona from '../../../components/eventos/EventosComoFunciona.astro';
+import EventosTestimonios from '../../../components/eventos/EventosTestimonios.astro';
+import EventosFAQ from '../../../components/eventos/EventosFAQ.astro';
+import EventosCTA from '../../../components/eventos/EventosCTA.astro';
+---
+
+<BaseLayout
+  title="Eventos y Celebraciones Campestres — Laguna Escondida"
+  description="Celebra tus momentos especiales rodeado de naturaleza en Laguna Escondida. Eventos privados, cumpleaños, quinceañeras, reuniones familiares y corporativas en Marinilla, Antioquia."
+>
+  <Navbar />
+  <main>
+    <EventosHero />
+    <EventosTipos />
+    <EventosEspacio />
+    <EventosComoFunciona />
+    <EventosTestimonios />
+    <EventosFAQ />
+    <EventosCTA />
+  </main>
+  <Footer />
+</BaseLayout>

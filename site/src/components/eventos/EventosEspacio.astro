@@ -1,0 +1,87 @@
+---
+const amenidades = [
+  'Ramada cubierta con capacidad para 80 personas',
+  'Acceso privado al lago durante el evento',
+  'Zona de fogón para asados',
+  'Cocina equipada disponible',
+  'Parqueadero privado con amplia capacidad',
+  'Baños y vestier para invitados',
+  'Zona de pesca recreativa para los invitados',
+  'Área verde para actividades y juegos',
+  'Acceso a sistema de sonido (con paquetes)',
+];
+
+const stats = [
+  { valor: '80', unidad: 'personas', descripcion: 'capacidad máxima' },
+  { valor: '2.000 m²', unidad: '', descripcion: 'área total del evento' },
+  { valor: '100%', unidad: '', descripcion: 'espacio exclusivo para tu grupo' },
+];
+---
+
+<section class="section-padding bg-lake-gradient" id="el-espacio" data-section="eventos-espacio">
+  <div class="section-container">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Texto + amenidades -->
+      <div>
+        <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-earth-300 font-body reveal">
+          El espacio
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl text-lake-700 leading-tight mb-5 reveal stagger-1">
+          Un lugar para que tus invitados<br class="hidden sm:block" />
+          no quieran irse
+        </h2>
+        <p class="font-body text-neutral mb-8 leading-relaxed reveal stagger-2">
+          Laguna Escondida se adapta a tu evento: el espacio es tuyo. Sin otras mesas,
+          sin extraños. Solo tu familia, tus amigos y el lago.
+        </p>
+
+        <!-- Lista de amenidades -->
+        <ul class="space-y-2.5 reveal stagger-3">
+          {amenidades.map((item) => (
+            <li class="flex items-start gap-3 font-body text-sm text-neutral">
+              <svg class="w-5 h-5 text-earth-300 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Stats + imagen placeholder -->
+      <div class="flex flex-col gap-6 reveal stagger-2">
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4">
+          {stats.map((s) => (
+            <div class="card-standard text-center py-6 px-3">
+              <span class="block font-display text-2xl sm:text-3xl text-lake-500 leading-none">{s.valor}</span>
+              {s.unidad && <span class="block font-body text-xs text-earth-500 font-semibold mt-0.5">{s.unidad}</span>}
+              <span class="block font-body text-xs text-neutral/60 mt-1">{s.descripcion}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- Imagen del espacio — reemplazar con foto real -->
+        <div class="relative rounded-brand overflow-hidden shadow-brand-lg aspect-video bg-lake-50">
+          <img
+            src="/images/hero/lago-comedor-vista.jpg"
+            alt="Ramada y lago en Laguna Escondida para eventos privados"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-lake-700/10"></div>
+          <!-- Badge encima de la imagen -->
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-brand">
+            <svg class="w-4 h-4 text-earth-300" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            <span class="font-body text-xs font-semibold text-lake-700">Vereda La Primavera, Marinilla</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
