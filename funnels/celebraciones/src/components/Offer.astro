@@ -4,7 +4,7 @@ import SectionWrapper from './ui/SectionWrapper.astro';
 import { offer } from '../data/funnel';
 ---
 
-<SectionWrapper id="paquetes" background="default">
+<SectionWrapper id="paquetes" data-section="offer" background="default">
   <div class="max-w-5xl mx-auto">
 
     <p class="section-label text-center mb-3">{offer.eyebrow}</p>
@@ -69,6 +69,8 @@ import { offer } from '../data/funnel';
               size="md"
               target="_blank"
               class="w-full"
+              data-event="funnel_whatsapp_click"
+              data-location={`offer-${pkg.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
               💬 {offer.ctaText}
             </Button>

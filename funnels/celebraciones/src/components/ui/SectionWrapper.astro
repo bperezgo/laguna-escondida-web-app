@@ -3,9 +3,10 @@ interface Props {
   id?: string;
   background?: 'default' | 'muted' | 'primary' | 'dark';
   class?: string;
+  'data-section'?: string;
 }
 
-const { id, background = 'default', class: className = '' } = Astro.props;
+const { id, background = 'default', class: className = '', 'data-section': dataSection } = Astro.props;
 
 const backgrounds: Record<string, string> = {
   default:  'bg-[var(--color-neutral-50)]',
@@ -17,6 +18,7 @@ const backgrounds: Record<string, string> = {
 
 <section
   id={id}
+  data-section={dataSection}
   class={`w-full ${backgrounds[background]} ${className}`}
 >
   <div class="section-wrapper">

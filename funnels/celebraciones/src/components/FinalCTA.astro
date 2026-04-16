@@ -4,7 +4,7 @@ import SectionWrapper from './ui/SectionWrapper.astro';
 import { finalCta } from '../data/funnel';
 ---
 
-<SectionWrapper id="reservar" background="dark">
+<SectionWrapper id="reservar" data-section="final-cta" background="dark">
   <div class="max-w-3xl mx-auto text-center">
 
     <h2 class="text-3xl md:text-5xl font-bold mb-6"
@@ -16,7 +16,8 @@ import { finalCta } from '../data/funnel';
       {finalCta.subheadline}
     </p>
 
-    <Button href={finalCta.ctaHref} variant="whatsapp" size="lg" target="_blank">
+    <Button href={finalCta.ctaHref} variant="whatsapp" size="lg" target="_blank"
+      data-event="funnel_whatsapp_click" data-location="final-cta">
       💬 {finalCta.ctaText}
     </Button>
 

@@ -3,7 +3,7 @@ import Button from './ui/Button.astro';
 import { hero } from '../data/funnel';
 ---
 
-<section class="relative w-full overflow-hidden"
+<section data-section="hero" class="relative w-full overflow-hidden"
   style="background-color: var(--color-neutral-50); padding: 4rem 0 5rem;">
 
   <!-- Subtle leaf pattern -->
@@ -34,7 +34,8 @@ import { hero } from '../data/funnel';
       </p>
 
       <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
-        <Button href={hero.ctaHref} variant="whatsapp" size="lg" target="_blank">
+        <Button href={hero.ctaHref} variant="whatsapp" size="lg" target="_blank"
+          data-event="funnel_whatsapp_click" data-location="hero">
           💬 {hero.ctaText}
         </Button>
         {hero.secondaryCta && (

@@ -66,5 +66,68 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght
       fbq('track', 'PageView');
     </script>
   )}
+
+  {import.meta.env.PUBLIC_TIKTOK_PIXEL_ID && (
+    <script define:vars={{ tiktokPixelId: import.meta.env.PUBLIC_TIKTOK_PIXEL_ID }}>
+      !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+      ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+      ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+      for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+      ttq.instance=function(t){for(var e=w[t]||[],n=ttq.methods.length,i=0;i<n;i++)ttq.setAndDefer(e,ttq.methods[i]);return e};
+      ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=r;ttq._t=ttq._t||{};ttq._t[e]=+new Date;ttq._o=ttq._o||{};ttq._o[e]=n||{};var a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=r+"?sdkid="+e+"&lib="+t;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(a,s)};
+      ttq.load(tiktokPixelId);
+      ttq.page()}(window,document,'ttq');
+    </script>
+  )}
+
+  <!-- Section view tracking (IntersectionObserver) -->
+  <script>
+    (function () {
+      const observed = new Set();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const section = (entry.target as HTMLElement).dataset.section;
+            if (!section || observed.has(section)) return;
+            observed.add(section);
+            (window as any).dataLayer = (window as any).dataLayer || [];
+            (window as any).dataLayer.push({
+              event: 'funnel_section_view',
+              funnel_name: 'celebraciones',
+              section_name: section,
+            });
+          });
+        },
+        { threshold: 0.3 }
+      );
+      document.querySelectorAll('[data-section]').forEach((el) => observer.observe(el));
+    })();
+  </script>
+
+  <!-- CTA click tracking -->
+  <script>
+    document.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest('[data-event]') as HTMLElement | null;
+      if (!target) return;
+
+      const eventName = target.dataset.event!;
+      const location = target.dataset.location || 'unknown';
+
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: eventName,
+        funnel_name: 'celebraciones',
+        event_location: location,
+      });
+
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead', { funnel_name: 'celebraciones', event_location: location });
+      }
+      if (typeof (window as any).ttq !== 'undefined') {
+        (window as any).ttq.track('Contact', { funnel_name: 'celebraciones', event_location: location });
+      }
+    });
+  </script>
 </body>
 </html>

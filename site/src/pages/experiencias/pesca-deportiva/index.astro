@@ -200,7 +200,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
               <div class="bg-white rounded-brand shadow-brand overflow-hidden">
                 <div class="flex flex-col sm:flex-row">
                   {species.image && (
-                    <div class="sm:w-40 sm:flex-shrink-0">
+                    <div class="sm:w-40 sm:shrink-0">
                       <img
                         src={urlFor(species.image).width(160).height(160).fit('crop').url()}
                         alt={species.image?.alt || species.name}
@@ -301,7 +301,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
           <!-- Incluido -->
           <div class="bg-white rounded-brand shadow-brand p-6 sm:p-8">
             <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-lake-50 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="w-10 h-10 bg-lake-50 rounded-full flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -318,7 +318,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
                 'Zonas de descanso y mesas al aire libre',
               ].map((item) => (
                 <li class="flex items-start gap-3">
-                  <svg class="w-5 h-5 text-earth-300 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-5 h-5 text-earth-300 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
                   <span class="text-sm">{item}</span>
@@ -330,7 +330,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
           <!-- Opcionales -->
           <div class="bg-white rounded-brand shadow-brand p-6 sm:p-8">
             <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-sand-200 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="w-10 h-10 bg-sand-200 rounded-full flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-neutral/50" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
@@ -347,7 +347,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
                 'Servicio de foto con tu captura',
               ].map((item) => (
                 <li class="flex items-start gap-3">
-                  <svg class="w-5 h-5 text-neutral/30 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 text-neutral/30 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                   </svg>
                   <span class="text-sm">{item}</span>
@@ -402,7 +402,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
             },
           ].map((item) => (
             <div class="bg-white rounded-brand shadow-brand p-6 flex gap-4">
-              <span class="text-3xl flex-shrink-0 mt-1" role="img" aria-hidden="true">{item.emoji}</span>
+              <span class="text-3xl shrink-0 mt-1" role="img" aria-hidden="true">{item.emoji}</span>
               <div>
                 <h3 class="font-display text-lg text-lake-700 mb-2">{item.title}</h3>
                 <p class="font-body text-neutral text-sm leading-relaxed">{item.description}</p>

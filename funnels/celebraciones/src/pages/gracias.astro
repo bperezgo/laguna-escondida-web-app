@@ -20,7 +20,8 @@ import { whatsappLink } from '../data/funnel';
       <p class="text-base mb-8" style="color: var(--color-neutral-500);">
         Si no te ha llegado respuesta, escríbenos de nuevo:
       </p>
-      <Button href={whatsappLink} variant="whatsapp" size="lg" target="_blank">
+      <Button href={whatsappLink} variant="whatsapp" size="lg" target="_blank"
+        data-event="funnel_whatsapp_click" data-location="gracias">
         💬 Escribir por WhatsApp
       </Button>
 
@@ -52,4 +53,21 @@ import { whatsappLink } from '../data/funnel';
       </div>
     </div>
   </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // GA4
+      if (typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'generate_lead', { funnel_name: 'celebraciones' });
+      }
+      // Meta
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead', { funnel_name: 'celebraciones' });
+      }
+      // TikTok
+      if (typeof (window as any).ttq !== 'undefined') {
+        (window as any).ttq.track('SubmitForm', { funnel_name: 'celebraciones' });
+      }
+    });
+  </script>
 </FunnelLayout>

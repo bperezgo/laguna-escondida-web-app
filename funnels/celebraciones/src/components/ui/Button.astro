@@ -13,6 +13,7 @@ const {
   size = 'lg',
   class: className = '',
   target,
+  ...rest
 } = Astro.props;
 
 const Tag = href ? 'a' : 'button';
@@ -38,6 +39,7 @@ const variants: Record<string, string> = {
   class={`inline-flex items-center justify-center gap-2 font-semibold rounded-full
           transition-all duration-200 cursor-pointer
           ${sizes[size]} ${variants[variant]} ${className}`}
+  {...rest}
 >
   <slot />
 </Tag>
