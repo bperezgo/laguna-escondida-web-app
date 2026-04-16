@@ -1,0 +1,144 @@
+---
+// Cookie consent banner — Ley 1581 de 2012 (Colombia)
+// Shows once per browser. Stores choice in localStorage under 'cookie_consent'.
+// Values: 'accepted' | 'rejected'
+---
+
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-label="Aviso de cookies"
+  aria-live="polite"
+  class="cookie-banner"
+>
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <strong>Usamos cookies</strong>
+      <p>
+        Utilizamos cookies propias y de terceros (Google Analytics, Meta, TikTok) para analizar
+        el tráfico y mostrarte publicidad relacionada con tus intereses. Al hacer clic en
+        <em>Aceptar</em> consientes su uso. Puedes rechazarlas sin que eso afecte tu navegación.
+        <a href="/privacidad" class="cookie-link">Ver política de privacidad</a>
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button id="cookie-reject" class="cookie-btn cookie-btn-ghost">Solo necesarias</button>
+      <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'cookie_consent';
+  const banner = document.getElementById('cookie-banner') as HTMLElement | null;
+
+  // Hide immediately if already decided
+  if (localStorage.getItem(STORAGE_KEY)) {
+    banner?.remove();
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    banner?.classList.add('cookie-banner--hide');
+    setTimeout(() => banner?.remove(), 300);
+  });
+
+  document.getElementById('cookie-reject')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'rejected');
+    banner?.classList.add('cookie-banner--hide');
+    setTimeout(() => banner?.remove(), 300);
+  });
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92vw, 44rem);
+    background: var(--color-neutral-900, #111);
+    color: var(--color-neutral-100, #f5f5f5);
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .cookie-banner--hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0.75rem);
+  }
+
+  .cookie-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .cookie-inner {
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  }
+
+  .cookie-text {
+    flex: 1;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .cookie-text strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .cookie-text p {
+    margin: 0;
+    color: var(--color-neutral-300, #ccc);
+  }
+
+  .cookie-link {
+    color: var(--color-primary, #4caf50);
+    text-decoration: underline;
+    margin-left: 0.25rem;
+    white-space: nowrap;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  .cookie-btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+
+  .cookie-btn:hover {
+    opacity: 0.85;
+  }
+
+  .cookie-btn-primary {
+    background: var(--color-primary, #4caf50);
+    color: white;
+  }
+
+  .cookie-btn-ghost {
+    background: transparent;
+    color: var(--color-neutral-300, #ccc);
+    border: 1px solid var(--color-neutral-600, #666);
+  }
+</style>
