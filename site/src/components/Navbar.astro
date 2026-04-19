@@ -81,16 +81,43 @@ const navLinks = [
     left: 0;
     right: 0;
     z-index: 50;
-    background: rgba(250, 248, 243, 0.92);
-    backdrop-filter: saturate(140%) blur(12px);
+    background: transparent;
+    backdrop-filter: none;
     border-bottom: 1px solid transparent;
-    color: var(--color-ink);
-    transition: border-color var(--duration-3) var(--ease-out), background var(--duration-3) var(--ease-out);
+    color: var(--color-sand-50);
+    transition: border-color var(--duration-3) var(--ease-out),
+      background var(--duration-3) var(--ease-out),
+      backdrop-filter var(--duration-3) var(--ease-out),
+      color var(--duration-3) var(--ease-out);
   }
 
   .site-header.is-scrolled {
-    border-bottom-color: var(--color-line);
     background: rgba(250, 248, 243, 0.96);
+    backdrop-filter: saturate(140%) blur(12px);
+    border-bottom-color: var(--color-line);
+    color: var(--color-ink);
+  }
+
+  .site-header .brandmark,
+  .site-header .nav-list a,
+  .site-header .menu-trigger {
+    text-shadow: 0 1px 2px rgba(7, 19, 14, 0.45);
+    transition: color var(--duration-3) var(--ease-out),
+      text-shadow var(--duration-2) var(--ease-out);
+  }
+
+  .site-header.is-scrolled .brandmark,
+  .site-header.is-scrolled .nav-list a,
+  .site-header.is-scrolled .menu-trigger {
+    text-shadow: none;
+  }
+
+  .site-header .brandmark {
+    color: inherit;
+  }
+
+  .site-header.is-scrolled .brandmark {
+    color: var(--color-lake-700);
   }
 
   .bar {
@@ -321,6 +348,12 @@ const navLinks = [
 
   .drawer-cta-btn:hover {
     background: #ffffff;
+  }
+</style>
+
+<style is:global>
+  body:has(.hero) .site-header {
+    position: fixed;
   }
 </style>
 

@@ -1,5 +1,7 @@
 ---
 import StarRating from './StarRating.astro';
+import Eyebrow from './ui/Eyebrow.astro';
+import Button from './ui/Button.astro';
 import { sanityClient, responsiveImage } from '../lib/sanity';
 import { HERO_SECTION_QUERY } from '../lib/queries/heroSection';
 import { useTranslations, type Locale } from '../i18n';
@@ -14,6 +16,7 @@ const heroImg = hero?.backgroundImage
   : { src: '/images/hero/lago-comedor-vista.jpg', srcset: '', sizes: '' };
 const bgAlt = hero?.backgroundImage?.alt || t.hero.bgAlt;
 
+const eyebrow = t.hero.eyebrow;
 const line1 = hero?.headline?.line1 || t.hero.line1;
 const line2 = hero?.headline?.line2 || t.hero.line2;
 const line3 = hero?.headline?.line3 || t.hero.line3;
@@ -26,73 +29,323 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
 const ctaPrimary = hero?.ctaPrimaryText || t.hero.ctaPrimary;
 const ctaSecondary = hero?.ctaSecondaryText || t.hero.ctaSecondary;
 const trustBadge = hero?.trustBadgeText || t.hero.trustBadge;
+
+const stats = t.hero.stats;
+const houseNoteEyebrow = t.hero.houseNoteEyebrow;
+const houseNote = t.hero.houseNote;
+const scrollHint = t.hero.scrollHint;
 ---
-<section class="hero min-h-[85vh] sm:min-h-[85vh] relative" id="inicio" data-section="hero">
-  <!-- Background: foto del lago con comedor -->
-  <div class="absolute inset-0 overflow-hidden">
+<section class="hero" id="inicio" data-section="hero" data-screen-label="Hero">
+  <div class="hero-bg">
     <img
       src={heroImg.src}
       srcset={heroImg.srcset}
       sizes={heroImg.sizes}
       alt={bgAlt}
-      class="w-full h-full object-cover will-change-transform"
+      class="hero-img"
       loading="eager"
       fetchpriority="high"
       data-parallax
     />
-    <div class="absolute inset-0 bg-linear-to-t from-lake-700/80 via-lake-700/40 via-40% to-transparent to-70%"></div>
+    <div class="hero-overlay"></div>
   </div>
 
-  <div class="hero-content relative z-10 px-4 max-w-4xl xl:max-w-5xl mx-auto flex items-end min-h-[85vh] pb-10 sm:pb-16">
-    <div class="flex flex-col items-start gap-5 text-left">
-      <!-- Headline principal -->
-      <h1 class="font-display text-3xl sm:text-4xl md:text-6xl xl:text-7xl text-white leading-tight text-shadow-hero hero-animate">
-        {line1}<br/>
-        {line2}<br/>
-        <span class="text-earth-300">{line3}</span>
-      </h1>
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <Eyebrow text={eyebrow} inverse />
+        <h1 class="hero-title">
+          {line1}<br />
+          {line2}<br />
+          <em>{line3}</em>
+        </h1>
+        <p class="hero-lead">{subheadline}</p>
 
-      <!-- Subheadline (hidden on mobile to reduce text density) -->
-      <p class="hidden sm:block text-lg sm:text-xl md:text-2xl text-white/90 font-body max-w-2xl text-shadow-hero hero-animate hero-animate-delay-1">
-        {subheadline}
-      </p>
+        <div class="hero-actions">
+          <Button
+            variant="inverse-primary"
+            href={waHref}
+            event="whatsapp_click"
+            location="hero"
+            withDot
+          >
+            {ctaPrimary}
+          </Button>
+          <Button variant="inverse-secondary" href="#experiencias">
+            {ctaSecondary}
+          </Button>
+        </div>
 
-      <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row gap-4 mt-4 hero-animate hero-animate-delay-2">
-        <a href={waHref}
-           class="btn btn-lg bg-white text-lake-700 hover:bg-lake-50 border-0 font-body font-semibold text-lg px-8"
-           data-event="whatsapp_click" data-location="hero">
-          <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          {ctaPrimary}
-        </a>
-        <a href="#experiencias"
-           class="btn btn-lg btn-outline border-white text-white hover:bg-white/20 hover:border-white font-body font-semibold text-lg px-8">
-          {ctaSecondary}
-        </a>
+        <div class="hero-meta">
+          {stats.map((s) => (
+            <div class="cell">
+              <div class="caption">{s.label}</div>
+              <div class="val">{s.value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div class="hero-trust">
+          <StarRating />
+          <span>{trustBadge}</span>
+        </div>
       </div>
+    </div>
 
-      <!-- Trust badge -->
-      <div class="flex items-center gap-2 mt-4 text-white/80 text-shadow-hero hero-animate hero-animate-delay-3">
-        <StarRating />
-        <span>{trustBadge}</span>
+    <aside class="hero-side">
+      <div class="card-note">
+        <Eyebrow text={houseNoteEyebrow} inverse />
+        <p>{houseNote}</p>
       </div>
+    </aside>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="line"></span>
+      <span>{scrollHint}</span>
     </div>
   </div>
 </section>
 
 <script is:inline>
-  (function() {
+  (function () {
     var img = document.querySelector('[data-parallax]');
     if (!img || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        requestAnimationFrame(function() {
-          img.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            img.style.transform = 'translateY(' + window.scrollY * -0.15 + 'px)';
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
   })();
 </script>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding-top: 120px;
+    padding-bottom: 80px;
+    overflow: hidden;
+    color: var(--color-sand-50);
+    background: var(--color-lake-800);
+    isolation: isolate;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(7, 19, 14, 0) 0%,
+      rgba(7, 19, 14, 0.1) 35%,
+      rgba(7, 19, 14, 0.65) 100%
+    );
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    min-height: calc(100vh - 200px);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: end;
+    min-height: calc(100vh - 200px);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-title {
+    margin-top: 24px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.75rem, 7vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    color: var(--color-sand-50);
+    max-width: 16ch;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--color-earth-300);
+    font-weight: 300;
+  }
+
+  .hero-lead {
+    margin-top: 24px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.78);
+    max-width: 48ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 32px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    max-width: 720px;
+    width: 100%;
+  }
+
+  .hero-meta .cell .caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(236, 242, 240, 0.55);
+  }
+
+  .hero-meta .cell .val {
+    margin-top: 6px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    color: var(--color-sand-50);
+  }
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    color: rgba(250, 248, 243, 0.75);
+  }
+
+  .hero-side {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-side {
+      display: block;
+      position: absolute;
+      right: var(--gutter);
+      bottom: 96px;
+      width: 280px;
+      z-index: 3;
+    }
+  }
+
+  .card-note {
+    background: rgba(250, 248, 243, 0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 24px;
+    border-radius: var(--radius-md);
+  }
+
+  .card-note p {
+    margin: 14px 0 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: rgba(250, 248, 243, 0.9);
+    line-height: 1.55;
+    font-size: var(--text-body);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 24px;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    gap: 14px;
+    color: rgba(250, 248, 243, 0.6);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 1280px) {
+    .scroll-hint {
+      display: flex;
+    }
+  }
+
+  .scroll-hint .line {
+    width: 60px;
+    height: 1px;
+    background: rgba(250, 248, 243, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-hint .line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-earth-300);
+    transform: translateX(-100%);
+    animation: scrollHint 3.2s var(--ease-in-out) infinite;
+  }
+
+  @keyframes scrollHint {
+    0% {
+      transform: translateX(-100%);
+    }
+    55% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+</style>

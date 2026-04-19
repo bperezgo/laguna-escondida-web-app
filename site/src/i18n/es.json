@@ -24,15 +24,24 @@
     "brandName": "Laguna Escondida"
   },
   "hero": {
+    "eyebrow": "45 minutos de Medellin \u00b7 Marinilla, Antioquia",
     "line1": "Pesca 5 especies de peces.",
     "line2": "Come frente al lago.",
     "line3": "A 45 minutos de Medellin.",
     "subheadline": "Restaurante campestre y pesca deportiva en Marinilla, Antioquia. Yamu, Doradas, Cachama, Tilapia Roja y Nilotica — todo en un solo lugar.",
     "ctaPrimary": "Reservar visita",
     "ctaSecondary": "Ver experiencias",
-    "trustBadge": "4.6 en Google Maps · Marinilla, Antioquia",
+    "trustBadge": "4.6 en Google Maps \u00b7 Marinilla, Antioquia",
     "bgAlt": "Vista del lago de pesca deportiva desde el comedor de Laguna Escondida en Marinilla, Antioquia",
-    "waMessage": "Hola, quiero reservar en Laguna Escondida"
+    "waMessage": "Hola, quiero reservar en Laguna Escondida",
+    "stats": [
+      { "label": "Especies de peces", "value": "5" },
+      { "label": "Desde Medellin", "value": "45 min" },
+      { "label": "Frente al lago", "value": "Comedor" }
+    ],
+    "houseNoteEyebrow": "Nota de la Casa",
+    "houseNote": "\"Cuando baja la tarde el lago se vuelve un espejo \u2014 es el mejor momento para encender la chimenea del comedor y esperar.\"",
+    "scrollHint": "Deslizar"
   },
   "experiences": {
     "heading": "Que puedes hacer en Laguna Escondida?",
@@ -125,6 +134,7 @@
   },
   "footer": {
     "brandName": "Laguna Escondida",
+    "tagline": "\"Un lugar para quedarse quieto — en medio de un pais que nunca lo esta.\"",
     "description": "Restaurante campestre y pesca deportiva en Marinilla, Antioquia. 5 especies de peces, comida fresca y eventos frente al lago.",
     "experiencesTitle": "Experiencias",
     "sportFishing": "Pesca deportiva",
@@ -140,6 +150,7 @@
     "followTitle": "Siguenos",
     "copyright": "© 2026 Laguna Escondida. Todos los derechos reservados.",
     "privacy": "Politica de privacidad",
+    "designedNote": "Sitio disenado con calma \u00b7 Marinilla, Antioquia",
     "waFloatingLabel": "Contactar por WhatsApp"
   }
 }

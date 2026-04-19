@@ -24,15 +24,24 @@
     "brandName": "Laguna Escondida"
   },
   "hero": {
+    "eyebrow": "45 minutes from Medellin \u00b7 Marinilla, Antioquia",
     "line1": "Fish 5 different species.",
     "line2": "Dine by the lake.",
     "line3": "45 minutes from Medellin.",
     "subheadline": "Country restaurant and sport fishing in Marinilla, Antioquia. Yamu, Doradas, Cachama, Red Tilapia and Nilotica — all in one place.",
     "ctaPrimary": "Book a visit",
     "ctaSecondary": "See experiences",
-    "trustBadge": "4.6 on Google Maps · Marinilla, Antioquia",
+    "trustBadge": "4.6 on Google Maps \u00b7 Marinilla, Antioquia",
     "bgAlt": "View of the sport fishing lake from the dining area at Laguna Escondida in Marinilla, Antioquia",
-    "waMessage": "Hi, I'd like to book a visit at Laguna Escondida"
+    "waMessage": "Hi, I'd like to book a visit at Laguna Escondida",
+    "stats": [
+      { "label": "Fish species", "value": "5" },
+      { "label": "From Medellin", "value": "45 min" },
+      { "label": "Lakefront", "value": "Dining" }
+    ],
+    "houseNoteEyebrow": "House Note",
+    "houseNote": "\"As the afternoon fades the lake turns to a mirror \u2014 the best moment to light the dining room fireplace and wait.\"",
+    "scrollHint": "Scroll"
   },
   "experiences": {
     "heading": "What can you do at Laguna Escondida?",
@@ -125,6 +134,7 @@
   },
   "footer": {
     "brandName": "Laguna Escondida",
+    "tagline": "\"A place to stay still — in a country that never does.\"",
     "description": "Country restaurant and sport fishing in Marinilla, Antioquia. 5 fish species, fresh food and events by the lake.",
     "experiencesTitle": "Experiences",
     "sportFishing": "Sport fishing",
@@ -140,6 +150,7 @@
     "followTitle": "Follow us",
     "copyright": "© 2026 Laguna Escondida. All rights reserved.",
     "privacy": "Privacy policy",
+    "designedNote": "Site designed with calm \u00b7 Marinilla, Antioquia",
     "waFloatingLabel": "Contact via WhatsApp"
   }
 }
