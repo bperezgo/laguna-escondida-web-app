@@ -1,0 +1,40 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  event?: string;
+  location?: string;
+  inverse?: boolean;
+  target?: string;
+  rel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  label,
+  event,
+  location,
+  inverse = false,
+  target,
+  rel,
+  class: className = '',
+} = Astro.props;
+
+const classes = [
+  'link-rule',
+  inverse && 'is-inverse',
+  className,
+].filter(Boolean).join(' ');
+---
+<a
+  href={href}
+  class={classes}
+  target={target}
+  rel={rel}
+  data-event={event}
+  data-location={location}
+>
+  <span>{label}</span>
+  <span class="arrow" aria-hidden="true">→</span>
+</a>

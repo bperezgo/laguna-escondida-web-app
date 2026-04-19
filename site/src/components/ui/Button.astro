@@ -1,0 +1,51 @@
+---
+type Variant = 'primary' | 'secondary' | 'ghost' | 'whatsapp' | 'inverse-primary' | 'inverse-secondary';
+
+interface Props {
+  variant?: Variant;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  event?: string;
+  location?: string;
+  target?: string;
+  rel?: string;
+  class?: string;
+  withDot?: boolean;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  event,
+  location,
+  target,
+  rel,
+  class: className = '',
+  withDot = false,
+} = Astro.props;
+
+const variantClass = {
+  'primary': 'btn-editorial-primary',
+  'secondary': 'btn-editorial-secondary',
+  'ghost': 'btn-editorial-ghost',
+  'whatsapp': 'btn-editorial-whatsapp',
+  'inverse-primary': 'is-inverse-primary',
+  'inverse-secondary': 'is-inverse-secondary',
+}[variant];
+
+const classes = ['btn-editorial', variantClass, className].filter(Boolean).join(' ');
+const Tag = href ? 'a' : 'button';
+---
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class={classes}
+  target={target}
+  rel={rel}
+  data-event={event}
+  data-location={location}
+>
+  {withDot && <span class="dot" aria-hidden="true"></span>}
+  <slot />
+</Tag>

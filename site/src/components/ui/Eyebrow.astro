@@ -1,0 +1,18 @@
+---
+interface Props {
+  text: string;
+  centered?: boolean;
+  inverse?: boolean;
+  class?: string;
+}
+
+const { text, centered = false, inverse = false, class: className = '' } = Astro.props;
+
+const classes = [
+  'eyebrow',
+  centered && 'is-centered',
+  inverse && 'is-inverse',
+  className,
+].filter(Boolean).join(' ');
+---
+<div class={classes}>{text}</div>

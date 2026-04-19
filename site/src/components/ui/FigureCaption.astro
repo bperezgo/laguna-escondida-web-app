@@ -1,0 +1,15 @@
+---
+interface Props {
+  index?: string;
+  label: string;
+  class?: string;
+}
+
+const { index, label, class: className = '' } = Astro.props;
+
+const classes = ['fig-caption', className].filter(Boolean).join(' ');
+---
+<figcaption class={classes}>
+  {index && <span class="idx">{index}</span>}
+  <span>{label}</span>
+</figcaption>

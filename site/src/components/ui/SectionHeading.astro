@@ -1,0 +1,36 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  centered?: boolean;
+  inverse?: boolean;
+  withRule?: boolean;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  centered = false,
+  inverse = false,
+  withRule = false,
+  class: className = '',
+} = Astro.props;
+
+const classes = [
+  'section-heading-editorial',
+  centered && 'is-centered',
+  inverse && 'is-inverse',
+  className,
+].filter(Boolean).join(' ');
+---
+<div class={classes}>
+  {eyebrow && <Eyebrow text={eyebrow} centered={centered} inverse={inverse} />}
+  <h2 class="h2-editorial title" set:html={title} />
+  {subtitle && <p class="lead subtitle">{subtitle}</p>}
+  {withRule && <span class="rule" aria-hidden="true"></span>}
+</div>

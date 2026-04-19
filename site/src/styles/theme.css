@@ -1,44 +1,158 @@
-/* ── Brand colors: Naturaleza Oscura — verde selva + dorado ── */
+/* ──────────────────────────────────────────────────────────────────────────
+   LAGUNA ESCONDIDA — DESIGN TOKENS
+   Dirección: natural orgánico · editorial silencioso · sense of place rural
+   Capa 1: tokens base (colors, type, spacing, radii, motion, layout)
+   ────────────────────────────────────────────────────────────────────────── */
+
 @theme {
-  --color-lake-50: #E0F2F1;
-  --color-lake-100: #80CBC4;
-  --color-lake-500: #1A3C34;
-  --color-lake-700: #0D1F1A;
+  /* ── Color · Lake (verde selva profundo — primary) ── */
+  --color-lake-50:  #ecf2f0;
+  --color-lake-100: #d1e0db;
+  --color-lake-200: #a8c4bc;
+  --color-lake-300: #7ba599;
+  --color-lake-400: #4f8478;
+  --color-lake-500: #2d5a50;
+  --color-lake-600: #1f4339;
+  --color-lake-700: #163028;
+  --color-lake-800: #0e2019;
+  --color-lake-900: #07130e;
 
-  --color-earth-300: #C9A84C;
-  --color-earth-500: #8B7332;
+  /* ── Color · Olive (puente cálido entre lago y tierra) ── */
+  --color-olive-50:  #f4f3ec;
+  --color-olive-100: #e3e1d1;
+  --color-olive-200: #c9c5ab;
+  --color-olive-300: #a8a384;
+  --color-olive-400: #847f60;
+  --color-olive-500: #5f5a41;
+  --color-olive-600: #413e2d;
+  --color-olive-700: #2a281d;
 
-  --color-sand-100: #FAF9F6;
-  --color-sand-200: #E8E0D0;
+  /* ── Color · Earth (dorado — acento estratégico) ── */
+  --color-earth-100: #f0e6cc;
+  --color-earth-200: #dcc896;
+  --color-earth-300: #c5a961;
+  --color-earth-400: #a98a42;
+  --color-earth-500: #806630;
+  --color-earth-600: #5a471f;
 
+  /* ── Color · Sand (off-whites cálidos) ── */
+  --color-sand-50:  #faf8f3;
+  --color-sand-100: #f4f0e7;
+  --color-sand-200: #ebe4d3;
+  --color-sand-300: #d9cfb5;
+  --color-sand-400: #b9ac8d;
+
+  /* ── Color · Clay (terracota — error + acento de calidez) ── */
+  --color-clay-500: #b25335;
+
+  /* ── Color · Terra (compat — mantenido para no romper usos existentes) ── */
   --color-terra: #80CBC4;
 
-  --font-display: "Lora", Georgia, serif;
-  --font-body: "Source Sans 3", system-ui, sans-serif;
+  /* ── Tokens semánticos ── */
+  --color-surface:         var(--color-sand-50);
+  --color-surface-tint:    var(--color-sand-100);
+  --color-surface-deep:    var(--color-sand-200);
+  --color-surface-inverse: var(--color-lake-700);
+  --color-surface-elevated: #ffffff;
 
-  --radius-brand: 12px;
+  --color-ink:         var(--color-lake-800);
+  --color-ink-muted:   var(--color-olive-500);
+  --color-ink-subtle:  var(--color-olive-400);
+  --color-ink-inverse: var(--color-sand-100);
 
-  --shadow-brand: 0 4px 12px rgba(13, 31, 26, 0.12);
-  --shadow-brand-lg: 0 8px 30px rgba(13, 31, 26, 0.15);
+  --color-line:        rgba(22, 48, 40, 0.10);
+  --color-line-strong: rgba(22, 48, 40, 0.22);
+  --color-line-gold:   var(--color-earth-300);
+
+  --color-accent:      var(--color-earth-400);
+  --color-accent-ink:  var(--color-earth-500);
+
+  /* ── Tipografía ── */
+  --font-display: "Cormorant Garamond", "Lora", Georgia, serif;
+  --font-serif:   "Lora", Georgia, serif;
+  --font-body:    "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ── Escala modular tipográfica ── */
+  --text-caption:   0.75rem;    /* 12 */
+  --text-eyebrow:   0.6875rem;  /* 11 uppercase */
+  --text-body-sm:   0.875rem;   /* 14 */
+  --text-body:      1rem;       /* 16 */
+  --text-body-lg:   1.125rem;   /* 18 */
+  --text-lead:      1.375rem;   /* 22 */
+  --text-h6:        1.25rem;    /* 20 */
+  --text-h5:        1.5rem;     /* 24 */
+  --text-h4:        1.875rem;   /* 30 */
+  --text-h3:        2.5rem;     /* 40 */
+  --text-h2:        3.375rem;   /* 54 */
+  --text-h1:        4.5rem;     /* 72 */
+  --text-display:   clamp(4rem, 9vw, 8.5rem);
+
+  /* ── Radios ── */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-brand: 12px;   /* alias retro-compatible */
+  --radius-arch: 999px 999px 12px 12px;
+  --radius-arch-soft: 240px 240px 12px 12px;
+
+  /* ── Sombras ── */
+  --shadow-brand:    0 4px 18px rgba(14, 32, 25, 0.08);
+  --shadow-brand-lg: 0 24px 60px -20px rgba(14, 32, 25, 0.22);
+
+  /* ── Motion ── */
+  --ease-out:    cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --duration-1:  180ms;
+  --duration-2:  320ms;
+  --duration-3:  560ms;
+  --duration-4:  900ms;
+
+  /* ── Layout ── */
+  --container-width:         1280px;
+  --container-width-narrow:  960px;
+  --container-width-reading: 680px;
+  --gutter: clamp(20px, 4vw, 48px);
+
+  /* ── Espaciado base 4/8 ── */
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3:  12px;
+  --spacing-4:  16px;
+  --spacing-5:  24px;
+  --spacing-6:  32px;
+  --spacing-7:  48px;
+  --spacing-8:  64px;
+  --spacing-9:  96px;
+  --spacing-10: 128px;
+  --spacing-11: 160px;
+  --spacing-12: 192px;
 }
 
-/* ── DaisyUI theme ── */
+/* ── DaisyUI theme mapping ── */
 @plugin "daisyui/theme" {
   name: "laguna";
   default: true;
   prefersdark: false;
   color-scheme: light;
-  --color-primary: #1A3C34;
-  --color-primary-content: #FFFFFF;
-  --color-secondary: #C9A84C;
-  --color-secondary-content: #0D1F1A;
-  --color-accent: #80CBC4;
-  --color-neutral: #1A1A1A;
-  --color-base-100: #FAF9F6;
-  --color-base-200: #E8E0D0;
-  --color-base-300: #E0F2F1;
-  --color-info: #1A3C34;
-  --color-success: #1A3C34;
-  --color-warning: #C9A84C;
-  --color-error: #C45D3E;
+  --color-primary: #163028;
+  --color-primary-content: #faf8f3;
+  --color-secondary: #a98a42;
+  --color-secondary-content: #0e2019;
+  --color-accent: #5f5a41;
+  --color-accent-content: #faf8f3;
+  --color-neutral: #0e2019;
+  --color-neutral-content: #faf8f3;
+  --color-base-100: #faf8f3;
+  --color-base-200: #f4f0e7;
+  --color-base-300: #ebe4d3;
+  --color-base-content: #0e2019;
+  --color-info: #2d5a50;
+  --color-info-content: #faf8f3;
+  --color-success: #2d5a50;
+  --color-success-content: #faf8f3;
+  --color-warning: #c5a961;
+  --color-warning-content: #0e2019;
+  --color-error: #b25335;
+  --color-error-content: #faf8f3;
 }

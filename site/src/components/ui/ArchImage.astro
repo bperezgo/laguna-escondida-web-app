@@ -1,0 +1,62 @@
+---
+type Variant = 'arch' | 'arch-soft' | 'arch-circle' | 'rect';
+type Ratio = '4x5' | '3x4' | '1x1' | '16x9' | '3x2' | 'tall' | 'auto';
+
+interface Props {
+  src: string;
+  alt: string;
+  srcset?: string;
+  sizes?: string;
+  variant?: Variant;
+  ratio?: Ratio;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  wrapperClass?: string;
+}
+
+const {
+  src,
+  alt,
+  srcset,
+  sizes,
+  variant = 'arch',
+  ratio = 'auto',
+  loading = 'lazy',
+  fetchpriority,
+  class: className = '',
+  wrapperClass = '',
+} = Astro.props;
+
+const variantClass = {
+  'arch': 'arch',
+  'arch-soft': 'arch-soft',
+  'arch-circle': 'arch-circle',
+  'rect': '',
+}[variant];
+
+const ratioStyle: Record<Ratio, string> = {
+  '4x5':  'aspect-ratio: 4/5;',
+  '3x4':  'aspect-ratio: 3/4;',
+  '1x1':  'aspect-ratio: 1/1;',
+  '16x9': 'aspect-ratio: 16/9;',
+  '3x2':  'aspect-ratio: 3/2;',
+  'tall': 'aspect-ratio: 2/3;',
+  'auto': '',
+};
+
+const wrapperClasses = [variantClass, wrapperClass].filter(Boolean).join(' ');
+const wrapperStyle = ratioStyle[ratio];
+const imgClasses = ['w-full', 'h-full', 'object-cover', className].filter(Boolean).join(' ');
+---
+<div class={wrapperClasses} style={wrapperStyle}>
+  <img
+    src={src}
+    srcset={srcset}
+    sizes={sizes}
+    alt={alt}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={imgClasses}
+  />
+</div>
