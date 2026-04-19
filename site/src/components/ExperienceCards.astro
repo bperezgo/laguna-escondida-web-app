@@ -1,50 +1,205 @@
 ---
+import SectionHeading from './ui/SectionHeading.astro';
+import LinkRule from './ui/LinkRule.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
-
-const icons = [
-  `<path d="M6.5 12c3-6 10-6 14-2-4 4-11 4-14-2z M6.5 12c3 6 10 6 14 2 M3 12h3.5 M16 10l1-4 M16 14l1 4"/>`,
-  `<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2 M7 2v20 M21 15V2v0a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>`,
-  `<path d="M5.8 11.3L2 22l10.7-3.79 M4 3h.01 M22 8h.01 M15 2h.01 M22 20h.01 M22 2l-2.24.75a2.9 2.9 0 00-1.96 3.12v0c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/>`,
-];
 
 const hrefs = [
   '/experiencias/pesca-deportiva/',
   '/experiencias/restaurante/',
   '/experiencias/eventos/',
 ];
+
+const events = ['pesca_click', 'restaurante_click', 'eventos_click'];
 ---
 
-<section class="section-padding bg-sand-gradient" id="experiencias" data-section="experiencias">
-  <div class="section-container">
-    <h2 class="section-heading reveal">
-      {t.experiences.heading}
-    </h2>
-    <p class="section-subtitle reveal stagger-1">
-      {t.experiences.subtitle}
-    </p>
+<section
+  class="experiences-section"
+  id="experiencias"
+  data-section="experiencias"
+  data-screen-label="Experiencias"
+>
+  <div class="experiences-container">
+    <SectionHeading
+      eyebrow={t.experiences.eyebrow}
+      title={t.experiences.heading}
+      subtitle={t.experiences.subtitle}
+      withRule
+      class="reveal"
+    />
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
+    <div class="exp-grid reveal">
       {t.experiences.cards.map((card, i) => (
-        <a href={hrefs[i]} class="card-hoverable group">
-          <figure class="px-6 pt-6">
-            <div class="w-16 h-16 bg-lake-50 rounded-full flex items-center justify-center">
-              <svg class="w-8 h-8 text-lake-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <Fragment set:html={icons[i]} />
-              </svg>
-            </div>
-          </figure>
-          <div class="card-body items-center text-center">
-            <h3 class="card-title font-display text-2xl text-lake-700">{card.title}</h3>
-            <p class="font-body text-neutral">{card.description}</p>
-            <div class="card-actions mt-4">
-              <span class="text-lake-500 font-semibold font-body group-hover:translate-x-1 transition-transform duration-300">{card.cta} &rarr;</span>
-            </div>
+        <article class={`exp-card stagger-${i + 1}`}>
+          <div class="media">
+            <span class="num">{card.label}</span>
+            <div class={`ph ph-${i + 1}`} aria-hidden="true"></div>
           </div>
-        </a>
+          <div class="body-wrap">
+            <h3 class="h4-editorial">
+              {card.title}<br />
+              <em>{card.italicSubtitle}</em>
+            </h3>
+            <p class="body-editorial">{card.description}</p>
+            <div class="meta">
+              <span>
+                {card.metaLeftLabel} <b class="gold">{card.metaLeftValue}</b>
+              </span>
+              <span>{card.metaRight}</span>
+            </div>
+            <LinkRule
+              href={hrefs[i]}
+              label={card.cta}
+              event={events[i]}
+              location="experiences"
+            />
+          </div>
+        </article>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .experiences-section {
+    padding-block: clamp(80px, 10vw, 160px);
+    background: var(--color-sand-50);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .experiences-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    margin-top: 64px;
+  }
+
+  @media (min-width: 720px) {
+    .exp-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .exp-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+  }
+
+  .exp-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--duration-3) var(--ease-out);
+  }
+
+  .media {
+    position: relative;
+    clip-path: inset(0 round 999px 999px 8px 8px);
+    isolation: isolate;
+  }
+
+  .ph {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    transition: transform var(--duration-4) var(--ease-out), filter var(--duration-3) var(--ease-out);
+    background-color: var(--color-lake-700);
+  }
+
+  .ph-1 {
+    background:
+      linear-gradient(180deg, rgba(7, 19, 14, 0.05) 0%, rgba(7, 19, 14, 0.4) 100%),
+      radial-gradient(ellipse at 30% 70%, rgba(197, 169, 97, 0.25) 0%, transparent 55%),
+      linear-gradient(160deg, var(--color-lake-600), var(--color-lake-800));
+  }
+
+  .ph-2 {
+    background:
+      linear-gradient(180deg, rgba(14, 32, 25, 0.05) 0%, rgba(14, 32, 25, 0.4) 100%),
+      radial-gradient(ellipse at 70% 30%, rgba(197, 169, 97, 0.22) 0%, transparent 55%),
+      linear-gradient(160deg, var(--color-olive-300), var(--color-lake-700));
+  }
+
+  .ph-3 {
+    background:
+      linear-gradient(180deg, rgba(7, 19, 14, 0.05) 0%, rgba(7, 19, 14, 0.45) 100%),
+      radial-gradient(ellipse at 50% 80%, rgba(197, 169, 97, 0.3) 0%, transparent 55%),
+      linear-gradient(160deg, var(--color-earth-300), var(--color-lake-800));
+  }
+
+  .exp-card:hover .ph {
+    transform: scale(1.03);
+    filter: brightness(0.96);
+  }
+
+  .num {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--color-sand-50);
+    z-index: 2;
+    padding: 6px 10px;
+    background: rgba(14, 32, 25, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .body-wrap {
+    padding-top: 28px;
+    display: grid;
+    gap: 14px;
+  }
+
+  .body-wrap h3 {
+    margin: 0;
+  }
+
+  .body-wrap h3 em {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--color-lake-500);
+    font-weight: 300;
+  }
+
+  .body-editorial {
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 18px;
+    margin-top: 6px;
+    border-top: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+  }
+
+  .meta .gold {
+    color: var(--color-earth-400);
+    font-family: var(--font-serif);
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+</style>

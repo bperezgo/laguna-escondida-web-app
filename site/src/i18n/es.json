@@ -44,23 +44,42 @@
     "scrollHint": "Deslizar"
   },
   "experiences": {
-    "heading": "Que puedes hacer en Laguna Escondida?",
-    "subtitle": "Laguna Escondida es un restaurante campestre con lago de pesca deportiva ubicado en la Vereda La Primavera de Marinilla. Ofrece tres experiencias en un solo destino: pescar, comer y celebrar.",
+    "eyebrow": "Experiencias",
+    "heading": "Tres maneras de encontrarse con el lago.",
+    "subtitle": "Laguna Escondida es un restaurante campestre con lago de pesca deportiva en la Vereda La Primavera de Marinilla. Cada experiencia es independiente y se puede combinar en un mismo dia.",
     "cards": [
       {
-        "title": "Pescar",
+        "label": "01 / Pescar",
+        "title": "Pesca deportiva",
+        "italicSubtitle": "en lago privado",
         "description": "Lago con 5 especies de peces: Yamu, Doradas, Cachama, Tilapia Roja y Tilapia Nilotica. La mayor variedad del Oriente Antioqueno.",
-        "cta": "Conocer mas"
+        "metaLeftLabel": "Lago con",
+        "metaLeftValue": "5 especies",
+        "metaRight": "Todos los niveles",
+        "imageAlt": "Pescador en el lago privado de Laguna Escondida en Marinilla, Antioquia",
+        "cta": "Conocer la pesca"
       },
       {
-        "title": "Comer",
+        "label": "02 / Comer",
+        "title": "Comedor campestre",
+        "italicSubtitle": "frente al lago",
         "description": "Restaurante campestre con vista al lago. Yamu frito, Tilapia, Trucha y mas. Construccion en guadua, ambiente rustico autentico.",
-        "cta": "Ver menu"
+        "metaLeftLabel": "Menu",
+        "metaLeftValue": "Campestre",
+        "metaRight": "Guadua al aire libre",
+        "imageAlt": "Plato de pescado frito con vista al lago en Laguna Escondida",
+        "cta": "Ver el menu"
       },
       {
-        "title": "Celebrar",
+        "label": "03 / Celebrar",
+        "title": "Eventos privados",
+        "italicSubtitle": "en kiosco frente al agua",
         "description": "Cumpleanos, revelaciones de genero y reuniones con kiosco privado. Espacio campestre para hasta 60 personas frente al lago.",
-        "cta": "Cotizar evento"
+        "metaLeftLabel": "Capacidad",
+        "metaLeftValue": "hasta 60",
+        "metaRight": "Uso exclusivo",
+        "imageAlt": "Kiosco para eventos privados frente al lago en Laguna Escondida",
+        "cta": "Solicitar cotizacion"
       }
     ]
   },

@@ -44,23 +44,42 @@
     "scrollHint": "Scroll"
   },
   "experiences": {
-    "heading": "What can you do at Laguna Escondida?",
-    "subtitle": "Laguna Escondida is a country restaurant with a sport fishing lake located in Vereda La Primavera, Marinilla. It offers three experiences in one destination: fish, eat and celebrate.",
+    "eyebrow": "Experiences",
+    "heading": "Three ways to meet the lake.",
+    "subtitle": "Laguna Escondida is a country restaurant with a sport fishing lake in Vereda La Primavera, Marinilla. Each experience stands on its own — combine them in a single day or book them separately.",
     "cards": [
       {
-        "title": "Fish",
-        "description": "Lake with 5 fish species: Yamu, Doradas, Cachama, Red Tilapia and Nile Tilapia. The widest variety in Eastern Antioquia.",
-        "cta": "Learn more"
+        "label": "01 / Fish",
+        "title": "Sport fishing",
+        "italicSubtitle": "in a private lake",
+        "description": "A lake with 5 fish species: Yamu, Doradas, Cachama, Red Tilapia and Nile Tilapia. The widest variety in Eastern Antioquia.",
+        "metaLeftLabel": "Lake with",
+        "metaLeftValue": "5 species",
+        "metaRight": "All levels",
+        "imageAlt": "Angler at the private lake of Laguna Escondida in Marinilla, Antioquia",
+        "cta": "See fishing"
       },
       {
-        "title": "Eat",
+        "label": "02 / Eat",
+        "title": "Country dining room",
+        "italicSubtitle": "by the water",
         "description": "Country restaurant overlooking the lake. Fried Yamu, Tilapia, Trout and more. Bamboo construction, authentic rustic atmosphere.",
-        "cta": "See menu"
+        "metaLeftLabel": "Menu",
+        "metaLeftValue": "Country style",
+        "metaRight": "Open-air bamboo",
+        "imageAlt": "Fresh fish plate with a view of the lake at Laguna Escondida",
+        "cta": "See the menu"
       },
       {
-        "title": "Celebrate",
+        "label": "03 / Celebrate",
+        "title": "Private events",
+        "italicSubtitle": "in a lakefront kiosk",
         "description": "Birthdays, gender reveals and gatherings with a private kiosk. Country venue for up to 60 guests by the lake.",
-        "cta": "Get a quote"
+        "metaLeftLabel": "Capacity",
+        "metaLeftValue": "up to 60",
+        "metaRight": "Exclusive use",
+        "imageAlt": "Private event kiosk overlooking the lake at Laguna Escondida",
+        "cta": "Request a quote"
       }
     ]
   },
