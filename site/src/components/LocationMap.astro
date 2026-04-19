@@ -1,62 +1,270 @@
 ---
+import SectionHeading from './ui/SectionHeading.astro';
+import LinkRule from './ui/LinkRule.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 ---
-<section class="section-padding bg-sand-gradient" id="ubicacion" data-section="ubicacion">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="font-display text-3xl md:text-4xl text-lake-700 text-center mb-4 reveal">
-      {t.location.heading}
-    </h2>
-    <p class="text-center text-lg text-neutral mb-12 max-w-2xl mx-auto font-body reveal stagger-1">
-      {t.location.subtitle}
-    </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start reveal stagger-2">
-
-      <!-- Mapa -->
-      <div class="rounded-brand overflow-hidden shadow-brand h-100">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d-75.3418145!3d6.1880394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e46a10044cddb71%3A0x9db2b94ed46991da!2sLaguna%20Escondida!5e0!3m2!1ses!2sco!4v1"
-          width="100%"
-          height="100%"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title={t.location.mapTitle}>
-        </iframe>
+<section
+  class="location-section"
+  id="ubicacion"
+  data-section="ubicacion"
+  data-screen-label="Ubicacion"
+>
+  <div class="location-container">
+    <div class="location-grid">
+      <div class="location-map reveal">
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d-75.3418145!3d6.1880394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e46a10044cddb71%3A0x9db2b94ed46991da!2sLaguna%20Escondida!5e0!3m2!1ses!2sco!4v1"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title={t.location.mapTitle}
+          ></iframe>
+        </div>
+        <div class="pin" aria-hidden="true"></div>
       </div>
 
-      <!-- Info de ubicacion -->
-      <div class="space-y-6">
-        <div class="card bg-white shadow-brand p-6">
-          <h3 class="font-display text-xl text-lake-700 mb-3">{t.location.fromMedellin}</h3>
-          <p class="font-body text-neutral" set:html={t.location.fromMedellinDesc} />
+      <div class="location-info reveal stagger-1">
+        <SectionHeading
+          eyebrow={t.location.eyebrow}
+          title={t.location.heading}
+          subtitle={t.location.subtitle}
+        />
+
+        <dl class="location-dl">
+          <div>
+            <dt>{t.location.fromMedellin}</dt>
+            <dd set:html={t.location.fromMedellinDesc} />
+          </div>
+          <div>
+            <dt>{t.location.fromRionegro}</dt>
+            <dd set:html={t.location.fromRionegroDesc} />
+          </div>
+        </dl>
+
+        <div class="hours-block">
+          <p class="hours-label">{t.location.hours}</p>
+          <dl class="hours-dl">
+            <div>
+              <dt>{t.location.hoursSatSun}</dt>
+              <dd>{t.location.hoursSatSunTime}</dd>
+            </div>
+            <div>
+              <dt>{t.location.hoursHolidays}</dt>
+              <dd>{t.location.hoursHolidaysTime}</dd>
+            </div>
+            <div>
+              <dt>{t.location.hoursWeekdays}</dt>
+              <dd>{t.location.hoursWeekdaysTime}</dd>
+            </div>
+          </dl>
         </div>
 
-        <div class="card bg-white shadow-brand p-6">
-          <h3 class="font-display text-xl text-lake-700 mb-3">{t.location.fromRionegro}</h3>
-          <p class="font-body text-neutral" set:html={t.location.fromRionegroDesc} />
+        <div class="location-cta">
+          <LinkRule
+            href="https://maps.google.com/?q=Laguna+Escondida+Marinilla"
+            label={t.location.openInMaps}
+            event="maps_click"
+            location="directions"
+            target="_blank"
+            rel="noopener"
+          />
         </div>
-
-        <div class="card bg-white shadow-brand p-6">
-          <h3 class="font-display text-xl text-lake-700 mb-3">{t.location.hours}</h3>
-          <ul class="font-body text-neutral space-y-1">
-            <li><strong>{t.location.hoursSatSun}</strong> {t.location.hoursSatSunTime}</li>
-            <li><strong>{t.location.hoursHolidays}</strong> {t.location.hoursHolidaysTime}</li>
-            <li><strong>{t.location.hoursWeekdays}</strong> {t.location.hoursWeekdaysTime}</li>
-          </ul>
-        </div>
-
-        <a href="https://maps.google.com/?q=Laguna+Escondida+Marinilla"
-           class="btn btn-primary btn-lg w-full text-white font-body font-semibold"
-           target="_blank" rel="noopener"
-           data-event="maps_click" data-location="directions">
-          {t.location.openInMaps} &rarr;
-        </a>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .location-section {
+    padding-block: clamp(80px, 10vw, 160px);
+    background: var(--color-surface-tint);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .location-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .location-grid {
+      grid-template-columns: 5fr 6fr;
+      gap: 96px;
+    }
+  }
+
+  .location-map {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+    width: 100%;
+    margin-inline: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-olive-50);
+    box-shadow: var(--shadow-brand-lg);
+  }
+
+  .map-frame {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .map-frame iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .pin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-earth-300);
+    box-shadow:
+      0 0 0 6px rgba(197, 169, 97, 0.28),
+      0 0 0 14px rgba(197, 169, 97, 0.12);
+    transform: translate(-50%, -50%);
+    animation: pin-pulse 3s var(--ease-in-out) infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pin-pulse {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 6px rgba(197, 169, 97, 0.28),
+        0 0 0 14px rgba(197, 169, 97, 0.12);
+    }
+    50% {
+      box-shadow:
+        0 0 0 8px rgba(197, 169, 97, 0.38),
+        0 0 0 20px rgba(197, 169, 97, 0.04);
+    }
+  }
+
+  .location-info {
+    display: grid;
+    gap: 32px;
+  }
+
+  .location-dl {
+    margin: 0;
+    display: grid;
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .location-dl > div {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  @media (max-width: 639px) {
+    .location-dl > div {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+
+  .location-dl dt {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin: 0;
+  }
+
+  .location-dl dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  .location-dl dd :global(strong) {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .hours-block {
+    padding-top: 28px;
+    border-top: 1px solid var(--color-line);
+    display: grid;
+    gap: 16px;
+  }
+
+  .hours-label {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .hours-dl {
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .hours-dl > div {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  @media (max-width: 639px) {
+    .hours-dl > div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+
+  .hours-dl dt {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .hours-dl dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink-muted);
+  }
+
+  .location-cta {
+    margin-top: 8px;
+  }
+</style>

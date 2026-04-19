@@ -1,60 +1,214 @@
 ---
 import { sanityClient, responsiveImage } from '../lib/sanity';
-import { BLOG_PREVIEW_QUERY } from '../lib/queries/blog';
+import { BLOG_PREVIEW_QUERY, type BlogPostPreview } from '../lib/queries/blog';
+import LinkRule from './ui/LinkRule.astro';
+import Eyebrow from './ui/Eyebrow.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 
-const posts = await sanityClient.fetch(BLOG_PREVIEW_QUERY);
+const posts: BlogPostPreview[] = await sanityClient.fetch(BLOG_PREVIEW_QUERY);
+
+const dateFmt = new Intl.DateTimeFormat(t.meta.dateLocale, {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+});
+
+const formatDate = (iso?: string) => {
+  if (!iso) return '';
+  try {
+    return dateFmt.format(new Date(iso)).replace(/\./g, '');
+  } catch {
+    return '';
+  }
+};
 ---
 
-<section class="section-padding bg-lake-gradient" id="blog" data-section="blog">
-  <div class="section-container">
-    <h2 class="section-heading reveal">
-      {t.blog.heading}
-    </h2>
-    <p class="section-subtitle reveal stagger-1">
-      {t.blog.subtitle}
-    </p>
-
-    {posts.length > 0 && (
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
-        {posts.map((post: any) => (
-          <a href={`/contenido/${post.slug.current}`} class="card-hoverable group">
-            <figure>
-              {(() => {
-                const imgAttrs = responsiveImage(
-                  post.featuredImage,
-                  [400, 800],
-                  '(max-width: 640px) 100vw, 33vw',
-                );
-                return (
-                  <img
-                    src={imgAttrs.src}
-                    srcset={imgAttrs.srcset}
-                    sizes={imgAttrs.sizes}
-                    alt={post.featuredImage?.alt || post.title}
-                    class="w-full h-48 object-cover rounded-t-brand"
-                    loading="lazy"
-                  />
-                );
-              })()}
-            </figure>
-            <div class="card-body">
-              <div class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}>{post.category?.title}</div>
-              <h3 class="card-title font-display text-lg text-lake-700 group-hover:text-lake-500 transition-colors duration-300">{post.title}</h3>
-              <p class="font-body text-neutral text-sm">{post.excerpt}</p>
-            </div>
-          </a>
-        ))}
+<section
+  class="blog-section"
+  id="blog"
+  data-section="blog"
+  data-screen-label="Blog"
+>
+  <div class="blog-container">
+    <div class="blog-head reveal">
+      <div>
+        <Eyebrow text={t.blog.eyebrow} />
+        <h2 class="blog-title">{t.blog.heading}</h2>
+        <p class="blog-subtitle">{t.blog.subtitle}</p>
       </div>
-    )}
-
-    <div class="text-center mt-10">
-      <a href="/contenido/" class="section-cta">
-        {t.blog.viewAll} &rarr;
-      </a>
+      <LinkRule
+        href="/contenido/"
+        label={t.blog.viewAll}
+        event="blog_view_all"
+        location="blog"
+        class="blog-head-cta"
+      />
     </div>
+
+    {posts.length > 0 ? (
+      <div class="blog-grid reveal stagger-1">
+        {posts.map((post) => {
+          const imgAttrs = responsiveImage(
+            post.featuredImage,
+            [400, 800, 1200],
+            '(max-width: 900px) 100vw, 33vw',
+          );
+          const alt = post.featuredImage?.alt || post.title;
+          const date = formatDate(post.publishedAt);
+          return (
+            <a
+              class="blog-card"
+              href={`/contenido/${post.slug.current}`}
+              data-event="blog_card_click"
+              data-location="blog"
+            >
+              <div class="blog-media">
+                <img
+                  src={imgAttrs.src}
+                  srcset={imgAttrs.srcset}
+                  sizes={imgAttrs.sizes}
+                  alt={alt}
+                  loading="lazy"
+                />
+              </div>
+              {post.category?.title && <p class="blog-tag">{post.category.title}</p>}
+              <h5 class="blog-heading">{post.title}</h5>
+              {date && <p class="blog-meta">{date}</p>}
+            </a>
+          );
+        })}
+      </div>
+    ) : (
+      <p class="blog-empty reveal stagger-1">{t.blog.emptyState}</p>
+    )}
   </div>
 </section>
+
+<style>
+  .blog-section {
+    padding-block: clamp(80px, 10vw, 160px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .blog-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .blog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .blog-head > div {
+    max-width: 640px;
+  }
+
+  .blog-title {
+    margin: 16px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .blog-subtitle {
+    margin: 16px 0 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+  }
+
+  .blog-head-cta {
+    flex-shrink: 0;
+  }
+
+  .blog-grid {
+    margin-top: 72px;
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 900px) {
+    .blog-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+  }
+
+  .blog-card {
+    display: grid;
+    gap: 20px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-olive-50);
+  }
+
+  .blog-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-4) var(--ease-out);
+  }
+
+  .blog-card:hover .blog-media img {
+    transform: scale(1.02);
+  }
+
+  .blog-tag {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+  }
+
+  .blog-heading {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-h5, 1.25rem);
+    line-height: 1.35;
+    color: var(--color-ink);
+    font-weight: 500;
+    transition: color var(--duration-3) var(--ease-out);
+  }
+
+  .blog-card:hover .blog-heading {
+    color: var(--color-lake-700);
+  }
+
+  .blog-meta {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .blog-empty {
+    margin-top: 48px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-ink-muted);
+  }
+</style>

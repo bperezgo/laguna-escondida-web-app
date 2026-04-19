@@ -1,4 +1,6 @@
 ---
+import SectionHeading from './ui/SectionHeading.astro';
+
 const faqs = [
   {
     q: '¿Necesito experiencia previa para pescar?',
@@ -39,32 +41,117 @@ const faqs = [
 ];
 ---
 
-<section class="section-padding bg-sand-100" id="faq" data-section="pesca-faq">
-  <div class="section-container">
-    <h2 class="section-heading reveal">Preguntas frecuentes</h2>
-    <p class="section-subtitle reveal stagger-1">
-      Todo lo que necesitas saber antes de llegar.
-    </p>
+<section class="faq-section" id="faq" data-section="pesca-faq" data-screen-label="FAQ">
+  <div class="faq-container">
+    <SectionHeading
+      eyebrow="Preguntas frecuentes"
+      title="Todo lo que necesitas saber"
+      subtitle="Antes de llegar, aclaramos las dudas más comunes sobre la pesca, el restaurante y la reserva."
+      class="reveal"
+    />
 
-    <div class="max-w-3xl mx-auto flex flex-col gap-3 reveal stagger-2">
+    <div class="faq-list reveal stagger-1">
       {faqs.map((item) => (
-        <details class="group bg-white rounded-brand shadow-brand overflow-hidden">
-          <summary class="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-display text-base text-lake-700 hover:text-lake-500 transition-colors select-none">
-            <span>{item.q}</span>
-            <svg
-              class="w-5 h-5 flex-shrink-0 text-earth-300 transition-transform duration-300 group-open:rotate-45"
-              fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-            </svg>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">{item.q}</span>
+            <span class="faq-toggle" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 8h10 M8 3v10" stroke-linecap="round" />
+              </svg>
+            </span>
           </summary>
-          <div class="px-6 pb-5">
-            <p class="font-body text-neutral text-sm leading-relaxed border-t border-sand-200 pt-4">
-              {item.a}
-            </p>
+          <div class="faq-body">
+            <p>{item.a}</p>
           </div>
         </details>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .faq-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface-tint);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .faq-container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .faq-list {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.125rem, 1.8vw, 1.35rem);
+    line-height: 1.3;
+    color: var(--color-ink);
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-summary:hover {
+    color: var(--color-lake-700);
+  }
+
+  .faq-q {
+    flex: 1;
+  }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-earth-300);
+    transition: transform var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .faq-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .faq-item[open] .faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .faq-body {
+    padding: 0 0 28px;
+    max-width: 64ch;
+  }
+
+  .faq-body p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+  }
+</style>

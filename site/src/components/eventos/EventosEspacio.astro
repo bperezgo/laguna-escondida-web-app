@@ -1,4 +1,7 @@
 ---
+import Eyebrow from '../ui/Eyebrow.astro';
+import ArchImage from '../ui/ArchImage.astro';
+
 const amenidades = [
   'Ramada cubierta con capacidad para 80 personas',
   'Acceso privado al lago durante el evento',
@@ -12,76 +15,208 @@ const amenidades = [
 ];
 
 const stats = [
-  { valor: '80', unidad: 'personas', descripcion: 'capacidad máxima' },
-  { valor: '2.000 m²', unidad: '', descripcion: 'área total del evento' },
-  { valor: '100%', unidad: '', descripcion: 'espacio exclusivo para tu grupo' },
+  { valor: '80', unidad: 'personas', descripcion: 'Capacidad máxima' },
+  { valor: '2.000', unidad: 'm²', descripcion: 'Área total' },
+  { valor: '100', unidad: '%', descripcion: 'Espacio exclusivo' },
 ];
 ---
 
-<section class="section-padding bg-lake-gradient" id="el-espacio" data-section="eventos-espacio">
-  <div class="section-container">
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-      <!-- Texto + amenidades -->
-      <div>
-        <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-earth-300 font-body reveal">
-          El espacio
-        </span>
-        <h2 class="font-display text-3xl sm:text-4xl text-lake-700 leading-tight mb-5 reveal stagger-1">
-          Un lugar para que tus invitados<br class="hidden sm:block" />
-          no quieran irse
+<section class="espacio-section" id="el-espacio" data-section="eventos-espacio" data-screen-label="El espacio">
+  <div class="espacio-container">
+    <div class="espacio-grid">
+      <div class="espacio-text">
+        <Eyebrow text="El espacio" />
+        <h2 class="espacio-title reveal">
+          Un lugar para que tus invitados<br />
+          <em>no quieran irse.</em>
         </h2>
-        <p class="font-body text-neutral mb-8 leading-relaxed reveal stagger-2">
+        <p class="espacio-lead reveal stagger-1">
           Laguna Escondida se adapta a tu evento: el espacio es tuyo. Sin otras mesas,
           sin extraños. Solo tu familia, tus amigos y el lago.
         </p>
 
-        <!-- Lista de amenidades -->
-        <ul class="space-y-2.5 reveal stagger-3">
-          {amenidades.map((item) => (
-            <li class="flex items-start gap-3 font-body text-sm text-neutral">
-              <svg class="w-5 h-5 text-earth-300 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-              </svg>
-              {item}
-            </li>
-          ))}
+        <ul class="amenidades-list reveal stagger-2">
+          {amenidades.map((item) => <li>{item}</li>)}
         </ul>
       </div>
 
-      <!-- Stats + imagen placeholder -->
-      <div class="flex flex-col gap-6 reveal stagger-2">
-        <!-- Stats -->
-        <div class="grid grid-cols-3 gap-4">
-          {stats.map((s) => (
-            <div class="card-standard text-center py-6 px-3">
-              <span class="block font-display text-2xl sm:text-3xl text-lake-500 leading-none">{s.valor}</span>
-              {s.unidad && <span class="block font-body text-xs text-earth-500 font-semibold mt-0.5">{s.unidad}</span>}
-              <span class="block font-body text-xs text-neutral/60 mt-1">{s.descripcion}</span>
-            </div>
-          ))}
-        </div>
-
-        <!-- Imagen del espacio — reemplazar con foto real -->
-        <div class="relative rounded-brand overflow-hidden shadow-brand-lg aspect-video bg-lake-50">
-          <img
+      <div class="espacio-side reveal stagger-1">
+        <div class="espacio-media">
+          <ArchImage
             src="/images/hero/lago-comedor-vista.jpg"
             alt="Ramada y lago en Laguna Escondida para eventos privados"
-            class="w-full h-full object-cover"
-            loading="lazy"
+            variant="arch-soft"
+            ratio="3x4"
           />
-          <div class="absolute inset-0 bg-lake-700/10"></div>
-          <!-- Badge encima de la imagen -->
-          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-brand">
-            <svg class="w-4 h-4 text-earth-300" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="font-body text-xs font-semibold text-lake-700">Vereda La Primavera, Marinilla</span>
-          </div>
+          <figcaption class="media-caption">
+            <span class="idx">01</span>
+            <span>Vereda La Primavera · Marinilla, Antioquia</span>
+          </figcaption>
         </div>
-      </div>
 
+        <dl class="espacio-stats">
+          {stats.map((s) => (
+            <div>
+              <dt>{s.descripcion}</dt>
+              <dd>
+                <span class="val">{s.valor}</span>
+                {s.unidad && <span class="unit">{s.unidad}</span>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .espacio-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .espacio-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .espacio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .espacio-grid {
+      grid-template-columns: 6fr 5fr;
+      gap: 96px;
+    }
+  }
+
+  .espacio-title {
+    margin: 20px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+
+  .espacio-title em {
+    font-style: italic;
+    color: var(--color-lake-700);
+    font-weight: 300;
+  }
+
+  .espacio-lead {
+    margin: 24px 0 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+    max-width: 52ch;
+  }
+
+  .amenidades-list {
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    border-top: 1px solid var(--color-line);
+    padding-top: 24px;
+  }
+
+  .amenidades-list li {
+    position: relative;
+    padding-left: 24px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+
+  .amenidades-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 12px;
+    height: 1px;
+    background: var(--color-earth-300);
+  }
+
+  .espacio-side {
+    display: grid;
+    gap: 32px;
+  }
+
+  .espacio-media {
+    display: grid;
+    gap: 12px;
+  }
+
+  .media-caption {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-subtle);
+  }
+
+  .media-caption .idx {
+    color: var(--color-accent-ink);
+  }
+
+  .espacio-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .espacio-stats > div {
+    display: grid;
+    gap: 8px;
+  }
+
+  .espacio-stats dt {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .espacio-stats dd {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .espacio-stats .val {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1;
+    color: var(--color-lake-700);
+  }
+
+  .espacio-stats .unit {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+</style>

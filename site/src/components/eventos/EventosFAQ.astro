@@ -1,74 +1,180 @@
 ---
+import SectionHeading from '../ui/SectionHeading.astro';
+
 const preguntas = [
   {
     pregunta: '¿El espacio es completamente privado para nuestro evento?',
-    respuesta:
-      'Sí. Cuando reservas para un evento privado, el lugar es exclusivamente tuyo durante el tiempo acordado. No hay otras mesas ni visitantes del día.',
+    respuesta: 'Sí. Cuando reservas para un evento privado, el lugar es exclusivamente tuyo durante el tiempo acordado. No hay otras mesas ni visitantes del día.',
   },
   {
     pregunta: '¿Tienen cocina o hay que contratar catering externo?',
-    respuesta:
-      'Contamos con cocina equipada y personal propio. El menú se pacta con anticipación — desde sancocho campestre hasta parrilladas completas. También puedes traer catering externo coordinado con nosotros.',
+    respuesta: 'Contamos con cocina equipada y personal propio. El menú se pacta con anticipación — desde sancocho campestre hasta parrilladas completas. También puedes traer catering externo coordinado con nosotros.',
   },
   {
     pregunta: '¿Qué pasa si el día del evento llueve?',
-    respuesta:
-      'La ramada principal es cubierta y tiene capacidad para todo el grupo, así que la lluvia no afecta el evento. Si llueve fuerte, simplemente todos disfrutan bajo techo con vista al lago.',
+    respuesta: 'La ramada principal es cubierta y tiene capacidad para todo el grupo, así que la lluvia no afecta el evento. Si llueve fuerte, simplemente todos disfrutan bajo techo con vista al lago.',
   },
   {
     pregunta: '¿Se puede poner música y DJ?',
-    respuesta:
-      'Sí, algunos paquetes incluyen sistema de sonido. Para DJ externo o banda en vivo, hay que coordinarlo con anticipación. Respetamos horarios de uso de sonido hasta las 10 PM por normas de la vereda.',
+    respuesta: 'Sí, algunos paquetes incluyen sistema de sonido. Para DJ externo o banda en vivo, hay que coordinarlo con anticipación. Respetamos horarios de uso de sonido hasta las 10 PM por normas de la vereda.',
   },
   {
     pregunta: '¿Cuánto cuesta un evento?',
-    respuesta:
-      'Los precios varían según el número de personas, el menú y los servicios adicionales. En el funnel de celebraciones puedes ver los paquetes base desde $300.000 COP por persona. Para grupos grandes o eventos muy personalizados, te hacemos una cotización a medida.',
+    respuesta: 'Los precios varían según el número de personas, el menú y los servicios adicionales. En el funnel de celebraciones puedes ver los paquetes base desde $300.000 COP por persona. Para grupos grandes o eventos muy personalizados, te hacemos una cotización a medida.',
   },
   {
     pregunta: '¿Con cuánta anticipación debo reservar?',
-    respuesta:
-      'Recomendamos reservar con al menos 3 semanas de anticipación, especialmente en temporada alta (diciembre, semana santa, vacaciones de mitad de año). Para fechas de fin de semana muy solicitadas, 4–6 semanas es ideal.',
+    respuesta: 'Recomendamos reservar con al menos 3 semanas de anticipación, especialmente en temporada alta (diciembre, semana santa, vacaciones de mitad de año). Para fechas de fin de semana muy solicitadas, 4–6 semanas es ideal.',
   },
 ];
+
+const WA_NUMBER = '573194313781';
+const WA_MESSAGE = 'Hola, tengo una pregunta sobre eventos en Laguna Escondida';
+const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
 ---
 
-<section class="section-padding bg-sand-100" id="faq-eventos" data-section="eventos-faq">
-  <div class="section-container">
+<section class="faq-section" id="faq-eventos" data-section="eventos-faq" data-screen-label="FAQ eventos">
+  <div class="faq-container">
+    <SectionHeading
+      eyebrow="Preguntas frecuentes"
+      title="Todo lo que necesitas saber"
+      subtitle="Antes de reservar, aclaramos las dudas más comunes sobre eventos y espacios."
+      class="reveal"
+    />
 
-    <h2 class="section-heading reveal">Preguntas frecuentes</h2>
-    <p class="section-subtitle reveal stagger-1">
-      Todo lo que necesitas saber antes de reservar.
-    </p>
-
-    <div class="max-w-3xl mx-auto space-y-3 reveal stagger-2">
-      {preguntas.map((faq) => (
-        <div class="collapse collapse-plus bg-white shadow-brand rounded-brand">
-          <input type="checkbox" />
-          <div class="collapse-title font-display text-base sm:text-lg text-lake-700 pr-10">
-            {faq.pregunta}
+    <div class="faq-list reveal stagger-1">
+      {preguntas.map((item) => (
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">{item.pregunta}</span>
+            <span class="faq-toggle" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 8h10 M8 3v10" stroke-linecap="round" />
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <p>{item.respuesta}</p>
           </div>
-          <div class="collapse-content">
-            <p class="font-body text-sm text-neutral leading-relaxed pt-1">
-              {faq.respuesta}
-            </p>
-          </div>
-        </div>
+        </details>
       ))}
     </div>
 
-    <!-- Preguntas adicionales -->
-    <p class="text-center mt-8 font-body text-sm text-neutral/60 reveal stagger-3">
+    <p class="faq-aside reveal stagger-2">
       ¿Tienes otra pregunta?{' '}
       <a
-        href="https://wa.me/573194313781?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20eventos%20en%20Laguna%20Escondida"
-        class="text-lake-500 underline hover:text-lake-700 transition-colors"
-        data-event="whatsapp_click" data-location="faq"
-        target="_blank" rel="noopener"
-      >
-        Escríbenos por WhatsApp
-      </a>
+        href={waHref}
+        data-event="whatsapp_click"
+        data-location="faq"
+        target="_blank"
+        rel="noopener"
+      >Escríbenos por WhatsApp</a>
     </p>
-
   </div>
 </section>
+
+<style>
+  .faq-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .faq-container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .faq-list {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.125rem, 1.8vw, 1.35rem);
+    line-height: 1.3;
+    color: var(--color-ink);
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-summary:hover {
+    color: var(--color-lake-700);
+  }
+
+  .faq-q {
+    flex: 1;
+  }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-earth-300);
+    transition: transform var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .faq-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .faq-item[open] .faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .faq-body {
+    padding: 0 0 28px;
+    max-width: 64ch;
+  }
+
+  .faq-body p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+  }
+
+  .faq-aside {
+    margin-top: 48px;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-ink-muted);
+  }
+
+  .faq-aside a {
+    font-style: normal;
+    color: var(--color-lake-700);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-line-gold, var(--color-earth-300));
+    transition: border-color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .faq-aside a:hover {
+    border-color: var(--color-lake-700);
+  }
+</style>

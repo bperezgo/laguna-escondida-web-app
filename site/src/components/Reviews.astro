@@ -1,48 +1,178 @@
 ---
-import StarRating from './StarRating.astro';
+import SectionHeading from './ui/SectionHeading.astro';
+import LinkRule from './ui/LinkRule.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
+
+const initials = (author: string) =>
+  author
+    .replace(/[^\p{L}\s]/gu, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
 ---
 
-<section class="section-padding bg-lake-gradient" id="resenas" data-section="resenas">
-  <div class="section-container">
-    <h2 class="section-heading reveal">
-      {t.reviews.heading}
-    </h2>
+<section
+  class="reviews-section"
+  id="resenas"
+  data-section="resenas"
+  data-screen-label="Reseñas"
+>
+  <div class="reviews-container">
+    <SectionHeading
+      eyebrow={t.reviews.eyebrow}
+      title={t.reviews.heading}
+      centered
+      class="reveal"
+    />
 
-    <!-- Rating badge -->
-    <div class="flex items-center justify-center gap-3 mb-8 sm:mb-12 reveal stagger-1">
-      <StarRating size="lg" />
-      <span class="text-2xl font-bold text-lake-700 font-body">4.6</span>
-      <a href="https://g.page/r/XXXX/review"
-         class="text-lake-500 underline font-body"
-         target="_blank" rel="noopener"
-         data-event="maps_click" data-location="reviews">
-        {t.reviews.viewOnMaps}
-      </a>
-    </div>
-
-    <!-- Testimonios -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
+    <div class="reviews-grid reveal stagger-1">
       {t.reviews.items.map((review) => (
-        <div class="card-standard">
-          <StarRating count={review.stars} size="sm" class="mb-3" />
-          <p class="font-body text-neutral italic mb-4">"{review.text}"</p>
-          <p class="font-body text-sm text-lake-700 font-semibold">— {review.author}</p>
-        </div>
+        <article class="review-card">
+          <div class="stars" aria-label={`${review.stars} / 5`}>
+            {Array.from({ length: review.stars }).map(() => (
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1.5l1.9 4.1 4.5.5-3.3 3 .9 4.4L8 11.2l-4 2.3.9-4.4-3.3-3 4.5-.5z" />
+              </svg>
+            ))}
+          </div>
+          <blockquote>{review.text}</blockquote>
+          <div class="who">
+            <div class="avatar" aria-hidden="true">{initials(review.author)}</div>
+            <div>
+              <div class="name">{review.author}</div>
+            </div>
+          </div>
+        </article>
       ))}
     </div>
 
-    <!-- CTA dejar resena -->
-    <div class="text-center mt-10">
-      <a href="https://g.page/r/XXXX/review"
-         class="section-cta"
-         target="_blank" rel="noopener"
-         data-event="maps_click" data-location="leave-review">
-        {t.reviews.leaveReview} &rarr;
-      </a>
+    <div class="reviews-actions reveal stagger-2">
+      <LinkRule
+        href="https://g.page/r/XXXX/review"
+        label={t.reviews.viewOnMaps}
+        event="maps_click"
+        location="reviews"
+        target="_blank"
+        rel="noopener"
+      />
+      <LinkRule
+        href="https://g.page/r/XXXX/review"
+        label={t.reviews.leaveReview}
+        event="maps_click"
+        location="leave-review"
+        target="_blank"
+        rel="noopener"
+      />
     </div>
   </div>
 </section>
+
+<style>
+  .reviews-section {
+    padding-block: clamp(80px, 10vw, 160px);
+    background: var(--color-olive-50);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .reviews-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .reviews-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 900px) {
+    .reviews-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .review-card {
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-line);
+    padding: 40px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 28px;
+    min-height: 340px;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: var(--color-earth-400);
+  }
+
+  .stars svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  blockquote {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    font-style: italic;
+    color: var(--color-ink);
+  }
+
+  blockquote::before {
+    content: "\201C";
+    display: block;
+    font-family: var(--font-display);
+    font-size: 64px;
+    line-height: 0.4;
+    color: var(--color-earth-300);
+    margin-bottom: 8px;
+  }
+
+  .who {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-olive-200);
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--color-lake-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .name {
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+  }
+
+  .reviews-actions {
+    margin-top: 64px;
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

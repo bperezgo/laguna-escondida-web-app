@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/ui/Eyebrow.astro';
+import Button from '../../components/ui/Button.astro';
 import menuData from '../../../../menu.json';
 
 const { restaurant, categories } = menuData;
@@ -23,37 +25,33 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
 >
   <Navbar />
 
-  <!-- ── HEADER ───────────────────────────────────────────────── -->
-  <header class="bg-lake-700 py-10 px-4 text-center">
-    <div class="max-w-3xl mx-auto">
-      <img
-        src="/logo-navbar.png"
-        alt="Laguna Escondida"
-        width="72"
-        height="72"
-        class="rounded-full mx-auto mb-5 ring-2 ring-earth-300/40"
-        loading="eager"
-      />
-      <h1 class="font-display text-3xl sm:text-4xl text-white mb-2">{restaurant.name}</h1>
-      <p class="font-body text-earth-300 text-base">{restaurant.tagline}</p>
+  <header class="menu-hero" data-section="menu-hero" data-screen-label="Menú hero">
+    <div class="hero-container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span aria-hidden="true">/</span>
+        <span class="is-current">Menú</span>
+      </nav>
+
+      <div class="hero-content">
+        <Eyebrow text="Carta · Cocina campestre" inverse />
+        <h1 class="hero-title">
+          {restaurant.name}
+        </h1>
+        <p class="hero-lead">{restaurant.tagline}</p>
+      </div>
     </div>
   </header>
 
-  <!-- ── TABS STICKY ──────────────────────────────────────────── -->
-  <div id="category-tabs" class="sticky top-16 z-40 bg-sand-100 border-b border-sand-200 shadow-sm">
-    <div class="max-w-3xl mx-auto px-4">
-      <div class="tabs-scroll flex overflow-x-auto gap-2 py-3" role="tablist" aria-label="Categorías del menú">
+  <div id="category-tabs" class="category-tabs">
+    <div class="tabs-container">
+      <div class="tabs-scroll" role="tablist" aria-label="Categorías del menú">
         {sortedCategories.map((cat, i) => (
           <button
             role="tab"
             data-target={cat.id}
             aria-selected={i === 0 ? 'true' : 'false'}
-            class:list={[
-              'tab-btn shrink-0 px-4 py-2 rounded-full font-body text-sm font-semibold transition-all duration-200 border cursor-pointer',
-              i === 0
-                ? 'bg-lake-500 text-white border-lake-500'
-                : 'bg-white text-lake-700 border-sand-200 hover:border-lake-100 hover:bg-lake-50'
-            ]}
+            class:list={['tab-btn', i === 0 && 'is-active']}
           >
             {cat.name}
           </button>
@@ -62,78 +60,59 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
     </div>
   </div>
 
-  <!-- ── MENU CONTENT ─────────────────────────────────────────── -->
-  <main class="bg-sand-gradient min-h-screen">
-    <div class="max-w-3xl mx-auto px-4 pt-4 pb-16">
-
+  <main class="menu-main">
+    <div class="menu-container">
       {sortedCategories.map((cat, i) => (
-        <section id={cat.id} data-section={`menu-${cat.id}`} class="scroll-mt-36">
-          <h2 class="font-display text-xl sm:text-2xl text-lake-700 pt-8 mb-5">
-            {cat.name}
-          </h2>
+        <section id={cat.id} data-section={`menu-${cat.id}`} class="menu-category">
+          <header class="category-head">
+            <p class="category-index">{String(i + 1).padStart(2, '0')}</p>
+            <h2 class="category-title">{cat.name}</h2>
+          </header>
 
-          <div class="space-y-3">
+          <ul class="dishes-list">
             {cat.dishes.map((dish) => (
-              <div class="card-standard p-0 overflow-hidden">
-                <div class="flex items-stretch gap-0">
-                  <!-- Texto -->
-                  <div class="flex-1 min-w-0 flex flex-col justify-between p-4 sm:p-5">
-                    <div>
-                      <h3 class="font-display text-base text-lake-700 leading-snug">{dish.name}</h3>
-                      {dish.description && (
-                        <p class="font-body text-sm text-neutral/70 mt-1 leading-relaxed">{dish.description}</p>
-                      )}
-                    </div>
-                    <span class="font-body font-semibold text-earth-500 text-base mt-3 block">
-                      {formatPrice(dish.price)}
-                    </span>
+              <li class="dish-item">
+                {dish.image && (
+                  <div class="dish-media">
+                    <img src={dish.image} alt={dish.name} width="128" height="128" loading="lazy" />
                   </div>
-                  <!-- Imagen -->
-                  {dish.image && (
-                    <div class="w-28 sm:w-32 shrink-0">
-                      <img
-                        src={dish.image}
-                        alt={dish.name}
-                        width="128"
-                        height="128"
-                        class="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
+                )}
+                <div class="dish-body">
+                  <div class="dish-head">
+                    <h3 class="dish-name">{dish.name}</h3>
+                    <span class="dish-dots" aria-hidden="true"></span>
+                    <span class="dish-price">{formatPrice(dish.price)}</span>
+                  </div>
+                  {dish.description && (
+                    <p class="dish-desc">{dish.description}</p>
                   )}
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          {i < sortedCategories.length - 1 && (
-            <div class="mt-10 mb-2 h-px" style="background: linear-gradient(to right, transparent, #C9A84C55, transparent);"></div>
-          )}
+          {i < sortedCategories.length - 1 && <div class="category-divider" aria-hidden="true"></div>}
         </section>
       ))}
 
-      <!-- ── CTA WHATSAPP ────────────────────────────────────── -->
-      <div class="text-center pt-14 pb-4">
-        <div class="h-px mb-8 mx-auto max-w-xs" style="background: linear-gradient(to right, transparent, #C9A84C, transparent);"></div>
-        <h2 class="font-display text-2xl sm:text-3xl text-lake-700 mb-3">¿Listo para reservar?</h2>
-        <p class="font-body text-neutral/70 mb-7 max-w-xs mx-auto text-sm sm:text-base">
+      <div class="menu-cta">
+        <Eyebrow text="Reservas" centered />
+        <h2 class="cta-title">¿Listo para reservar?</h2>
+        <p class="cta-lead">
           Contáctanos por WhatsApp para reservar tu mesa o consultar disponibilidad.
         </p>
-        <a
+        <Button
+          variant="primary"
           href={waHref}
-          class="btn btn-primary text-white font-body font-semibold gap-2 px-6"
-          data-event="whatsapp_click"
-          data-location="menu-cta"
+          event="whatsapp_click"
+          location="menu-cta"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
+          withDot
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
           Reservar mesa
-        </a>
+        </Button>
       </div>
-
     </div>
   </main>
 
@@ -141,13 +120,313 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
 </BaseLayout>
 
 <style>
-  /* Hide scrollbar on tabs row while keeping scroll */
+  .menu-hero {
+    position: relative;
+    padding-block: clamp(96px, 10vw, 140px) clamp(48px, 6vw, 80px);
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+  }
+
+  .hero-container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .breadcrumb {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.55);
+    margin-bottom: 40px;
+  }
+
+  .breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-sand-50);
+  }
+
+  .breadcrumb .is-current {
+    color: var(--color-earth-300);
+  }
+
+  .hero-content {
+    display: grid;
+    gap: 16px;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .hero-title {
+    margin: 12px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--color-sand-50);
+  }
+
+  .hero-lead {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.78);
+    max-width: 48ch;
+  }
+
+  .category-tabs {
+    position: sticky;
+    top: 64px;
+    z-index: 40;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .tabs-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
   .tabs-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-block: 16px;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
+
   .tabs-scroll::-webkit-scrollbar {
     display: none;
+  }
+
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    background: transparent;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .tab-btn:hover {
+    color: var(--color-ink);
+    border-color: var(--color-earth-300);
+  }
+
+  .tab-btn.is-active {
+    color: var(--color-sand-50);
+    background: var(--color-lake-700);
+    border-color: var(--color-lake-700);
+  }
+
+  .menu-main {
+    background: var(--color-surface);
+    padding-block: clamp(48px, 6vw, 80px) clamp(80px, 10vw, 140px);
+  }
+
+  .menu-container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .menu-category {
+    scroll-margin-top: 160px;
+    padding-top: 56px;
+  }
+
+  .menu-category:first-of-type {
+    padding-top: 32px;
+  }
+
+  .category-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-line-gold, var(--color-earth-300));
+  }
+
+  .category-index {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink, var(--color-earth-400));
+  }
+
+  .category-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.1;
+    color: var(--color-ink);
+  }
+
+  .dishes-list {
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dish-item {
+    display: flex;
+    gap: 20px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .dish-item:last-child {
+    border-bottom: none;
+  }
+
+  .dish-media {
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    overflow: hidden;
+    background: var(--color-surface-tint);
+  }
+
+  .dish-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dish-body {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .dish-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .dish-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    color: var(--color-ink);
+    flex-shrink: 0;
+  }
+
+  .dish-dots {
+    flex: 1;
+    height: 1px;
+    min-width: 24px;
+    background-image: radial-gradient(circle, var(--color-line) 1px, transparent 1px);
+    background-size: 6px 2px;
+    background-repeat: repeat-x;
+    background-position: 0 50%;
+    align-self: center;
+    margin-top: 4px;
+  }
+
+  .dish-price {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-lake-700);
+    flex-shrink: 0;
+  }
+
+  .dish-desc {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+    max-width: 56ch;
+  }
+
+  .category-divider {
+    margin: 48px 0 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in srgb, var(--color-earth-300) 35%, transparent),
+      transparent
+    );
+  }
+
+  .menu-cta {
+    margin-top: 80px;
+    padding-top: 56px;
+    border-top: 1px solid var(--color-line);
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .cta-title {
+    margin: 8px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    color: var(--color-ink);
+  }
+
+  .cta-lead {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+    max-width: 42ch;
+  }
+
+  @media (max-width: 560px) {
+    .dish-item {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dish-media {
+      width: 100%;
+      height: 200px;
+    }
+
+    .dish-head {
+      flex-wrap: wrap;
+    }
+
+    .dish-dots {
+      display: none;
+    }
   }
 </style>
 
@@ -160,23 +439,13 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
       tabs.forEach(function (btn) {
         var isActive = btn.getAttribute('data-target') === id;
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-
-        if (isActive) {
-          btn.classList.add('bg-lake-500', 'text-white', 'border-lake-500');
-          btn.classList.remove('bg-white', 'text-lake-700', 'border-sand-200');
-        } else {
-          btn.classList.remove('bg-lake-500', 'text-white', 'border-lake-500');
-          btn.classList.add('bg-white', 'text-lake-700', 'border-sand-200');
-        }
-
-        // Scroll active tab into view in the tabs bar
+        btn.classList.toggle('is-active', isActive);
         if (isActive) {
           btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
         }
       });
     }
 
-    // Click → scroll to section
     tabs.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var targetId = btn.getAttribute('data-target');
@@ -188,7 +457,6 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
       });
     });
 
-    // IntersectionObserver → update active tab on scroll
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -197,7 +465,7 @@ const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
           }
         });
       },
-      { threshold: 0.25, rootMargin: '-120px 0px -55% 0px' }
+      { threshold: 0.25, rootMargin: '-160px 0px -55% 0px' }
     );
 
     sections.forEach(function (section) {

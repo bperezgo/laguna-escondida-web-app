@@ -5,6 +5,10 @@ import Footer from '../../../components/Footer.astro';
 import Reviews from '../../../components/Reviews.astro';
 import StarRating from '../../../components/StarRating.astro';
 import PescaFAQ from '../../../components/PescaFAQ.astro';
+import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import SectionHeading from '../../../components/ui/SectionHeading.astro';
+import Button from '../../../components/ui/Button.astro';
+import LinkRule from '../../../components/ui/LinkRule.astro';
 import { sanityClient, urlFor, responsiveImage } from '../../../lib/sanity';
 import { FISH_SPECIES_QUERY } from '../../../lib/queries/fishSpecies';
 import { HERO_SECTION_QUERY } from '../../../lib/queries/heroSection';
@@ -20,7 +24,6 @@ const WA_NUMBER = '573194313781';
 const WA_MESSAGE = 'Hola, quiero reservar una visita de pesca deportiva en Laguna Escondida';
 const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
 
-// Datos enriquecidos por especie (hardcoded por ahora, puede migrar a Sanity)
 const speciesExtra: Record<string, { flavor: string; technique: string; avgWeight: string }> = {
   'Yamu': {
     flavor: 'Carne firme e intensa. El favorito para preparar en ceviche o frito con patacones.',
@@ -54,11 +57,115 @@ const difficultyLabel: Record<string, string> = {
   Media: 'Media',
   Dificil: 'Difícil',
 };
-const difficultyBadge: Record<string, string> = {
-  Facil: 'badge-primary',
-  Media: 'badge-secondary',
-  Dificil: 'badge-accent',
-};
+
+const differentiators = [
+  {
+    label: '01',
+    title: '5 especies en un solo lago',
+    body: 'Mientras la mayoría de trucheras solo ofrecen una especie, aquí puedes pescar cinco — cada visita es una experiencia diferente.',
+  },
+  {
+    label: '02',
+    title: 'Para todos los niveles',
+    body: 'Niños desde 4 años, principiantes y pescadores con experiencia. Caña, carnada y orientación incluidas — solo traes las ganas.',
+  },
+  {
+    label: '03',
+    title: 'Del agua a tu plato',
+    body: 'Lo que pesques, el restaurante lo prepara fresco. No hay nada más campestre que comer tu propia captura frente al lago.',
+  },
+];
+
+const steps = [
+  {
+    step: '01',
+    title: 'Llegada',
+    description: 'Parqueas, entras y te recibimos con orientación del lugar. Te explicamos las zonas del lago y las especies disponibles.',
+  },
+  {
+    step: '02',
+    title: 'Elige tu puesto',
+    description: 'Seleccionas tu zona en el lago. Hay puestos al sol, a la sombra y kioscos privados para grupos con reserva anticipada.',
+  },
+  {
+    step: '03',
+    title: 'Pesca',
+    description: 'Caña y carnada básica incluidas. Nuestro equipo está disponible para ayudarte a pescar tu primera o décima captura.',
+  },
+  {
+    step: '04',
+    title: 'A la mesa',
+    description: 'El restaurante prepara tu captura fresca o pides del menú. Una vista al lago, comida campestre y el sabor de lo que pescaste.',
+  },
+];
+
+const includes = [
+  'Acceso al lago de pesca deportiva',
+  'Caña de pescar y carnada básica',
+  'Orientación inicial para nuevos pescadores',
+  'Asistencia del equipo durante la jornada',
+  'Parqueadero gratuito',
+  'Zonas de descanso y mesas al aire libre',
+];
+
+const extras = [
+  'Preparación de tu captura en el restaurante',
+  'Carnadas especiales para Yamu (mayor reto)',
+  'Kiosco privado para grupos (reserva anticipada)',
+  'Menú completo del restaurante campestre',
+  'Bebidas, jugos naturales y postres',
+  'Servicio de foto con tu captura',
+];
+
+const audiences = [
+  {
+    label: 'Familias',
+    title: 'Familias con niños',
+    description: 'Niños desde 4 años pueden pescar sin problema. El ambiente es seguro, tranquilo y lejos del ruido de la ciudad. Una forma diferente de pasar el fin de semana en familia.',
+  },
+  {
+    label: 'Parejas',
+    title: 'Parejas',
+    description: 'Un plan diferente. Naturaleza, tranquilidad y la complicidad de esperar juntos a que pique. Luego un almuerzo frente al lago con lo que pescaron.',
+  },
+  {
+    label: 'Grupos',
+    title: 'Grupos de amigos',
+    description: 'Competencia sana: quién pesca más, quién pesca el más grande. Con kiosco privado disponible para grupos que quieran su espacio exclusivo.',
+  },
+  {
+    label: 'Expertos',
+    title: 'Pescadores con experiencia',
+    description: 'El Yamu es el reto. Difícil de pescar, espectacular al comerlo. Si ya dominas la trucha, ven a buscar algo que te haga sudar.',
+  },
+];
+
+const tips = [
+  {
+    title: 'Las mañanas son mejores',
+    tip: 'Entre 9 AM y 11 AM el lago está más tranquilo y los peces más activos. Si buscas Yamu, llega temprano.',
+  },
+  {
+    title: 'Cada especie tiene su carnada',
+    tip: 'Masa para Tilapias, lombriz para Dorada y Cachama, carnada viva para Yamu. Pregúntanos al llegar y te orientamos.',
+  },
+  {
+    title: 'El Yamu requiere paciencia',
+    tip: 'Puede tardar hasta 2 horas antes de picar. No desesperes — cuando muerde, la adrenalina vale cada minuto de espera.',
+  },
+  {
+    title: 'Días nublados = más actividad',
+    tip: 'Con cielo nublado y temperatura fresca, los peces se mueven más. Los días soleados intensos los vuelven menos activos.',
+  },
+  {
+    title: 'Para niños: empieza cerca a la orilla',
+    tip: 'La Tilapia Roja es la más activa y abundante cerca a la orilla. Perfecta para que los pequeños tengan su primera captura rápido.',
+  },
+  {
+    title: 'Guarda calma en el puesto',
+    tip: 'El ruido y movimiento espantan los peces. Habla en voz baja, evita golpear el suelo y deja que el agua se calme antes de lanzar.',
+  },
+];
 
 const PAGE_TITLE = 'Pesca Deportiva en Marinilla — 5 especies | Laguna Escondida';
 const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica en un lago privado. La mayor variedad del Oriente Antioqueño, a 45 min de Medellín. Para todos los niveles.';
@@ -69,170 +176,133 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
   <main>
 
     <!-- ① HERO -->
-    <section class="hero min-h-[80vh] relative" id="inicio" data-section="pesca-hero">
-      <div class="absolute inset-0 overflow-hidden">
+    <section class="pesca-hero" id="inicio" data-section="pesca-hero" data-screen-label="Pesca hero">
+      <div class="hero-bg">
         <img
           src={heroImg.src}
           srcset={heroImg.srcset}
           sizes={heroImg.sizes}
           alt="Lago de pesca deportiva en Laguna Escondida, Marinilla, Antioquia"
-          class="w-full h-full object-cover will-change-transform"
+          class="hero-img"
           loading="eager"
           fetchpriority="high"
           data-parallax
         />
-        <div class="absolute inset-0 bg-linear-to-t from-lake-700/85 via-lake-700/45 via-40% to-transparent to-70%"></div>
+        <div class="hero-overlay"></div>
       </div>
 
-      <div class="hero-content relative z-10 px-4 max-w-4xl xl:max-w-5xl mx-auto flex items-end min-h-[80vh] pb-10 sm:pb-16">
-        <div class="flex flex-col items-start gap-5 text-left">
-          <h1 class="font-display text-3xl sm:text-4xl md:text-6xl xl:text-7xl text-white leading-tight text-shadow-hero hero-animate">
-            Pesca 5 especies.<br/>
-            Ninguna truchera<br/>
-            <span class="text-earth-300">las tiene todas.</span>
+      <div class="hero-inner">
+        <div class="hero-content">
+          <Eyebrow text="Pesca deportiva · Lago privado" inverse />
+          <h1 class="hero-title">
+            Pesca 5 especies.<br />
+            Ninguna truchera<br />
+            <em>las tiene todas.</em>
           </h1>
-
-          <p class="hidden sm:block text-lg sm:text-xl md:text-2xl text-white/90 font-body max-w-2xl text-shadow-hero hero-animate hero-animate-delay-1">
+          <p class="hero-lead">
             Yamu, Dorada, Cachama, Tilapia Roja y Nilotica en un lago privado en Marinilla.
             No se necesita experiencia previa — traes ganas, nosotros ponemos el resto.
           </p>
 
-          <div class="flex flex-col sm:flex-row gap-4 mt-4 hero-animate hero-animate-delay-2">
-            <a
+          <div class="hero-actions">
+            <Button
+              variant="inverse-primary"
               href={waHref}
-              class="btn btn-lg bg-white text-lake-700 hover:bg-lake-50 border-0 font-body font-semibold text-lg px-8"
-              data-event="whatsapp_click" data-location="pesca-hero"
+              event="whatsapp_click"
+              location="pesca-hero"
+              withDot
             >
-              <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Reservar por WhatsApp
-            </a>
-            <a
-              href="#como-funciona"
-              class="btn btn-lg btn-outline border-white text-white hover:bg-white/20 hover:border-white font-body font-semibold text-lg px-8"
-            >
-              Ver cómo funciona ↓
-            </a>
+            </Button>
+            <Button variant="inverse-secondary" href="#como-funciona">
+              Ver cómo funciona
+            </Button>
           </div>
 
-          <div class="flex items-center gap-2 mt-2 text-white/80 text-shadow-hero hero-animate hero-animate-delay-3">
+          <div class="hero-trust">
             <StarRating />
-            <span class="font-body text-sm sm:text-base">4.6 en Google Maps · Marinilla, Antioquia</span>
+            <span>4.6 en Google Maps · Marinilla, Antioquia</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ② DIFERENCIADORES -->
-    <section class="section-padding bg-sand-gradient" id="diferenciadores" data-section="pesca-diferenciadores">
+    <section class="pesca-section" id="diferenciadores" data-section="pesca-diferenciadores" data-screen-label="Diferenciadores">
       <div class="section-container">
-        <h2 class="section-heading reveal">¿Por qué pescar en Laguna Escondida?</h2>
-        <p class="section-subtitle reveal stagger-1">
-          No somos una truchera más. Somos el lago con más variedad de especies del Oriente Antioqueño,
-          en un ambiente campestre donde la pesca y la gastronomía van de la mano.
-        </p>
+        <SectionHeading
+          eyebrow="Por qué aquí"
+          title="¿Por qué pescar en Laguna Escondida?"
+          subtitle="No somos una truchera más. Somos el lago con más variedad de especies del Oriente Antioqueño, en un ambiente campestre donde la pesca y la gastronomía van de la mano."
+          class="reveal"
+        />
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
-          <!-- Card 1 -->
-          <div class="card-standard text-center">
-            <figure class="px-6 pt-6 mb-4">
-              <div class="w-16 h-16 bg-lake-50 rounded-full flex items-center justify-center mx-auto">
-                <svg class="w-8 h-8 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M6.5 12c3-6 10-6 14-2-4 4-11 4-14-2z M6.5 12c3 6 10 6 14 2 M3 12h3.5"/>
-                </svg>
-              </div>
-            </figure>
-            <div class="card-body items-center text-center pt-0">
-              <h3 class="card-title font-display text-xl text-lake-700">5 especies en un solo lago</h3>
-              <p class="font-body text-neutral text-sm">Mientras la mayoría de trucheras solo ofrecen una especie, aquí puedes pescar cinco — cada visita es una experiencia diferente.</p>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="card-standard text-center">
-            <figure class="px-6 pt-6 mb-4">
-              <div class="w-16 h-16 bg-lake-50 rounded-full flex items-center justify-center mx-auto">
-                <svg class="w-8 h-8 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 11a4 4 0 100-8 4 4 0 000 8z M23 21v-2a4 4 0 00-3-3.87 M16 3.13a4 4 0 010 7.75"/>
-                </svg>
-              </div>
-            </figure>
-            <div class="card-body items-center text-center pt-0">
-              <h3 class="card-title font-display text-xl text-lake-700">Para todos los niveles</h3>
-              <p class="font-body text-neutral text-sm">Niños desde 4 años, principiantes y pescadores con experiencia. Caña, carnada y orientación incluidas — solo traes las ganas.</p>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="card-standard text-center">
-            <figure class="px-6 pt-6 mb-4">
-              <div class="w-16 h-16 bg-lake-50 rounded-full flex items-center justify-center mx-auto">
-                <svg class="w-8 h-8 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2 M7 2v20 M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3v7"/>
-                </svg>
-              </div>
-            </figure>
-            <div class="card-body items-center text-center pt-0">
-              <h3 class="card-title font-display text-xl text-lake-700">Del agua a tu plato</h3>
-              <p class="font-body text-neutral text-sm">Lo que pesques, el restaurante lo prepara fresco. No hay nada más campestre que comer tu propia captura frente al lago.</p>
-            </div>
-          </div>
+        <div class="diff-grid reveal stagger-1">
+          {differentiators.map((d) => (
+            <article class="diff-card">
+              <div class="diff-index">{d.label}</div>
+              <h3 class="diff-title">{d.title}</h3>
+              <p class="diff-body">{d.body}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
 
     <!-- ③ LAS 5 ESPECIES -->
-    <section class="section-padding bg-lake-gradient" id="especies" data-section="pesca-especies">
+    <section class="pesca-section pesca-section--tint" id="especies" data-section="pesca-especies" data-screen-label="Especies">
       <div class="section-container">
-        <h2 class="section-heading reveal">Las 5 especies que puedes pescar</h2>
-        <p class="section-subtitle max-w-3xl reveal stagger-1">
-          Cada especie tiene su propio carácter: algunas pican rápido, otras son todo un reto.
-          Todas terminan en un plato delicioso si así lo quieres.
-        </p>
+        <SectionHeading
+          eyebrow="Lo que vive en el lago"
+          title="Las 5 especies que puedes pescar"
+          subtitle="Cada especie tiene su propio carácter: algunas pican rápido, otras son todo un reto. Todas terminan en un plato delicioso si así lo quieres."
+          class="reveal"
+        />
 
-        <div class="flex flex-col gap-6 reveal stagger-2">
-          {speciesData.map((species: any, i: number) => {
+        <div class="species-list reveal stagger-1">
+          {speciesData.map((species: any) => {
             const extra = speciesExtra[species.name] ?? {
               flavor: species.description,
               technique: 'Consulta con nuestro equipo al llegar.',
               avgWeight: '—',
             };
             return (
-              <div class="bg-white rounded-brand shadow-brand overflow-hidden">
-                <div class="flex flex-col sm:flex-row">
-                  {species.image && (
-                    <div class="sm:w-40 sm:shrink-0">
-                      <img
-                        src={urlFor(species.image).width(160).height(160).fit('crop').url()}
-                        alt={species.image?.alt || species.name}
-                        class="w-full h-40 sm:h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <div class="flex-1 p-5 sm:p-6">
-                    <div class="flex flex-wrap items-center gap-3 mb-3">
-                      <h3 class="font-display text-xl text-lake-700">{species.name}</h3>
-                      <span class={`badge ${difficultyBadge[species.difficulty] ?? 'badge-primary'} badge-outline font-body text-xs`}>
-                        Dificultad: {difficultyLabel[species.difficulty] ?? species.difficulty}
-                      </span>
-                      <span class="text-xs font-body text-neutral/60 bg-sand-200 px-2 py-0.5 rounded-full">
-                        Peso prom. {extra.avgWeight}
-                      </span>
-                    </div>
-
-                    <div class="grid sm:grid-cols-2 gap-4">
+              <article class="species-card">
+                {species.image && (
+                  <div class="species-media">
+                    <img
+                      src={urlFor(species.image).width(400).height(500).fit('crop').url()}
+                      alt={species.image?.alt || species.name}
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="species-body">
+                  <header class="species-head">
+                    <h3 class="species-name">{species.name}</h3>
+                    <dl class="species-meta">
                       <div>
-                        <p class="text-xs font-body font-semibold text-earth-500 uppercase tracking-wide mb-1">Sabor</p>
-                        <p class="font-body text-neutral text-sm">{extra.flavor}</p>
+                        <dt>Dificultad</dt>
+                        <dd>{difficultyLabel[species.difficulty] ?? species.difficulty}</dd>
                       </div>
                       <div>
-                        <p class="text-xs font-body font-semibold text-earth-500 uppercase tracking-wide mb-1">Técnica recomendada</p>
-                        <p class="font-body text-neutral text-sm">{extra.technique}</p>
+                        <dt>Peso promedio</dt>
+                        <dd>{extra.avgWeight}</dd>
                       </div>
+                    </dl>
+                  </header>
+                  <div class="species-split">
+                    <div>
+                      <p class="species-label">Sabor</p>
+                      <p class="species-copy">{extra.flavor}</p>
+                    </div>
+                    <div>
+                      <p class="species-label">Técnica recomendada</p>
+                      <p class="species-copy">{extra.technique}</p>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
@@ -240,220 +310,104 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
     </section>
 
     <!-- ④ CÓMO FUNCIONA -->
-    <section class="section-padding bg-white" id="como-funciona" data-section="pesca-como-funciona">
+    <section class="pesca-section" id="como-funciona" data-section="pesca-como-funciona" data-screen-label="Como funciona">
       <div class="section-container">
-        <h2 class="section-heading reveal">¿Cómo es la experiencia?</h2>
-        <p class="section-subtitle reveal stagger-1">
-          Sin complicaciones. Llegas, pescas y comes. Así de sencillo.
-        </p>
+        <SectionHeading
+          eyebrow="La experiencia"
+          title="¿Cómo es la experiencia?"
+          subtitle="Sin complicaciones. Llegas, pescas y comes. Así de sencillo."
+          class="reveal"
+        />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8 reveal stagger-2">
-          {[
-            {
-              step: '01',
-              title: 'Llegada',
-              description: 'Parqueas, entras y te recibimos con orientación del lugar. Te explicamos las zonas del lago y las especies disponibles.',
-              icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>`,
-            },
-            {
-              step: '02',
-              title: 'Elige tu puesto',
-              description: 'Seleccionas tu zona en el lago. Hay puestos al sol, a la sombra y kioscos privados para grupos con reserva anticipada.',
-              icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>`,
-            },
-            {
-              step: '03',
-              title: 'Pesca',
-              description: 'Caña y carnada básica incluidas. Nuestro equipo está disponible para ayudarte a pescar tu primera o décima captura.',
-              icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 12c3-6 10-6 14-2-4 4-11 4-14-2z M6.5 12c3 6 10 6 14 2 M3 12h3.5 M16 10l1-4 M16 14l1 4"/>`,
-            },
-            {
-              step: '04',
-              title: 'A la mesa',
-              description: 'El restaurante prepara tu captura fresca o pides del menú. Una vista al lago, comida campestre y el sabor de lo que pescaste.',
-              icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2 M7 2v20 M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3v7"/>`,
-            },
-          ].map((item) => (
-            <div class="relative text-center">
-              <p class="font-display text-7xl sm:text-8xl text-earth-300/20 leading-none select-none mb-2">{item.step}</p>
-              <div class="w-12 h-12 bg-lake-50 rounded-full flex items-center justify-center mx-auto -mt-8 mb-4 border-2 border-lake-100">
-                <svg class="w-6 h-6 text-lake-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <Fragment set:html={item.icon} />
-                </svg>
-              </div>
-              <h3 class="font-display text-lg text-lake-700 mb-2">{item.title}</h3>
-              <p class="font-body text-neutral text-sm leading-relaxed">{item.description}</p>
-            </div>
+        <div class="steps-grid reveal stagger-1">
+          {steps.map((s) => (
+            <article class="step-card">
+              <div class="step-index">{s.step}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-body">{s.description}</p>
+            </article>
           ))}
         </div>
       </div>
     </section>
 
     <!-- ⑤ QUÉ INCLUYE -->
-    <section class="section-padding bg-sand-100" id="incluye" data-section="pesca-incluye">
+    <section class="pesca-section pesca-section--olive" id="incluye" data-section="pesca-incluye" data-screen-label="Incluye">
       <div class="section-container">
-        <h2 class="section-heading reveal">¿Qué incluye la visita?</h2>
-        <p class="section-subtitle reveal stagger-1">
-          Todo lo que necesitas para pescar está cubierto desde que llegas.
-        </p>
+        <SectionHeading
+          eyebrow="Lo que cubrimos"
+          title="¿Qué incluye la visita?"
+          subtitle="Todo lo que necesitas para pescar está cubierto desde que llegas."
+          class="reveal"
+        />
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto reveal stagger-2">
-          <!-- Incluido -->
-          <div class="bg-white rounded-brand shadow-brand p-6 sm:p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-lake-50 rounded-full flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              <h3 class="font-display text-xl text-lake-700">Incluido</h3>
-            </div>
-            <ul class="space-y-3 font-body text-neutral">
-              {[
-                'Acceso al lago de pesca deportiva',
-                'Caña de pescar y carnada básica',
-                'Orientación inicial para nuevos pescadores',
-                'Asistencia del equipo durante la jornada',
-                'Parqueadero gratuito',
-                'Zonas de descanso y mesas al aire libre',
-              ].map((item) => (
-                <li class="flex items-start gap-3">
-                  <svg class="w-5 h-5 text-earth-300 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
-                  <span class="text-sm">{item}</span>
-                </li>
-              ))}
+        <div class="includes-grid reveal stagger-1">
+          <div class="includes-card">
+            <p class="includes-label">Incluido</p>
+            <ul class="includes-list">
+              {includes.map((item) => <li>{item}</li>)}
             </ul>
           </div>
-
-          <!-- Opcionales -->
-          <div class="bg-white rounded-brand shadow-brand p-6 sm:p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-sand-200 rounded-full flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-neutral/50" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                </svg>
-              </div>
-              <h3 class="font-display text-xl text-lake-700">Adicionales</h3>
-            </div>
-            <ul class="space-y-3 font-body text-neutral">
-              {[
-                'Preparación de tu captura en el restaurante',
-                'Carnadas especiales para Yamu (mayor reto)',
-                'Kiosco privado para grupos (reserva anticipada)',
-                'Menú completo del restaurante campestre',
-                'Bebidas, jugos naturales y postres',
-                'Servicio de foto con tu captura',
-              ].map((item) => (
-                <li class="flex items-start gap-3">
-                  <svg class="w-5 h-5 text-neutral/30 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                  </svg>
-                  <span class="text-sm">{item}</span>
-                </li>
-              ))}
+          <div class="includes-card includes-card--muted">
+            <p class="includes-label">Adicionales</p>
+            <ul class="includes-list includes-list--muted">
+              {extras.map((item) => <li>{item}</li>)}
             </ul>
           </div>
         </div>
 
-        <div class="text-center mt-10 reveal stagger-3">
-          <p class="font-body text-neutral/70 text-sm mb-4">¿Preguntas sobre precios o disponibilidad?</p>
-          <a
+        <div class="includes-cta reveal stagger-2">
+          <p class="includes-cta-lead">¿Preguntas sobre precios o disponibilidad?</p>
+          <LinkRule
             href={waHref}
-            class="btn btn-primary text-white font-body font-semibold"
-            data-event="whatsapp_click" data-location="pesca-incluye"
-          >
-            Consultar por WhatsApp →
-          </a>
+            label="Consultar por WhatsApp"
+            event="whatsapp_click"
+            location="pesca-incluye"
+            target="_blank"
+            rel="noopener"
+          />
         </div>
       </div>
     </section>
 
     <!-- ⑥ PARA QUIÉN ES -->
-    <section class="section-padding bg-sand-gradient" id="para-quien" data-section="pesca-para-quien">
+    <section class="pesca-section pesca-section--tint" id="para-quien" data-section="pesca-para-quien" data-screen-label="Para quien">
       <div class="section-container">
-        <h2 class="section-heading reveal">¿Para quién es esta experiencia?</h2>
-        <p class="section-subtitle reveal stagger-1">
-          Laguna Escondida recibe a todo tipo de visitantes. Cada uno encuentra algo especial en el lago.
-        </p>
+        <SectionHeading
+          eyebrow="Para ti"
+          title="¿Para quién es esta experiencia?"
+          subtitle="Laguna Escondida recibe a todo tipo de visitantes. Cada uno encuentra algo especial en el lago."
+          class="reveal"
+        />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal stagger-2">
-          {[
-            {
-              emoji: '👨‍👩‍👧‍👦',
-              title: 'Familias con niños',
-              description: 'Niños desde 4 años pueden pescar sin problema. El ambiente es seguro, tranquilo y lejos del ruido de la ciudad. Una forma diferente de pasar el fin de semana en familia.',
-            },
-            {
-              emoji: '👫',
-              title: 'Parejas',
-              description: 'Un plan diferente. Naturaleza, tranquilidad y la complicidad de esperar juntos a que pique. Luego un almuerzo frente al lago con lo que pescaron.',
-            },
-            {
-              emoji: '🍻',
-              title: 'Grupos de amigos',
-              description: 'Competencia sana: quién pesca más, quién pesca el más grande. Con kiosco privado disponible para grupos que quieran su espacio exclusivo.',
-            },
-            {
-              emoji: '🎣',
-              title: 'Pescadores con experiencia',
-              description: 'El Yamu es el reto. Difícil de pescar, espectacular al comerlo. Si ya dominas la trucha, ven a buscar algo que te haga sudar.',
-            },
-          ].map((item) => (
-            <div class="bg-white rounded-brand shadow-brand p-6 flex gap-4">
-              <span class="text-3xl shrink-0 mt-1" role="img" aria-hidden="true">{item.emoji}</span>
-              <div>
-                <h3 class="font-display text-lg text-lake-700 mb-2">{item.title}</h3>
-                <p class="font-body text-neutral text-sm leading-relaxed">{item.description}</p>
-              </div>
-            </div>
+        <div class="audience-grid reveal stagger-1">
+          {audiences.map((a) => (
+            <article class="audience-card">
+              <p class="audience-tag">{a.label}</p>
+              <h3 class="audience-title">{a.title}</h3>
+              <p class="audience-body">{a.description}</p>
+            </article>
           ))}
         </div>
       </div>
     </section>
 
     <!-- ⑦ CONSEJOS DE PESCA -->
-    <section class="section-padding bg-white" id="consejos" data-section="pesca-consejos">
+    <section class="pesca-section" id="consejos" data-section="pesca-consejos" data-screen-label="Consejos">
       <div class="section-container">
-        <h2 class="section-heading reveal">Consejos para pescar mejor</h2>
-        <p class="section-subtitle reveal stagger-1">
-          No necesitas ser experto, pero estos tips te dan ventaja desde el primer lanzamiento.
-        </p>
+        <SectionHeading
+          eyebrow="Apuntes del lago"
+          title="Consejos para pescar mejor"
+          subtitle="No necesitas ser experto, pero estos tips te dan ventaja desde el primer lanzamiento."
+          class="reveal"
+        />
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto reveal stagger-2">
-          {[
-            {
-              title: 'Las mañanas son mejores',
-              tip: 'Entre 9 AM y 11 AM el lago está más tranquilo y los peces más activos. Si buscas Yamu, llega temprano.',
-            },
-            {
-              title: 'Cada especie tiene su carnada',
-              tip: 'Masa para Tilapias, lombriz para Dorada y Cachama, carnada viva para Yamu. Pregúntanos al llegar y te orientamos.',
-            },
-            {
-              title: 'El Yamu requiere paciencia',
-              tip: 'Puede tardar hasta 2 horas antes de picar. No desesperes — cuando muerde, la adrenalina vale cada minuto de espera.',
-            },
-            {
-              title: 'Días nublados = más actividad',
-              tip: 'Con cielo nublado y temperatura fresca, los peces se mueven más. Los días soleados intensos los vuelven menos activos.',
-            },
-            {
-              title: 'Para niños: empieza cerca a la orilla',
-              tip: 'La Tilapia Roja es la más activa y abundante cerca a la orilla. Perfecta para que los pequeños tengan su primera captura rápido.',
-            },
-            {
-              title: 'Guarda calma en el puesto',
-              tip: 'El ruido y movimiento espantan los peces. Habla en voz baja, evita golpear el suelo y deja que el agua se calme antes de lanzar.',
-            },
-          ].map((item) => (
-            <div class="flex gap-4 p-5 border-l-4 border-earth-300 bg-sand-100 rounded-r-brand">
-              <div>
-                <h3 class="font-display text-base text-lake-700 mb-1">{item.title}</h3>
-                <p class="font-body text-neutral text-sm leading-relaxed">{item.tip}</p>
-              </div>
-            </div>
+        <div class="tips-grid reveal stagger-1">
+          {tips.map((t) => (
+            <article class="tip-card">
+              <h3 class="tip-title">{t.title}</h3>
+              <p class="tip-body">{t.tip}</p>
+            </article>
           ))}
         </div>
       </div>
@@ -466,33 +420,31 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
     <PescaFAQ />
 
     <!-- ⑩ CTA FINAL -->
-    <section class="section-padding bg-lake-700" id="reservar" data-section="pesca-cta-final">
-      <div class="section-container text-center">
-        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-white mb-4 reveal">
-          ¿Listo para pescar <span class="text-earth-300">Yamu</span>?
-        </h2>
-        <p class="font-body text-white/80 text-lg max-w-xl mx-auto mb-8 reveal stagger-1">
-          Reserva tu visita por WhatsApp. Te confirmamos disponibilidad en minutos
-          y te damos todo lo que necesitas saber antes de llegar.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center reveal stagger-2">
-          <a
-            href={waHref}
-            class="btn btn-lg bg-earth-300 hover:bg-earth-500 text-lake-700 border-0 font-body font-semibold text-lg px-10"
-            data-event="whatsapp_click" data-location="pesca-cta-final"
-          >
-            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Reservar ahora
-          </a>
-          <a
-            href="/"
-            class="btn btn-lg btn-outline border-white/40 text-white/80 hover:bg-white/10 hover:border-white font-body font-semibold text-lg px-10"
-          >
-            Ver otras experiencias
-          </a>
+    <section class="pesca-cta-final" id="reservar" data-section="pesca-cta-final" data-screen-label="CTA final">
+      <div class="cta-container">
+        <div class="cta-text reveal">
+          <Eyebrow text="Reserva tu visita" inverse />
+          <h2 class="cta-heading">¿Listo para pescar <em>Yamu</em>?</h2>
+          <p class="cta-lead">
+            Reserva tu visita por WhatsApp. Te confirmamos disponibilidad en minutos
+            y te damos todo lo que necesitas saber antes de llegar.
+          </p>
         </div>
-
-        <p class="font-body text-white/40 text-sm mt-8 reveal stagger-3">
+        <div class="cta-actions reveal stagger-1">
+          <Button
+            variant="inverse-primary"
+            href={waHref}
+            event="whatsapp_click"
+            location="pesca-cta-final"
+            withDot
+          >
+            Reservar ahora
+          </Button>
+          <Button variant="inverse-secondary" href="/">
+            Ver otras experiencias
+          </Button>
+        </div>
+        <p class="cta-note reveal stagger-2">
           Sábados, domingos y festivos · 9:00 AM – 6:00 PM · Vereda La Primavera, Marinilla
         </p>
       </div>
@@ -500,15 +452,16 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
 
   </main>
 
-  <!-- WhatsApp flotante -->
   <a
     id="wa-floating-btn"
     href={waHref}
-    class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-brand-lg hover:scale-110 transition-transform duration-200"
+    class="wa-floating"
     aria-label="Contactar por WhatsApp"
     data-event="whatsapp_click" data-location="floating"
   >
-    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
   </a>
 
   <Footer />
@@ -522,7 +475,7 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
     window.addEventListener('scroll', function() {
       if (!ticking) {
         requestAnimationFrame(function() {
-          img.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+          img.style.transform = 'translateY(' + (window.scrollY * -0.15) + 'px)';
           ticking = false;
         });
         ticking = true;
@@ -530,3 +483,628 @@ const PAGE_DESCRIPTION = 'Pesca Yamu, Dorada, Cachama, Tilapia Roja y Nilotica e
     }, { passive: true });
   })();
 </script>
+
+<style>
+  /* ── Hero ── */
+  .pesca-hero {
+    position: relative;
+    min-height: 92vh;
+    padding-top: 120px;
+    padding-bottom: 80px;
+    overflow: hidden;
+    color: var(--color-sand-50);
+    background: var(--color-lake-800);
+    isolation: isolate;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(7, 19, 14, 0) 0%,
+      rgba(7, 19, 14, 0.15) 30%,
+      rgba(7, 19, 14, 0.72) 100%
+    );
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    min-height: calc(92vh - 200px);
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 720px;
+  }
+
+  .hero-title {
+    margin-top: 24px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 6.2vw, 5.25rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--color-sand-50);
+    max-width: 18ch;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--color-earth-300);
+    font-weight: 300;
+  }
+
+  .hero-lead {
+    margin-top: 24px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.8);
+    max-width: 52ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    font-size: var(--text-body-sm);
+    color: rgba(250, 248, 243, 0.7);
+  }
+
+  /* ── Section containers ── */
+  .pesca-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .pesca-section--tint {
+    background: var(--color-surface-tint);
+  }
+
+  .pesca-section--olive {
+    background: var(--color-olive-50);
+  }
+
+  .section-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ── Diferenciadores ── */
+  .diff-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  @media (min-width: 900px) {
+    .diff-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 56px;
+    }
+  }
+
+  .diff-card {
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line-gold, var(--color-earth-300));
+  }
+
+  .diff-index {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+  }
+
+  .diff-title {
+    margin: 18px 0 12px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+
+  .diff-body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── Especies list ── */
+  .species-list {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .species-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    background: var(--color-surface-elevated, #ffffff);
+    border: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+
+  @media (min-width: 720px) {
+    .species-card {
+      grid-template-columns: 240px 1fr;
+    }
+  }
+
+  .species-media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-olive-50);
+  }
+
+  @media (min-width: 720px) {
+    .species-media {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+  }
+
+  .species-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .species-body {
+    padding: 32px;
+    display: grid;
+    gap: 20px;
+  }
+
+  .species-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .species-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1;
+    color: var(--color-ink);
+  }
+
+  .species-meta {
+    display: flex;
+    gap: 32px;
+    margin: 0;
+  }
+
+  .species-meta > div {
+    display: grid;
+    gap: 4px;
+  }
+
+  .species-meta dt {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .species-meta dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+  }
+
+  .species-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 720px) {
+    .species-split {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  .species-label {
+    margin: 0 0 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+  }
+
+  .species-copy {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── Steps ── */
+  .steps-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 720px) {
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .steps-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .step-card {
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .step-index {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 3.25rem;
+    line-height: 1;
+    color: var(--color-earth-300);
+  }
+
+  .step-title {
+    margin: 16px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--color-ink);
+  }
+
+  .step-body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── Includes ── */
+  .includes-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 900px) {
+    .includes-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+  }
+
+  .includes-card {
+    padding: 40px;
+    background: var(--color-surface-elevated, #ffffff);
+    border: 1px solid var(--color-line);
+  }
+
+  .includes-card--muted {
+    background: transparent;
+    border-style: dashed;
+  }
+
+  .includes-label {
+    margin: 0 0 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-line-gold, var(--color-earth-300));
+  }
+
+  .includes-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .includes-list li {
+    position: relative;
+    padding-left: 24px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+
+  .includes-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 12px;
+    height: 1px;
+    background: var(--color-earth-300);
+  }
+
+  .includes-list--muted li {
+    color: var(--color-ink-muted);
+  }
+
+  .includes-list--muted li::before {
+    background: var(--color-ink-subtle);
+  }
+
+  .includes-cta {
+    margin-top: 48px;
+    text-align: center;
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .includes-cta-lead {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── Audiences ── */
+  .audience-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 720px) {
+    .audience-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+  }
+
+  .audience-card {
+    padding: 32px;
+    background: var(--color-surface-elevated, #ffffff);
+    border: 1px solid var(--color-line);
+  }
+
+  .audience-tag {
+    margin: 0 0 16px;
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+    padding: 4px 10px;
+    border: 1px solid var(--color-line-gold, var(--color-earth-300));
+  }
+
+  .audience-title {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--color-ink);
+  }
+
+  .audience-body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── Tips ── */
+  .tips-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 960px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 720px) {
+    .tips-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  .tip-card {
+    padding: 20px 24px;
+    border-left: 2px solid var(--color-earth-300);
+    background: var(--color-surface-tint);
+  }
+
+  .tip-title {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.125rem;
+    color: var(--color-ink);
+  }
+
+  .tip-body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── CTA final ── */
+  .pesca-cta-final {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+  }
+
+  .pesca-cta-final::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      600px 300px at 50% 50%,
+      rgba(197, 169, 97, 0.1),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .cta-container {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    gap: 32px;
+    justify-items: center;
+  }
+
+  .cta-heading {
+    margin: 16px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-sand-50);
+    max-width: 22ch;
+  }
+
+  .cta-heading em {
+    font-style: italic;
+    color: var(--color-earth-300);
+    font-weight: 300;
+  }
+
+  .cta-lead {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.78);
+    max-width: 48ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .cta-note {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.4);
+  }
+
+  /* ── WhatsApp floating ── */
+  .wa-floating {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 50;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-brand-lg);
+    transition: transform var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .wa-floating:hover {
+    transform: scale(1.08);
+  }
+
+  .wa-floating svg {
+    width: 28px;
+    height: 28px;
+    color: #ffffff;
+  }
+</style>

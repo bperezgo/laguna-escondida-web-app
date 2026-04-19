@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/ui/Eyebrow.astro';
 import { sanityClient, responsiveImage } from '../../lib/sanity';
 import { BLOG_LIST_QUERY, type BlogPostListItem } from '../../lib/queries/blog';
 import { useTranslations, getDateLocale, type Locale } from '../../i18n';
@@ -11,6 +12,20 @@ const t = useTranslations(locale);
 const dateLocale = getDateLocale(locale);
 
 const posts = await sanityClient.fetch<BlogPostListItem[]>(BLOG_LIST_QUERY);
+
+const dateFmt = new Intl.DateTimeFormat(dateLocale, {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+});
+const formatDate = (iso?: string) => {
+  if (!iso) return '';
+  try {
+    return dateFmt.format(new Date(iso)).replace(/\./g, '');
+  } catch {
+    return '';
+  }
+};
 ---
 
 <BaseLayout
@@ -18,58 +33,234 @@ const posts = await sanityClient.fetch<BlogPostListItem[]>(BLOG_LIST_QUERY);
   description={t.meta.blogDescription}
 >
   <Navbar />
-  <main class="section-padding bg-sand-gradient min-h-screen">
-    <div class="section-container">
-      <h1 class="section-heading">Blog</h1>
-      <p class="section-subtitle">
-        {t.blog.subtitle}
-      </p>
 
+  <header class="blog-hero" data-section="blog-hero" data-screen-label="Blog hero">
+    <div class="hero-container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span aria-hidden="true">/</span>
+        <span class="is-current">Blog</span>
+      </nav>
+
+      <div class="hero-content reveal">
+        <Eyebrow text={t.blog.eyebrow} />
+        <h1 class="hero-title">{t.blog.heading}</h1>
+        <p class="hero-lead">{t.blog.subtitle}</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="blog-list-section" data-section="blog-list" data-screen-label="Blog list">
+    <div class="section-container">
       {posts.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="blog-grid reveal">
           {posts.map((post) => {
             const imgAttrs = responsiveImage(
               post.featuredImage,
-              [400, 800],
+              [400, 800, 1200],
               '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
             );
+            const date = formatDate(post.publishedAt);
             return (
-              <a href={`/contenido/${post.slug.current}`} class="card-hoverable group">
-                <figure>
+              <a
+                class="blog-card"
+                href={`/contenido/${post.slug.current}`}
+                data-event="blog_card_click"
+                data-location="blog-list"
+              >
+                <div class="blog-media">
                   <img
                     src={imgAttrs.src}
                     srcset={imgAttrs.srcset}
                     sizes={imgAttrs.sizes}
                     alt={post.featuredImage?.alt || post.title}
-                    class="w-full h-48 object-cover rounded-t-brand"
                     loading="lazy"
                   />
-                </figure>
-                <div class="card-body">
-                  <div class="flex items-center gap-2">
-                    <a
-                      href={`/contenido/categoria/${post.category?.slug?.current}`}
-                      class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}
-                    >
-                      {post.category?.title}
-                    </a>
-                    <time class="text-xs text-neutral/50 font-body" datetime={post.publishedAt}>
-                      {new Date(post.publishedAt).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </time>
-                  </div>
-                  <h2 class="card-title font-display text-lg text-lake-700 group-hover:text-lake-500 transition-colors duration-300">
-                    {post.title}
-                  </h2>
-                  <p class="font-body text-neutral text-sm">{post.excerpt}</p>
                 </div>
+                {post.category?.title && (
+                  <p class="blog-tag">{post.category.title}</p>
+                )}
+                <h2 class="blog-heading">{post.title}</h2>
+                {post.excerpt && <p class="blog-excerpt">{post.excerpt}</p>}
+                {date && <p class="blog-meta">{date}</p>}
               </a>
             );
           })}
         </div>
       ) : (
-        <p class="text-center text-neutral/60 font-body">{t.blog.emptyState}</p>
+        <p class="blog-empty">{t.blog.emptyState}</p>
       )}
     </div>
   </main>
+
   <Footer />
 </BaseLayout>
+
+<style>
+  .blog-hero {
+    position: relative;
+    padding-block: clamp(100px, 12vw, 160px) clamp(60px, 8vw, 100px);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .hero-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .breadcrumb {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+    margin-bottom: 48px;
+  }
+
+  .breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-ink);
+  }
+
+  .breadcrumb .is-current {
+    color: var(--color-accent-ink, var(--color-earth-400));
+  }
+
+  .hero-content {
+    max-width: 720px;
+    display: grid;
+    gap: 20px;
+  }
+
+  .hero-title {
+    margin: 16px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+
+  .hero-lead {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+    max-width: 52ch;
+  }
+
+  .blog-list-section {
+    padding-block: clamp(60px, 8vw, 100px);
+    background: var(--color-surface);
+  }
+
+  .section-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  @media (min-width: 720px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+  }
+
+  .blog-card {
+    display: grid;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface-tint);
+  }
+
+  .blog-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 700ms var(--ease-out);
+  }
+
+  .blog-card:hover .blog-media img {
+    transform: scale(1.04);
+  }
+
+  .blog-tag {
+    margin: 4px 0 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink, var(--color-earth-400));
+  }
+
+  .blog-heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.25;
+    color: var(--color-ink);
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .blog-card:hover .blog-heading {
+    color: var(--color-lake-700);
+  }
+
+  .blog-excerpt {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  .blog-meta {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .blog-empty {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-ink-muted);
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+import Eyebrow from './ui/Eyebrow.astro';
+import Button from './ui/Button.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+const locale = (Astro.currentLocale ?? 'es') as Locale;
+const t = useTranslations(locale);
+
+const WA_NUMBER = '573194313781';
+const waMessage = t.hero.waMessage;
+const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+---
+
+<section
+  class="cta-band"
+  id="reservar"
+  data-section="reservar"
+  data-screen-label="CTA reservar"
+>
+  <div class="cta-container">
+    <div class="cta-text reveal">
+      <Eyebrow text={t.ctaBand.eyebrow} inverse />
+      <h2 class="cta-heading">{t.ctaBand.heading}</h2>
+    </div>
+    <div class="cta-actions reveal stagger-1">
+      <Button
+        variant="inverse-primary"
+        href={waHref}
+        event="reservation_cta_click"
+        location="cta_band"
+        target="_blank"
+        rel="noopener"
+      >
+        {t.hero.ctaPrimary}
+        <span class="arrow" aria-hidden="true">→</span>
+      </Button>
+      <Button
+        variant="whatsapp"
+        href={waHref}
+        event="whatsapp_click"
+        location="cta_band"
+        target="_blank"
+        rel="noopener"
+        withDot
+      >
+        {t.ctaBand.whatsappCta}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      600px 300px at 80% 50%,
+      rgba(197, 169, 97, 0.1),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .cta-container {
+    position: relative;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: end;
+  }
+
+  @media (min-width: 900px) {
+    .cta-container {
+      grid-template-columns: 1.5fr 1fr;
+      gap: 64px;
+    }
+  }
+
+  .cta-heading {
+    margin: 16px 0 0;
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4.2vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-sand-50);
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 900px) {
+    .cta-actions {
+      align-items: flex-end;
+    }
+  }
+
+  .cta-actions :global(.btn-editorial) {
+    min-width: 240px;
+    justify-content: center;
+  }
+
+  .cta-actions :global(.arrow) {
+    margin-left: 8px;
+  }
+</style>

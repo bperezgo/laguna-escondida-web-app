@@ -118,11 +118,13 @@
     }
   },
   "gallery": {
+    "eyebrow": "Moments by the lake",
     "heading": "What's a day like at Laguna Escondida?",
     "subtitle": "Bamboo construction, a lake surrounded by nature, and fresh dishes served with a view of the water. This is Laguna Escondida in Marinilla, Antioquia.",
     "cta": "View full gallery"
   },
   "reviews": {
+    "eyebrow": "Recent guests",
     "heading": "What do our visitors say?",
     "viewOnMaps": "View on Google Maps",
     "leaveReview": "Leave a review on Google",
@@ -145,6 +147,7 @@
     ]
   },
   "location": {
+    "eyebrow": "Getting here",
     "heading": "How to get to Laguna Escondida?",
     "subtitle": "Laguna Escondida is located in Vereda La Primavera, Marinilla, Antioquia. It's 45 minutes from Medellin and 15 minutes from Rionegro via the Medellin-Bogota highway.",
     "mapTitle": "Laguna Escondida location on Google Maps",
@@ -162,6 +165,7 @@
     "openInMaps": "Open in Google Maps"
   },
   "blog": {
+    "eyebrow": "Lake journal",
     "heading": "Learn about fishing and country cuisine",
     "subtitle": "Fishing guides, fresh fish recipes and things to do in Eastern Antioquia.",
     "viewAll": "View all posts",
@@ -170,6 +174,11 @@
     "emptyState": "Articles coming soon.",
     "categoryEmptyState": "No articles in this category yet.",
     "allArticlesIn": "All articles in the category"
+  },
+  "ctaBand": {
+    "eyebrow": "Reservations",
+    "heading": "Book your lake visit before the weekend fills up.",
+    "whatsappCta": "Message on WhatsApp"
   },
   "footer": {
     "brandName": "Laguna Escondida",

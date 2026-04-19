@@ -118,11 +118,13 @@
     }
   },
   "gallery": {
+    "eyebrow": "Momentos del lago",
     "heading": "Como es un dia en Laguna Escondida?",
     "subtitle": "Construccion en guadua, lago rodeado de naturaleza, y platos frescos servidos con vista al agua. Esto es Laguna Escondida en Marinilla, Antioquia.",
     "cta": "Ver galeria completa"
   },
   "reviews": {
+    "eyebrow": "Huespedes recientes",
     "heading": "Que dicen quienes nos han visitado?",
     "viewOnMaps": "Ver en Google Maps",
     "leaveReview": "Dejar una resena en Google",
@@ -145,6 +147,7 @@
     ]
   },
   "location": {
+    "eyebrow": "Como llegar",
     "heading": "Como llegar a Laguna Escondida?",
     "subtitle": "Laguna Escondida esta ubicada en la Vereda La Primavera, Marinilla, Antioquia. Queda a 45 minutos desde Medellin y a 15 minutos desde Rionegro por la autopista Medellin-Bogota.",
     "mapTitle": "Ubicación de Laguna Escondida en Google Maps",
@@ -162,6 +165,7 @@
     "openInMaps": "Abrir en Google Maps"
   },
   "blog": {
+    "eyebrow": "Diario del lago",
     "heading": "Aprende sobre pesca y gastronomia campestre",
     "subtitle": "Guias de pesca, recetas con pescado fresco y planes para hacer en el Oriente Antioqueno.",
     "viewAll": "Ver todo el blog",
@@ -170,6 +174,11 @@
     "emptyState": "Proximamente publicaremos articulos aqui.",
     "categoryEmptyState": "No hay articulos en esta categoria aun.",
     "allArticlesIn": "Todos los articulos en la categoria"
+  },
+  "ctaBand": {
+    "eyebrow": "Reservas",
+    "heading": "Reserva tu visita al lago antes que se llene el fin de semana.",
+    "whatsappCta": "Escribir por WhatsApp"
   },
   "footer": {
     "brandName": "Laguna Escondida",

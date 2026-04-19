@@ -1,65 +1,122 @@
 ---
+import SectionHeading from '../ui/SectionHeading.astro';
+
 const tipos = [
   {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A1.5 1.5 0 013 15.546M9 6l.01.01M12 4v1m0 14v1m4-16v1M6 6l-.01.01m12.01-.01L18 6.01"/>`,
+    label: '01',
     titulo: 'Cumpleaños y quinceañeras',
     descripcion: 'Un día inolvidable junto al lago, con espacio para decoración, música y el menú que elijas.',
   },
   {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>`,
+    label: '02',
     titulo: 'Reuniones familiares',
     descripcion: 'Reencuentros, integración y comida campestre al aire libre rodeados de peces y naturaleza.',
   },
   {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>`,
+    label: '03',
     titulo: 'Eventos corporativos',
     descripcion: 'Team buildings, retiros y celebraciones de empresa en un entorno natural que inspira.',
   },
   {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>`,
+    label: '04',
     titulo: 'Bodas y aniversarios',
     descripcion: 'Ceremonias íntimas con el lago como fondo. Naturaleza, privacidad y un ambiente único.',
   },
   {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>`,
+    label: '05',
     titulo: 'Grados y celebraciones',
     descripcion: 'Despide una etapa con familia y amigos en un lugar que sale de lo ordinario.',
   },
   {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10"/>`,
+    label: '06',
     titulo: 'Fiestas temáticas',
-    descripcion: 'Halloween, navidad, cumpleaños temáticos... el entorno natural potencia cualquier decoración.',
+    descripcion: 'Halloween, navidad, cumpleaños temáticos — el entorno natural potencia cualquier decoración.',
   },
 ];
 ---
 
-<section class="section-padding bg-sand-gradient" id="tipos-eventos" data-section="eventos-tipos">
+<section class="tipos-section" id="tipos-eventos" data-section="eventos-tipos" data-screen-label="Tipos de evento">
   <div class="section-container">
+    <SectionHeading
+      eyebrow="Ocasiones"
+      title="¿Qué tipo de evento celebras?"
+      subtitle="Desde una reunión íntima de familia hasta un evento corporativo — tenemos el espacio y la naturaleza para hacerlo especial."
+      class="reveal"
+    />
 
-    <h2 class="section-heading reveal">¿Qué tipo de evento celebras?</h2>
-    <p class="section-subtitle reveal stagger-1">
-      Desde una reunión íntima de familia hasta un evento corporativo — tenemos el espacio
-      y la naturaleza para hacerlo especial.
-    </p>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal stagger-2">
-      {tipos.map((tipo) => (
-        <div class="card-hoverable group p-6 flex gap-4 items-start">
-          <div class="shrink-0 w-12 h-12 bg-lake-50 rounded-full flex items-center justify-center mt-0.5">
-            <svg
-              class="w-6 h-6 text-lake-500 group-hover:scale-110 transition-transform duration-300"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            >
-              <Fragment set:html={tipo.icon} />
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-display text-lg text-lake-700 mb-1">{tipo.titulo}</h3>
-            <p class="font-body text-sm text-neutral/80 leading-relaxed">{tipo.descripcion}</p>
-          </div>
-        </div>
+    <div class="tipos-grid reveal stagger-1">
+      {tipos.map((t) => (
+        <article class="tipo-card">
+          <p class="tipo-index">{t.label}</p>
+          <h3 class="tipo-title">{t.titulo}</h3>
+          <p class="tipo-body">{t.descripcion}</p>
+        </article>
       ))}
     </div>
-
   </div>
 </section>
+
+<style>
+  .tipos-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface-tint);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .section-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .tipos-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 720px) {
+    .tipos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tipos-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .tipo-card {
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line-gold, var(--color-earth-300));
+  }
+
+  .tipo-index {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink);
+  }
+
+  .tipo-title {
+    margin: 16px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+
+  .tipo-body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+</style>

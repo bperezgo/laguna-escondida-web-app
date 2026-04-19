@@ -3,17 +3,39 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Navbar from '../../../components/Navbar.astro';
 import Footer from '../../../components/Footer.astro';
 import StarRating from '../../../components/StarRating.astro';
+import Eyebrow from '../../../components/ui/Eyebrow.astro';
+import SectionHeading from '../../../components/ui/SectionHeading.astro';
+import Button from '../../../components/ui/Button.astro';
+import LinkRule from '../../../components/ui/LinkRule.astro';
+import ArchImage from '../../../components/ui/ArchImage.astro';
 
 const waNumber = '573194313781';
 const waMessage = 'Hola, quiero reservar una mesa en el restaurante de Laguna Escondida';
 const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+
+const pilares = [
+  {
+    numero: '01',
+    titulo: 'Pescado del día',
+    descripcion: 'Cada plato sale directo del lago al plato. Sin congelados, sin intermediarios. El mismo pescado que ves en el agua en la mañana, en tu mesa al mediodía.',
+  },
+  {
+    numero: '02',
+    titulo: 'Ambiente en guadua',
+    descripcion: 'Construcción tradicional en guadua, sobre la orilla del lago. Cada mesa tiene vista al agua. El silencio de la vereda reemplaza el ruido de la ciudad.',
+  },
+  {
+    numero: '03',
+    titulo: 'Para toda la familia',
+    descripcion: 'Los adultos comen y descansan frente al lago. Los niños pescan mientras esperan. Un plan completo sin necesitar moverse de un solo lugar.',
+  },
+];
 
 const platos = [
   {
     nombre: 'Yamu Frito Entero',
     descripcion: 'La estrella del lago. Servido entero, crujiente por fuera y jugoso por dentro. Con patacones y ensalada fresca.',
     badge: 'Plato estrella',
-    badgeClass: 'bg-earth-300 text-lake-700',
     img: '/images/restaurante/yamu-frito.jpg',
     imgAlt: 'Yamu frito entero con patacones en Laguna Escondida',
   },
@@ -21,7 +43,6 @@ const platos = [
     nombre: 'Tilapia a la Plancha',
     descripcion: 'Fresca del lago, preparada a la plancha con limón y hierbas de la región. Liviana y llena de sabor.',
     badge: 'Muy pedido',
-    badgeClass: 'bg-lake-100 text-lake-700',
     img: '/images/restaurante/tilapia-plancha.jpg',
     imgAlt: 'Tilapia a la plancha en restaurante campestre Laguna Escondida',
   },
@@ -29,7 +50,6 @@ const platos = [
     nombre: 'Cachama al Ajillo',
     descripcion: 'Receta de la casa. Cachama entera en salsa de ajo y mantequilla, acompañada de yuca frita y arroz.',
     badge: 'Receta de la casa',
-    badgeClass: 'bg-sand-200 text-lake-700',
     img: '/images/restaurante/cachama-ajillo.jpg',
     imgAlt: 'Cachama al ajillo con yuca frita en Laguna Escondida',
   },
@@ -37,7 +57,6 @@ const platos = [
     nombre: 'Trucha con Hierbas',
     descripcion: 'El clásico campestre. Trucha entera marinada en hierbas frescas, al horno con papas criollas.',
     badge: 'Clásico campestre',
-    badgeClass: 'bg-lake-50 text-lake-700',
     img: '/images/restaurante/trucha-hierbas.jpg',
     imgAlt: 'Trucha con hierbas al horno en restaurante Laguna Escondida',
   },
@@ -47,19 +66,31 @@ const resenas = [
   {
     texto: 'El Yamu frito fue lo mejor que he comido en mucho tiempo. Nunca había probado nada así. El lugar es hermoso y la atención, excelente.',
     autor: 'Visitante de Google Maps',
+    detalle: 'Reseña verificada · Google',
     estrellas: 5,
   },
   {
     texto: 'Pescamos en la mañana y al mediodía nos prepararon el mismo pescado que habíamos sacado del lago. Una experiencia que no se olvida.',
     autor: 'Visitante de Google Maps',
+    detalle: 'Reseña verificada · Google',
     estrellas: 5,
   },
   {
     texto: 'La vista al lago mientras comes no tiene precio. Los patacones caseros y la Cachama al ajillo, una combinación perfecta.',
     autor: 'Visitante de Google Maps',
+    detalle: 'Reseña verificada · Google',
     estrellas: 5,
   },
 ];
+
+const initials = (author: string) =>
+  author.replace(/[^\p{L}\s]/gu, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
 ---
 
 <BaseLayout
@@ -68,435 +99,1151 @@ const resenas = [
 >
   <Navbar />
 
-  <!-- ── 1. HERO ─────────────────────────────────────────────── -->
-  <section class="relative min-h-[85vh] flex items-end" id="inicio" data-section="restaurante-hero">
-    <!-- Imagen de fondo -->
-    <div class="absolute inset-0 overflow-hidden">
+  <!-- ① HERO -->
+  <section class="resto-hero" id="inicio" data-section="restaurante-hero" data-screen-label="Restaurante hero">
+    <div class="hero-bg">
       <img
         src="/images/restaurante/hero-restaurante.jpg"
         alt="Restaurante campestre Laguna Escondida con vista al lago en Marinilla, Antioquia"
-        class="w-full h-full object-cover"
         loading="eager"
         fetchpriority="high"
+        data-parallax
       />
-      <div class="absolute inset-0 bg-linear-to-t from-lake-700/85 via-lake-700/45 via-40% to-transparent to-70%"></div>
+      <div class="hero-overlay"></div>
     </div>
 
-    <!-- Breadcrumb -->
-    <div class="absolute top-6 left-0 right-0 z-10 px-4">
-      <div class="max-w-6xl mx-auto">
-        <nav class="text-white/60 text-sm font-body flex items-center gap-2">
-          <a href="/" class="hover:text-white transition-colors">Inicio</a>
-          <span>/</span>
-          <a href="/#experiencias" class="hover:text-white transition-colors">Experiencias</a>
-          <span>/</span>
-          <span class="text-white/90">Restaurante</span>
-        </nav>
-      </div>
-    </div>
+    <div class="hero-container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span aria-hidden="true">/</span>
+        <a href="/#experiencias">Experiencias</a>
+        <span aria-hidden="true">/</span>
+        <span class="is-current">Restaurante</span>
+      </nav>
 
-    <!-- Contenido -->
-    <div class="relative z-10 px-4 max-w-4xl xl:max-w-5xl mx-auto pb-12 sm:pb-20 w-full">
-      <div class="flex flex-col items-start gap-5">
-        <h1 class="font-display text-3xl sm:text-4xl md:text-6xl xl:text-7xl text-white leading-tight text-shadow-hero hero-animate">
+      <div class="hero-content">
+        <Eyebrow text="Restaurante campestre · Vista al lago" inverse />
+        <h1 class="hero-title reveal">
           Come frente al lago.<br />
-          <span class="text-earth-300">Pescado del día.</span>
+          <em>Pescado del día.</em>
         </h1>
-
-        <p class="hidden sm:block text-lg sm:text-xl md:text-2xl text-white/90 font-body max-w-2xl text-shadow-hero hero-animate hero-animate-delay-1">
-          Restaurante campestre en guadua con vista al agua. Yamu, Tilapia, Cachama y Trucha frescos del lago — a 45 minutos de Medellín.
+        <p class="hero-lead reveal stagger-1">
+          Restaurante campestre en guadua con vista al agua. Yamu, Tilapia, Cachama
+          y Trucha frescos del lago — a 45 minutos de Medellín.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 mt-2 hero-animate hero-animate-delay-2">
-          <a
-            href={waHref}
-            class="btn btn-lg bg-white text-lake-700 hover:bg-lake-50 border-0 font-body font-semibold text-lg px-8"
-            data-event="whatsapp_click" data-location="restaurante-hero"
-          >
-            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            Reservar mesa
-          </a>
-          <a
-            href="#platos"
-            class="btn btn-lg btn-outline border-white text-white hover:bg-white/20 hover:border-white font-body font-semibold text-lg px-8"
-          >
-            Ver platos estrella
-          </a>
-        </div>
-
-        <div class="flex items-center gap-2 mt-2 text-white/80 text-shadow-hero hero-animate hero-animate-delay-3">
+        <div class="hero-trust reveal stagger-2">
           <StarRating />
-          <span class="font-body text-sm">4.6 en Google Maps · Marinilla, Antioquia</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 2. CONCEPTO ─────────────────────────────────────────── -->
-  <section class="section-padding bg-lake-gradient" data-section="restaurante-concepto">
-    <div class="section-container">
-      <h2 class="section-heading reveal text-lake-700">
-        ¿Qué hace diferente a nuestro restaurante?
-      </h2>
-      <p class="section-subtitle reveal stagger-1">
-        No es solo comer. Es sentarse frente al lago, con el sonido del agua y el olor a madera de guadua.
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10 reveal stagger-2">
-        <!-- Pilar 1 -->
-        <div class="flex flex-col items-center text-center gap-4 p-6">
-          <div class="w-16 h-16 bg-lake-100 rounded-full flex items-center justify-center shrink-0">
-            <svg class="w-8 h-8 text-lake-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M6.5 12c3-6 10-6 14-2-4 4-11 4-14-2z M6.5 12c3 6 10 6 14 2 M3 12h3.5"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-xl text-lake-700">Pescado del día</h3>
-          <p class="font-body text-neutral/80 text-sm leading-relaxed">
-            Cada plato sale directo del lago al plato. Sin congelados, sin intermediarios. El mismo pescado que ves en el agua en la mañana, en tu mesa al mediodía.
-          </p>
+          <span>4.6 en Google Maps · Marinilla, Antioquia</span>
         </div>
 
-        <!-- Pilar 2 -->
-        <div class="flex flex-col items-center text-center gap-4 p-6">
-          <div class="w-16 h-16 bg-earth-100 rounded-full flex items-center justify-center shrink-0">
-            <svg class="w-8 h-8 text-earth-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-xl text-lake-700">Ambiente en guadua</h3>
-          <p class="font-body text-neutral/80 text-sm leading-relaxed">
-            Construcción tradicional en guadua, sobre la orilla del lago. Cada mesa tiene vista al agua. El silencio de la vereda reemplaza el ruido de la ciudad.
-          </p>
-        </div>
-
-        <!-- Pilar 3 -->
-        <div class="flex flex-col items-center text-center gap-4 p-6">
-          <div class="w-16 h-16 bg-lake-100 rounded-full flex items-center justify-center shrink-0">
-            <svg class="w-8 h-8 text-lake-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 11a4 4 0 100-8 4 4 0 000 8z M23 21v-2a4 4 0 00-3-3.87 M16 3.13a4 4 0 010 7.75"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-xl text-lake-700">Para toda la familia</h3>
-          <p class="font-body text-neutral/80 text-sm leading-relaxed">
-            Los adultos comen y descansan frente al lago. Los niños pescan mientras esperan. Un plan completo sin necesitar moverse de un solo lugar.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 3. PLATOS ESTRELLA ──────────────────────────────────── -->
-  <section class="section-padding bg-sand-gradient" id="platos" data-section="restaurante-platos">
-    <div class="section-container">
-      <h2 class="section-heading reveal">Platos estrella</h2>
-      <p class="section-subtitle reveal stagger-1">
-        Pescados frescos del lago, preparados con recetas de la casa. Menú campestre, auténtico y sin complicaciones.
-      </p>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal stagger-2">
-        {platos.map((plato) => (
-          <div class="card-hoverable overflow-hidden group">
-            <!-- Imagen del plato -->
-            <div class="relative h-48 bg-lake-50 overflow-hidden">
-              <img
-                src={plato.img}
-                alt={plato.imgAlt}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-              <span class={`absolute top-3 left-3 text-xs font-body font-semibold px-2.5 py-1 rounded-full ${plato.badgeClass}`}>
-                {plato.badge}
-              </span>
-            </div>
-            <!-- Texto -->
-            <div class="p-5">
-              <h3 class="font-display text-lg text-lake-700 mb-2">{plato.nombre}</h3>
-              <p class="font-body text-sm text-neutral/75 leading-relaxed">{plato.descripcion}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <!-- Link al menú completo -->
-      <div class="text-center mt-10 reveal stagger-3">
-        <p class="font-body text-neutral/60 text-sm mb-3">¿Quieres ver todos los platos y acompañamientos?</p>
-        <a href="/menu/" class="section-cta">
-          Ver menú completo →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 4. FEATURE: PESCA TU ALMUERZO ─────────────────────── -->
-  <section class="section-padding bg-white" data-section="restaurante-pesca-almuerzo">
-    <div class="section-container">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <!-- Imagen -->
-        <div class="reveal order-2 lg:order-1">
-          <div class="relative rounded-brand overflow-hidden shadow-brand-lg aspect-4/3">
-            <img
-              src="/images/restaurante/pesca-almuerzo.jpg"
-              alt="Persona pescando en el lago de Laguna Escondida antes de almorzar"
-              class="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-        </div>
-
-        <!-- Texto -->
-        <div class="reveal stagger-1 order-1 lg:order-2 flex flex-col gap-6">
-          <span class="font-body text-earth-500 font-semibold text-sm uppercase tracking-widest">
-            Del lago al plato
-          </span>
-          <h2 class="font-display text-3xl sm:text-4xl text-lake-700 leading-tight">
-            Pesca tu almuerzo.
-          </h2>
-          <p class="font-body text-neutral/80 text-lg leading-relaxed">
-            En Laguna Escondida puedes pescar tu propio Yamu o Tilapia en la mañana y pedirle a nuestra cocina que lo prepare al mediodía. Es una de esas experiencias que pocas personas han vivido — y que no se olvida.
-          </p>
-          <p class="font-body text-neutral/80 leading-relaxed">
-            No necesitas experiencia previa. Nuestro equipo te ayuda con el equipo y las técnicas. Cualquier persona de cualquier edad puede hacerlo.
-          </p>
-          <a
-            href="/experiencias/pesca-deportiva/"
-            class="inline-flex items-center gap-2 text-lake-500 font-semibold font-body hover:text-lake-700 transition-colors group w-fit"
-          >
-            Conocer la pesca deportiva
-            <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 5. FEATURE: VISTA AL LAGO ──────────────────────────── -->
-  <section class="section-padding bg-sand-gradient" data-section="restaurante-espacio">
-    <div class="section-container">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <!-- Texto -->
-        <div class="reveal flex flex-col gap-6">
-          <span class="font-body text-earth-500 font-semibold text-sm uppercase tracking-widest">
-            El espacio
-          </span>
-          <h2 class="font-display text-3xl sm:text-4xl text-lake-700 leading-tight">
-            Una cocina con vista al lago.
-          </h2>
-          <p class="font-body text-neutral/80 text-lg leading-relaxed">
-            Nuestro restaurante está construido en guadua, sobre la orilla misma del lago. Cada mesa tiene vista al agua. No hay pantallas, no hay ruido — solo el lago, la naturaleza y una buena comida.
-          </p>
-          <p class="font-body text-neutral/80 leading-relaxed">
-            Es el mismo espacio que los lugareños de Marinilla conocen hace años. Auténtico, sin pretensiones, y con el sabor de la cocina campestre antioqueña.
-          </p>
-
-          <!-- Mini info -->
-          <div class="flex flex-col sm:flex-row gap-4 pt-2">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-lake-100 rounded-full flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                </svg>
-              </div>
-              <div>
-                <p class="font-body font-semibold text-lake-700 text-sm">Sáb, Dom y Festivos</p>
-                <p class="font-body text-neutral/70 text-sm">9:00 AM – 6:00 PM</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-lake-100 rounded-full flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-lake-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 7a4 4 0 100 0 M23 21v-2a4 4 0 00-3-3.87 M16 3.13a4 4 0 010 7.75"/>
-                </svg>
-              </div>
-              <div>
-                <p class="font-body font-semibold text-lake-700 text-sm">Entre semana</p>
-                <p class="font-body text-neutral/70 text-sm">Con reserva previa</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Imagen -->
-        <div class="reveal stagger-1">
-          <div class="relative rounded-brand overflow-hidden shadow-brand-lg aspect-4/3">
-            <img
-              src="/images/restaurante/cocina-vista-lago.jpg"
-              alt="Interior del restaurante en guadua de Laguna Escondida con vista al lago"
-              class="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── 6. INFORMACIÓN PRÁCTICA ────────────────────────────── -->
-  <section class="section-padding bg-lake-700" id="info" data-section="restaurante-info">
-    <div class="section-container">
-      <h2 class="section-heading reveal text-white">
-        ¿Cómo reservar tu mesa?
-      </h2>
-      <p class="section-subtitle reveal stagger-1 text-white/70">
-        Los fines de semana no necesitas reserva. Entre semana, avísanos con anticipación por WhatsApp.
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 reveal stagger-2">
-        <!-- Horarios -->
-        <div class="bg-white/10 border border-white/15 rounded-brand p-6 flex flex-col gap-4">
-          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-earth-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-lg text-white">Horarios</h3>
-          <ul class="font-body text-white/75 text-sm space-y-2">
-            <li class="flex justify-between">
-              <span>Sábados y domingos</span>
-              <span class="text-earth-300 font-semibold">9am – 6pm</span>
-            </li>
-            <li class="flex justify-between">
-              <span>Festivos</span>
-              <span class="text-earth-300 font-semibold">9am – 6pm</span>
-            </li>
-            <li class="flex justify-between">
-              <span>Entre semana</span>
-              <span class="text-white/50">Con reserva</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Cómo reservar -->
-        <div class="bg-white/10 border border-white/15 rounded-brand p-6 flex flex-col gap-4">
-          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-earth-300" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-lg text-white">Cómo reservar</h3>
-          <ul class="font-body text-white/75 text-sm space-y-2">
-            <li>Por WhatsApp al <span class="text-earth-300 font-semibold">+57 319 431 3781</span></li>
-            <li>Fines de semana y festivos: <span class="text-white/90">sin reserva, solo llegar</span></li>
-            <li>Entre semana: <span class="text-white/90">reserva obligatoria</span></li>
-          </ul>
-          <a
+        <div class="hero-actions reveal stagger-3">
+          <Button
+            variant="inverse-primary"
             href={waHref}
-            class="mt-2 btn btn-sm bg-earth-300 hover:bg-earth-500 text-lake-700 border-0 font-body font-semibold w-full"
-            data-event="whatsapp_click" data-location="restaurante-info"
-          >
-            Escribir por WhatsApp
-          </a>
-        </div>
-
-        <!-- Cómo llegar -->
-        <div class="bg-white/10 border border-white/15 rounded-brand p-6 flex flex-col gap-4">
-          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-earth-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-lg text-white">Cómo llegar</h3>
-          <ul class="font-body text-white/75 text-sm space-y-2">
-            <li>Desde Medellín: <span class="text-earth-300 font-semibold">45 min</span> por la autopista Medellín–Bogotá</li>
-            <li>Desde Rionegro: <span class="text-earth-300 font-semibold">15 min</span> directo</li>
-            <li>Vereda La Primavera, Marinilla, Antioquia</li>
-          </ul>
-          <a
-            href="https://maps.app.goo.gl/5EN4yjbr42zDCiyy6"
+            event="whatsapp_click"
+            location="restaurante-hero"
             target="_blank"
             rel="noopener"
-            class="mt-2 btn btn-sm btn-outline border-white/30 text-white hover:bg-white/10 hover:border-white font-body font-semibold w-full"
-            data-event="maps_click" data-location="restaurante-info"
+            withDot
           >
-            Abrir en Google Maps
-          </a>
+            Reservar mesa
+          </Button>
+          <Button
+            variant="inverse-secondary"
+            href="#platos"
+          >
+            Ver platos estrella
+          </Button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── 7. RESEÑAS ─────────────────────────────────────────── -->
-  <section class="section-padding bg-sand-gradient" data-section="restaurante-resenas">
+  <!-- ② CONCEPTO -->
+  <section class="concepto-section" data-section="restaurante-concepto" data-screen-label="Concepto">
     <div class="section-container">
-      <!-- Header -->
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
-        <div>
-          <h2 class="section-heading text-left mb-2 reveal">
-            Lo que dicen quienes comieron aquí
-          </h2>
-          <div class="flex items-center gap-2 reveal stagger-1">
-            <StarRating size="sm" />
-            <span class="font-body text-neutral/70 text-sm">4.6 en Google Maps</span>
-          </div>
-        </div>
-        <a
-          href="https://maps.app.goo.gl/5EN4yjbr42zDCiyy6"
-          target="_blank"
-          rel="noopener"
-          class="section-cta shrink-0 reveal stagger-1"
-          data-event="maps_click" data-location="restaurante-resenas"
-        >
-          Ver en Google Maps
-        </a>
-      </div>
+      <SectionHeading
+        eyebrow="El concepto"
+        title="¿Qué hace diferente a nuestro restaurante?"
+        subtitle="No es solo comer. Es sentarse frente al lago, con el sonido del agua y el olor a madera de guadua."
+        class="reveal"
+      />
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal stagger-2">
-        {resenas.map((resena) => (
-          <div class="card-hoverable flex flex-col gap-4 p-6">
-            <StarRating count={resena.estrellas} size="sm" />
-            <p class="font-body text-neutral/80 leading-relaxed flex-1">
-              "{resena.texto}"
-            </p>
-            <p class="font-body text-sm font-semibold text-lake-700">{resena.autor}</p>
-          </div>
+      <div class="pilares-grid reveal stagger-1">
+        {pilares.map((p) => (
+          <article class="pilar-card">
+            <div class="pilar-index">{p.numero}</div>
+            <h3 class="pilar-title">{p.titulo}</h3>
+            <p class="pilar-body">{p.descripcion}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ── 8. CTA FINAL ───────────────────────────────────────── -->
-  <section class="section-padding bg-lake-700" data-section="restaurante-cta-final">
-    <div class="section-container text-center">
-      <h2 class="font-display text-3xl sm:text-4xl xl:text-5xl text-white mb-4 reveal">
-        ¿Listo para comer frente al lago?
-      </h2>
-      <p class="font-body text-white/70 text-lg max-w-xl mx-auto mb-8 reveal stagger-1">
-        Los fines de semana no necesitas reserva — solo llegar. Entre semana, escríbenos y te apartamos una mesa.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center reveal stagger-2">
-        <a
+  <!-- ③ PLATOS ESTRELLA -->
+  <section class="platos-section" id="platos" data-section="restaurante-platos" data-screen-label="Platos estrella">
+    <div class="section-container">
+      <SectionHeading
+        eyebrow="La carta"
+        title="Platos estrella"
+        subtitle="Pescados frescos del lago, preparados con recetas de la casa. Menú campestre, auténtico y sin complicaciones."
+        class="reveal"
+      />
+
+      <div class="platos-grid reveal stagger-1">
+        {platos.map((plato, i) => (
+          <article class="plato-card">
+            <div class="plato-media">
+              <img src={plato.img} alt={plato.imgAlt} loading="lazy" />
+              <span class="plato-badge">{plato.badge}</span>
+            </div>
+            <div class="plato-body">
+              <p class="plato-index">{String(i + 1).padStart(2, '0')}</p>
+              <h3 class="plato-name">{plato.nombre}</h3>
+              <p class="plato-desc">{plato.descripcion}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="platos-cta reveal stagger-2">
+        <LinkRule
+          href="/menu/"
+          label="Ver menú completo"
+          event="menu_click"
+          location="restaurante-platos"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ PESCA TU ALMUERZO -->
+  <section class="feature-section" data-section="restaurante-pesca-almuerzo" data-screen-label="Pesca tu almuerzo">
+    <div class="section-container">
+      <div class="feature-grid">
+        <div class="feature-media reveal">
+          <ArchImage
+            src="/images/restaurante/pesca-almuerzo.jpg"
+            alt="Persona pescando en el lago de Laguna Escondida antes de almorzar"
+            variant="arch-soft"
+            ratio="4x5"
+          />
+          <figcaption class="media-caption">
+            <span class="idx">01</span>
+            <span>Del lago al plato · Vereda La Primavera</span>
+          </figcaption>
+        </div>
+
+        <div class="feature-text reveal stagger-1">
+          <Eyebrow text="Del lago al plato" />
+          <h2 class="feature-title">
+            Pesca tu almuerzo,<br />
+            <em>comételo al mediodía.</em>
+          </h2>
+          <p class="feature-lead">
+            En Laguna Escondida puedes pescar tu propio Yamu o Tilapia en la
+            mañana y pedirle a nuestra cocina que lo prepare al mediodía. Una de
+            esas experiencias que pocas personas han vivido — y que no se olvida.
+          </p>
+          <p class="feature-body">
+            No necesitas experiencia previa. Nuestro equipo te ayuda con el
+            equipo y las técnicas. Cualquier persona de cualquier edad puede hacerlo.
+          </p>
+          <LinkRule
+            href="/experiencias/pesca-deportiva/"
+            label="Conocer la pesca deportiva"
+            event="pesca_click"
+            location="restaurante-feature"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ ESPACIO -->
+  <section class="espacio-section" data-section="restaurante-espacio" data-screen-label="El espacio">
+    <div class="section-container">
+      <div class="espacio-grid">
+        <div class="espacio-text reveal">
+          <Eyebrow text="El espacio" />
+          <h2 class="espacio-title">
+            Una cocina con vista<br />
+            <em>al lago.</em>
+          </h2>
+          <p class="espacio-lead">
+            Nuestro restaurante está construido en guadua, sobre la orilla misma
+            del lago. Cada mesa tiene vista al agua. No hay pantallas, no hay
+            ruido — solo el lago, la naturaleza y una buena comida.
+          </p>
+          <p class="espacio-body">
+            Es el mismo espacio que los lugareños de Marinilla conocen hace años.
+            Auténtico, sin pretensiones, y con el sabor de la cocina campestre
+            antioqueña.
+          </p>
+
+          <dl class="espacio-hours">
+            <div>
+              <dt>Sáb, Dom y Festivos</dt>
+              <dd>9:00 AM – 6:00 PM</dd>
+            </div>
+            <div>
+              <dt>Entre semana</dt>
+              <dd>Con reserva previa</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="espacio-media reveal stagger-1">
+          <ArchImage
+            src="/images/restaurante/cocina-vista-lago.jpg"
+            alt="Interior del restaurante en guadua de Laguna Escondida con vista al lago"
+            variant="arch-soft"
+            ratio="3x4"
+          />
+          <figcaption class="media-caption">
+            <span class="idx">02</span>
+            <span>Ramada en guadua · Orilla del lago</span>
+          </figcaption>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ INFO PRÁCTICA -->
+  <section class="info-section" id="info" data-section="restaurante-info" data-screen-label="Info práctica">
+    <div class="section-container">
+      <SectionHeading
+        eyebrow="Reservas"
+        title="¿Cómo reservar tu mesa?"
+        subtitle="Los fines de semana no necesitas reserva. Entre semana, avísanos con anticipación por WhatsApp."
+        inverse
+        class="reveal"
+      />
+
+      <div class="info-grid reveal stagger-1">
+        <article class="info-card">
+          <p class="info-index">01</p>
+          <h3 class="info-title">Horarios</h3>
+          <ul class="info-list">
+            <li><span>Sábados y domingos</span><span class="accent">9am – 6pm</span></li>
+            <li><span>Festivos</span><span class="accent">9am – 6pm</span></li>
+            <li><span>Entre semana</span><span class="muted">Con reserva</span></li>
+          </ul>
+        </article>
+
+        <article class="info-card">
+          <p class="info-index">02</p>
+          <h3 class="info-title">Cómo reservar</h3>
+          <ul class="info-list">
+            <li>Por WhatsApp al <span class="accent">+57 319 431 3781</span></li>
+            <li>Fines de semana y festivos: sin reserva, solo llegar</li>
+            <li>Entre semana: reserva obligatoria</li>
+          </ul>
+          <div class="info-cta">
+            <Button
+              variant="inverse-primary"
+              href={waHref}
+              event="whatsapp_click"
+              location="restaurante-info"
+              target="_blank"
+              rel="noopener"
+            >
+              Escribir por WhatsApp
+            </Button>
+          </div>
+        </article>
+
+        <article class="info-card">
+          <p class="info-index">03</p>
+          <h3 class="info-title">Cómo llegar</h3>
+          <ul class="info-list">
+            <li>Desde Medellín: <span class="accent">45 min</span> por la autopista Medellín–Bogotá</li>
+            <li>Desde Rionegro: <span class="accent">15 min</span> directo</li>
+            <li>Vereda La Primavera, Marinilla, Antioquia</li>
+          </ul>
+          <div class="info-cta">
+            <Button
+              variant="inverse-secondary"
+              href="https://maps.app.goo.gl/5EN4yjbr42zDCiyy6"
+              event="maps_click"
+              location="restaurante-info"
+              target="_blank"
+              rel="noopener"
+            >
+              Abrir en Google Maps
+            </Button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ RESEÑAS -->
+  <section class="resenas-section" data-section="restaurante-resenas" data-screen-label="Reseñas">
+    <div class="section-container">
+      <SectionHeading
+        eyebrow="Lo que dicen"
+        title="Quienes comieron aquí"
+        subtitle="4.6 en Google Maps. Reseñas verificadas de visitantes reales."
+        centered
+        class="reveal"
+      />
+
+      <div class="resenas-grid reveal stagger-1">
+        {resenas.map((r) => (
+          <article class="resena-card">
+            <div class="stars" aria-label={`${r.estrellas} / 5`}>
+              {Array.from({ length: r.estrellas }).map(() => (
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 1.5l1.9 4.1 4.5.5-3.3 3 .9 4.4L8 11.2l-4 2.3.9-4.4-3.3-3 4.5-.5z" />
+                </svg>
+              ))}
+            </div>
+            <blockquote>{r.texto}</blockquote>
+            <footer class="who">
+              <div class="avatar" aria-hidden="true">{initials(r.autor)}</div>
+              <div>
+                <p class="name">{r.autor}</p>
+                <p class="detail">{r.detalle}</p>
+              </div>
+            </footer>
+          </article>
+        ))}
+      </div>
+
+      <div class="resenas-cta reveal stagger-2">
+        <LinkRule
+          href="https://maps.app.goo.gl/5EN4yjbr42zDCiyy6"
+          label="Ver en Google Maps"
+          event="maps_click"
+          location="restaurante-resenas"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ CTA FINAL -->
+  <section class="resto-cta" data-section="restaurante-cta-final" data-screen-label="CTA restaurante">
+    <div class="cta-container">
+      <div class="cta-text reveal">
+        <Eyebrow text="Reserva tu mesa" inverse />
+        <h2 class="cta-heading">
+          ¿Listo para comer<br />
+          <em>frente al lago?</em>
+        </h2>
+        <p class="cta-lead">
+          Los fines de semana no necesitas reserva — solo llegar. Entre semana,
+          escríbenos y te apartamos una mesa.
+        </p>
+      </div>
+
+      <div class="cta-actions reveal stagger-1">
+        <Button
+          variant="inverse-primary"
           href={waHref}
-          class="btn btn-lg bg-[#25D366] hover:bg-[#1ea855] text-white border-0 font-body font-semibold text-lg px-8"
-          data-event="whatsapp_click" data-location="restaurante-cta-final"
+          event="whatsapp_click"
+          location="restaurante-cta-final"
+          target="_blank"
+          rel="noopener"
+          withDot
         >
-          <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
           Reservar por WhatsApp
-        </a>
-        <a
+        </Button>
+        <Button
+          variant="inverse-secondary"
           href="/#experiencias"
-          class="btn btn-lg btn-outline border-white/50 text-white hover:bg-white/10 hover:border-white font-body font-semibold text-lg px-8"
         >
           Ver otras experiencias
-        </a>
+        </Button>
       </div>
     </div>
   </section>
 
   <Footer />
 
-  <!-- WhatsApp flotante -->
   <a
     id="wa-floating-btn"
     href={waHref}
-    class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#1ea855] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-200"
+    class="wa-floating"
     aria-label="Contactar por WhatsApp"
-    data-event="whatsapp_click" data-location="restaurante-floating"
+    data-event="whatsapp_click"
+    data-location="restaurante-floating"
+    target="_blank"
+    rel="noopener"
   >
-    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </a>
 </BaseLayout>
+
+<script>
+  const parallaxImg = document.querySelector<HTMLImageElement>('.resto-hero [data-parallax]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (parallaxImg && !reduceMotion) {
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY * -0.15;
+      parallaxImg.style.transform = `translate3d(0, ${y}px, 0)`;
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+</script>
+
+<style>
+  /* ── HERO ───────────────────────────── */
+  .resto-hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: flex-end;
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-bg img {
+    width: 100%;
+    height: 115%;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(12, 36, 52, 0.85) 0%,
+      rgba(12, 36, 52, 0.45) 40%,
+      rgba(12, 36, 52, 0.1) 70%,
+      transparent 100%
+    );
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+    padding-block: 48px 80px;
+  }
+
+  .breadcrumb {
+    position: absolute;
+    top: 32px;
+    left: var(--gutter);
+    right: var(--gutter);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.55);
+  }
+
+  .breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-sand-50);
+  }
+
+  .breadcrumb .is-current {
+    color: var(--color-earth-300);
+  }
+
+  .hero-content {
+    max-width: 720px;
+    display: grid;
+    gap: 20px;
+  }
+
+  .hero-title {
+    margin: 16px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    color: var(--color-sand-50);
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--color-earth-300);
+    font-weight: 300;
+  }
+
+  .hero-lead {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.82);
+    max-width: 52ch;
+  }
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.6);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  /* ── CONCEPTO ─────────────────────── */
+  .concepto-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .section-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .pilares-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 720px) {
+    .pilares-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+  }
+
+  .pilar-card {
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line-gold, var(--color-earth-300));
+  }
+
+  .pilar-index {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink, var(--color-earth-400));
+  }
+
+  .pilar-title {
+    margin: 12px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    line-height: 1.2;
+    color: var(--color-ink);
+  }
+
+  .pilar-body {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+
+  /* ── PLATOS ─────────────────────── */
+  .platos-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface-tint);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .platos-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 640px) {
+    .platos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .platos-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .plato-card {
+    background: var(--color-surface-elevated, #ffffff);
+    border: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    transition: border-color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .plato-card:hover {
+    border-color: var(--color-earth-300);
+  }
+
+  .plato-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .plato-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 700ms var(--ease-out);
+  }
+
+  .plato-card:hover .plato-media img {
+    transform: scale(1.04);
+  }
+
+  .plato-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-lake-800);
+    background: rgba(250, 248, 243, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+
+  .plato-body {
+    padding: 24px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .plato-index {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-ink, var(--color-earth-400));
+  }
+
+  .plato-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+
+  .plato-desc {
+    margin: 4px 0 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+  }
+
+  .platos-cta {
+    margin-top: 56px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── FEATURE ─────────────────────── */
+  .feature-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .feature-grid {
+      grid-template-columns: 5fr 6fr;
+      gap: 96px;
+    }
+  }
+
+  .feature-media {
+    display: grid;
+    gap: 12px;
+  }
+
+  .feature-title {
+    margin: 20px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+
+  .feature-title em {
+    font-style: italic;
+    color: var(--color-lake-700);
+    font-weight: 300;
+  }
+
+  .feature-lead {
+    margin: 24px 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink);
+    max-width: 52ch;
+  }
+
+  .feature-body {
+    margin: 0 0 24px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+    max-width: 52ch;
+  }
+
+  .media-caption {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-subtle);
+  }
+
+  .media-caption .idx {
+    color: var(--color-accent-ink, var(--color-earth-400));
+  }
+
+  /* ── ESPACIO ─────────────────────── */
+  .espacio-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-olive-50);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .espacio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .espacio-grid {
+      grid-template-columns: 6fr 5fr;
+      gap: 96px;
+    }
+  }
+
+  .espacio-title {
+    margin: 20px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+
+  .espacio-title em {
+    font-style: italic;
+    color: var(--color-lake-700);
+    font-weight: 300;
+  }
+
+  .espacio-lead {
+    margin: 24px 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink);
+    max-width: 52ch;
+  }
+
+  .espacio-body {
+    margin: 0 0 32px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+    max-width: 52ch;
+  }
+
+  .espacio-hours {
+    margin: 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 560px) {
+    .espacio-hours {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  .espacio-hours > div {
+    display: grid;
+    gap: 4px;
+  }
+
+  .espacio-hours dt {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .espacio-hours dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+  }
+
+  .espacio-media {
+    display: grid;
+    gap: 12px;
+  }
+
+  /* ── INFO ─────────────────────── */
+  .info-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .info-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 720px) {
+    .info-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .info-card {
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-index {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-earth-300);
+  }
+
+  .info-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--color-sand-50);
+  }
+
+  .info-list {
+    margin: 0;
+    padding: 16px 0 0;
+    list-style: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.5;
+    color: rgba(250, 248, 243, 0.78);
+    flex: 1;
+  }
+
+  .info-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .info-list .accent {
+    color: var(--color-earth-300);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  .info-list .muted {
+    color: rgba(250, 248, 243, 0.4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  .info-cta {
+    margin-top: 8px;
+  }
+
+  /* ── RESEÑAS ─────────────────────── */
+  .resenas-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-olive-50);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .resenas-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 900px) {
+    .resenas-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .resena-card {
+    position: relative;
+    padding: 40px;
+    background: var(--color-surface-elevated, #ffffff);
+    border: 1px solid var(--color-line);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    min-height: 340px;
+  }
+
+  .resena-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 12px;
+    right: 24px;
+    font-family: var(--font-display);
+    font-size: 64px;
+    line-height: 1;
+    color: var(--color-earth-300);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: var(--color-earth-400);
+  }
+
+  .stars svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  blockquote {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-olive-200, var(--color-olive-50));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--color-lake-700);
+    flex-shrink: 0;
+  }
+
+  .name {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+  }
+
+  .detail {
+    margin: 4px 0 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .resenas-cta {
+    margin-top: 56px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── CTA FINAL ─────────────────────── */
+  .resto-cta {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+  }
+
+  .resto-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      600px 300px at 50% 50%,
+      rgba(197, 169, 97, 0.1),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .cta-container {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    gap: 32px;
+    justify-items: center;
+  }
+
+  .cta-heading {
+    margin: 16px 0 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-sand-50);
+    max-width: 22ch;
+  }
+
+  .cta-heading em {
+    font-style: italic;
+    color: var(--color-earth-300);
+    font-weight: 300;
+  }
+
+  .cta-lead {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.78);
+    max-width: 48ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  /* ── WA floating ─────────────────────── */
+  .wa-floating {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 50;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: transform var(--duration-3, 200ms) var(--ease-out), background var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .wa-floating:hover {
+    transform: scale(1.08);
+    background: #1ea855;
+  }
+
+  .wa-floating svg {
+    width: 28px;
+    height: 28px;
+    color: #ffffff;
+  }
+</style>

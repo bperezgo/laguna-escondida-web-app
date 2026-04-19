@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/ui/Eyebrow.astro';
+import LinkRule from '../../components/ui/LinkRule.astro';
 import { PortableText } from 'astro-portabletext';
 import { sanityClient, responsiveImage, urlFor } from '../../lib/sanity';
 import PortableImage from '../../components/portable-text/Image.astro';
@@ -30,8 +32,21 @@ const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 const dateLocale = getDateLocale(locale);
 
-const imgAttrs = responsiveImage(post.featuredImage, [600, 1200, 1600], '(max-width: 768px) 100vw, 800px');
+const imgAttrs = responsiveImage(post.featuredImage, [600, 1200, 1600], '(max-width: 768px) 100vw, 960px');
 const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
+
+const dateFmt = new Intl.DateTimeFormat(dateLocale, {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+const formattedDate = (() => {
+  try {
+    return dateFmt.format(new Date(post.publishedAt));
+  } catch {
+    return '';
+  }
+})();
 ---
 
 <BaseLayout
@@ -40,49 +55,195 @@ const ogImage = urlFor(post.featuredImage).width(1200).height(630).url();
   image={ogImage}
 >
   <Navbar />
-  <main class="section-padding bg-sand-gradient min-h-screen">
-    <article class="max-w-3xl mx-auto">
-      <a href="/contenido" class="inline-flex items-center gap-1 text-lake-500 hover:text-lake-700 font-body text-sm mb-6 transition-colors">
-        &larr; {t.blog.backToBlog}
-      </a>
 
-      <header class="mb-8">
-        <div class="flex items-center gap-3 mb-4">
-          <a
-            href={`/contenido/categoria/${post.category?.slug?.current}`}
-            class={`badge badge-${post.category?.badgeClass || 'primary'} badge-outline font-body`}
-          >
-            {post.category?.title}
-          </a>
-          <time class="text-sm text-neutral/50 font-body" datetime={post.publishedAt}>
-            {new Date(post.publishedAt).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' })}
-          </time>
+  <article class="post-article" data-section="blog-post" data-screen-label="Blog post">
+    <header class="post-header">
+      <div class="post-container post-container--narrow">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Inicio</a>
+          <span aria-hidden="true">/</span>
+          <a href="/contenido">Blog</a>
+          {post.category?.title && (
+            <>
+              <span aria-hidden="true">/</span>
+              <a href={`/contenido/categoria/${post.category?.slug?.current}`}>{post.category.title}</a>
+            </>
+          )}
+        </nav>
+
+        <div class="post-meta-top">
+          {post.category?.title && (
+            <Eyebrow text={post.category.title} />
+          )}
+          {formattedDate && (
+            <time class="post-date" datetime={post.publishedAt}>{formattedDate}</time>
+          )}
         </div>
-        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-lake-700 mb-4">
-          {post.title}
-        </h1>
+
+        <h1 class="post-title">{post.title}</h1>
+
+        {post.excerpt && <p class="post-lead">{post.excerpt}</p>}
+
         {post.author && (
-          <p class="font-body text-neutral/60 text-sm">{t.blog.by} {post.author}</p>
-        )}
-      </header>
-
-      <img
-        src={imgAttrs.src}
-        srcset={imgAttrs.srcset}
-        sizes={imgAttrs.sizes}
-        alt={post.featuredImage?.alt || post.title}
-        class="w-full rounded-brand mb-10 aspect-video object-cover"
-      />
-
-      <div class="blog-content prose prose-lg max-w-none font-body prose-headings:font-display prose-headings:text-lake-700 prose-a:text-lake-500 prose-a:underline-offset-2 prose-img:rounded-brand">
-        {Array.isArray(post.content) && (
-          <PortableText
-            value={post.content}
-            components={{ type: { image: PortableImage } }}
-          />
+          <p class="post-author">{t.blog.by} <em>{post.author}</em></p>
         )}
       </div>
-    </article>
-  </main>
+    </header>
+
+    <figure class="post-figure">
+      <div class="post-container">
+        <img
+          src={imgAttrs.src}
+          srcset={imgAttrs.srcset}
+          sizes={imgAttrs.sizes}
+          alt={post.featuredImage?.alt || post.title}
+        />
+      </div>
+    </figure>
+
+    <div class="post-body">
+      <div class="post-container post-container--narrow">
+        <div class="blog-content">
+          {Array.isArray(post.content) && (
+            <PortableText
+              value={post.content}
+              components={{ type: { image: PortableImage } }}
+            />
+          )}
+        </div>
+
+        <div class="post-footer">
+          <LinkRule
+            href="/contenido"
+            label={t.blog.backToBlog}
+            event="blog_back_click"
+            location="blog-post"
+          />
+        </div>
+      </div>
+    </div>
+  </article>
+
   <Footer />
 </BaseLayout>
+
+<style>
+  .post-article {
+    background: var(--color-surface);
+  }
+
+  .post-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .post-container--narrow {
+    max-width: 780px;
+  }
+
+  .post-header {
+    padding-block: clamp(100px, 12vw, 160px) clamp(48px, 6vw, 72px);
+  }
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+    margin-bottom: 40px;
+  }
+
+  .breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-3, 200ms) var(--ease-out);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-ink);
+  }
+
+  .post-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .post-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+
+  .post-lead {
+    margin: 24px 0 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink-muted);
+    max-width: 56ch;
+  }
+
+  .post-author {
+    margin: 32px 0 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .post-author em {
+    font-style: italic;
+    color: var(--color-lake-700);
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .post-figure {
+    margin: 0;
+    padding-block: 0 clamp(48px, 6vw, 72px);
+  }
+
+  .post-figure img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-body {
+    padding-block: 0 clamp(80px, 10vw, 140px);
+  }
+
+  .post-footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    justify-content: center;
+  }
+</style>

@@ -1,62 +1,193 @@
 ---
-import StarRating from '../StarRating.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import LinkRule from '../ui/LinkRule.astro';
 
 const testimonios = [
   {
-    texto:
-      'Celebramos el cumpleaños de mi mamá con 45 personas y fue perfecto. El lago, la comida, la privacidad... todos se fueron encantados y ya me están pidiendo repetirlo el año que viene.',
+    texto: 'Celebramos el cumpleaños de mi mamá con 45 personas y fue perfecto. El lago, la comida, la privacidad... todos se fueron encantados y ya me están pidiendo repetirlo el año que viene.',
     autor: 'Marcela Ríos',
     detalle: 'Cumpleaños 60 años · 45 personas',
     estrellas: 5,
   },
   {
-    texto:
-      'Hicimos el team building de fin de año aquí y superó todas las expectativas. El ambiente natural hizo que la gente se soltara de una manera que en un salón de hotel nunca hubiera pasado.',
+    texto: 'Hicimos el team building de fin de año aquí y superó todas las expectativas. El ambiente natural hizo que la gente se soltara de una manera que en un salón de hotel nunca hubiera pasado.',
     autor: 'Carlos Mejía',
     detalle: 'Evento corporativo · 30 personas',
     estrellas: 5,
   },
   {
-    texto:
-      'Mi quinceañera fue exactamente como siempre la soñé. Simple, especial, con las personas que quiero. El lago de fondo en todas las fotos es increíble.',
+    texto: 'Mi quinceañera fue exactamente como siempre la soñé. Simple, especial, con las personas que quiero. El lago de fondo en todas las fotos es increíble.',
     autor: 'Valentina Ospina',
     detalle: 'Quinceañera · 60 personas',
     estrellas: 5,
   },
 ];
+
+const initials = (author: string) =>
+  author.replace(/[^\p{L}\s]/gu, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
 ---
 
-<section class="section-padding bg-lake-gradient" id="testimonios-eventos" data-section="eventos-testimonios">
+<section class="testi-section" id="testimonios-eventos" data-section="eventos-testimonios" data-screen-label="Testimonios">
   <div class="section-container">
+    <SectionHeading
+      eyebrow="Celebraciones pasadas"
+      title="Lo que dicen quienes ya celebraron"
+      subtitle="Familias y empresas que eligieron Laguna Escondida para sus momentos especiales."
+      centered
+      class="reveal"
+    />
 
-    <h2 class="section-heading reveal">Lo que dicen quienes ya celebraron</h2>
-    <p class="section-subtitle reveal stagger-1">
-      Familias y empresas que eligieron Laguna Escondida para sus momentos especiales.
-    </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-2">
+    <div class="testi-grid reveal stagger-1">
       {testimonios.map((t) => (
-        <div class="card-standard flex flex-col gap-4">
-          <StarRating count={t.estrellas} size="sm" />
-          <p class="font-body text-neutral italic leading-relaxed flex-1">"{t.texto}"</p>
-          <div class="border-t border-sand-200 pt-4">
-            <p class="font-body text-sm font-semibold text-lake-700">— {t.autor}</p>
-            <p class="font-body text-xs text-neutral/55 mt-0.5">{t.detalle}</p>
+        <article class="testi-card">
+          <div class="stars" aria-label={`${t.estrellas} / 5`}>
+            {Array.from({ length: t.estrellas }).map(() => (
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1.5l1.9 4.1 4.5.5-3.3 3 .9 4.4L8 11.2l-4 2.3.9-4.4-3.3-3 4.5-.5z" />
+              </svg>
+            ))}
           </div>
-        </div>
+          <blockquote>{t.texto}</blockquote>
+          <footer class="who">
+            <div class="avatar" aria-hidden="true">{initials(t.autor)}</div>
+            <div>
+              <p class="name">{t.autor}</p>
+              <p class="detail">{t.detalle}</p>
+            </div>
+          </footer>
+        </article>
       ))}
     </div>
 
-    <!-- CTA secundario -->
-    <div class="text-center mt-10 reveal stagger-3">
-      <a
+    <div class="testi-cta reveal stagger-2">
+      <LinkRule
         href="/f/celebraciones/"
-        class="section-cta"
-        data-event="eventos_ver_paquetes" data-location="testimonios"
-      >
-        Ver paquetes y disponibilidad →
-      </a>
+        label="Ver paquetes y disponibilidad"
+        event="eventos_ver_paquetes"
+        location="testimonios"
+      />
     </div>
-
   </div>
 </section>
+
+<style>
+  .testi-section {
+    padding-block: clamp(80px, 10vw, 140px);
+    background: var(--color-olive-50);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .section-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .testi-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 900px) {
+    .testi-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+  }
+
+  .testi-card {
+    position: relative;
+    padding: 40px;
+    background: var(--color-surface-elevated, #ffffff);
+    border: 1px solid var(--color-line);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    min-height: 340px;
+  }
+
+  .testi-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 12px;
+    right: 24px;
+    font-family: var(--font-display);
+    font-size: 64px;
+    line-height: 1;
+    color: var(--color-earth-300);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: var(--color-earth-400);
+  }
+
+  .stars svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  blockquote {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-olive-200, var(--color-olive-50));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--color-lake-700);
+    flex-shrink: 0;
+  }
+
+  .name {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+  }
+
+  .detail {
+    margin: 4px 0 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-subtle);
+  }
+
+  .testi-cta {
+    margin-top: 56px;
+    display: flex;
+    justify-content: center;
+  }
+</style>

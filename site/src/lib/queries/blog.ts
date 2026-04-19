@@ -29,6 +29,7 @@ export interface BlogPostPreview {
   slug: SanitySlug;
   excerpt: string;
   featuredImage: SanityImage;
+  publishedAt?: string;
   category: BlogCategory;
 }
 
@@ -46,6 +47,7 @@ export const BLOG_PREVIEW_QUERY = `*[_type == "blogPost"] | order(publishedAt de
   slug,
   excerpt,
   featuredImage,
+  publishedAt,
   "category": category->{title, slug, badgeClass}
 }`;
 

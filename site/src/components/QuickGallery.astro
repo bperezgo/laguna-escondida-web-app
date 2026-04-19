@@ -1,60 +1,150 @@
 ---
 import { sanityClient, responsiveImage } from '../lib/sanity';
 import { GALLERY_QUERY } from '../lib/queries/gallery';
+import SectionHeading from './ui/SectionHeading.astro';
+import FigureCaption from './ui/FigureCaption.astro';
+import LinkRule from './ui/LinkRule.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 
-const galleryImages = await sanityClient.fetch(GALLERY_QUERY);
-
-const gridSizeClasses: Record<string, { container: string; imgClass: string }> = {
-  featured: { container: 'col-span-2 row-span-2', imgClass: 'w-full h-full object-cover' },
-  wide: { container: 'col-span-2', imgClass: 'w-full h-36 sm:h-48 xl:h-56 object-cover' },
-  standard: { container: '', imgClass: 'w-full h-36 sm:h-48 xl:h-56 object-cover' },
+type GalleryItem = {
+  _id: string;
+  image: { alt?: string };
+  gridSize?: string;
+  order?: number;
+  caption?: string;
 };
+
+const galleryImages: GalleryItem[] = await sanityClient.fetch(GALLERY_QUERY);
+const total = galleryImages.length;
+
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
-<section class="section-padding bg-sand-gradient" id="galeria" data-section="galeria">
-  <div class="section-container xl:max-w-7xl">
-    <h2 class="section-heading reveal">
-      {t.gallery.heading}
-    </h2>
-    <p class="section-subtitle mb-12 reveal stagger-1">
-      {t.gallery.subtitle}
-    </p>
+<section
+  class="gallery-section"
+  id="galeria"
+  data-section="galeria"
+  data-screen-label="Galeria"
+>
+  <div class="gallery-container">
+    <SectionHeading
+      eyebrow={t.gallery.eyebrow}
+      title={t.gallery.heading}
+      subtitle={t.gallery.subtitle}
+      class="reveal"
+    />
 
-    <!-- Grid de fotos -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 reveal stagger-2">
-      {galleryImages.map((img: any) => {
-        const styles = gridSizeClasses[img.gridSize] || gridSizeClasses.standard;
+    <div class="gallery-grid reveal stagger-1">
+      {galleryImages.map((item, i) => {
+        const slot = (i % 5) + 1;
         const imgAttrs = responsiveImage(
-          img.image,
-          img.gridSize === 'featured' ? [400, 800, 1200, 1600] : [400, 800, 1200],
-          img.gridSize === 'featured'
-            ? '(max-width: 640px) 100vw, 50vw'
-            : '(max-width: 640px) 50vw, 25vw',
+          item.image,
+          slot === 1 ? [400, 800, 1200, 1600] : [400, 800, 1200],
+          slot === 1 ? '(max-width: 720px) 100vw, 58vw' : '(max-width: 720px) 100vw, 33vw',
         );
-        const alt = img.image?.alt || img.caption || '';
+        const alt = item.image?.alt || item.caption || '';
         return (
-          <div class={styles.container}>
-            <img
-              src={imgAttrs.src}
-              srcset={imgAttrs.srcset}
-              sizes={imgAttrs.sizes}
-              alt={alt}
-              class={`${styles.imgClass} rounded-brand shadow-brand`}
-              loading="lazy"
+          <figure class={`gal gal-${slot}`}>
+            <div class="media">
+              <img
+                src={imgAttrs.src}
+                srcset={imgAttrs.srcset}
+                sizes={imgAttrs.sizes}
+                alt={alt}
+                loading="lazy"
+              />
+            </div>
+            <FigureCaption
+              index={`${pad(i + 1)} / ${pad(total)}`}
+              label={item.caption || ''}
             />
-          </div>
+          </figure>
         );
       })}
     </div>
 
-    <div class="text-center mt-10">
-      <a href="/galeria/" class="section-cta">
-        {t.gallery.cta} &rarr;
-      </a>
+    <div class="gallery-cta reveal stagger-2">
+      <LinkRule
+        href="/galeria/"
+        label={t.gallery.cta}
+        event="galeria_cta_click"
+        location="galeria"
+      />
     </div>
   </div>
 </section>
+
+<style>
+  .gallery-section {
+    padding-block: clamp(80px, 10vw, 160px);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .gallery-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .gallery-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+  }
+
+  .gal {
+    margin: 0;
+    grid-column: span 12;
+  }
+
+  @media (min-width: 720px) {
+    .gal-1 { grid-column: span 7; }
+    .gal-2 { grid-column: span 5; }
+    .gal-3 { grid-column: span 4; }
+    .gal-4 { grid-column: span 4; }
+    .gal-5 { grid-column: span 4; }
+  }
+
+  .media {
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-lake-700);
+  }
+
+  .media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-4) var(--ease-out);
+  }
+
+  .gal:hover .media img {
+    transform: scale(1.02);
+  }
+
+  .gal-1 .media { aspect-ratio: 16 / 10; }
+  .gal-2 .media {
+    aspect-ratio: 4 / 5;
+    border-radius: 240px 240px 8px 8px;
+  }
+  .gal-3 .media {
+    aspect-ratio: 1 / 1;
+    border-radius: 999px 999px 8px 8px;
+  }
+  .gal-4 .media { aspect-ratio: 1 / 1; }
+  .gal-5 .media {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+
+  .gallery-cta {
+    margin-top: 64px;
+    text-align: center;
+  }
+</style>
