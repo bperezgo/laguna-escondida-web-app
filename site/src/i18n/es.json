@@ -43,6 +43,17 @@
     "houseNote": "\"Cuando baja la tarde el lago se vuelve un espejo \u2014 es el mejor momento para encender la chimenea del comedor y esperar.\"",
     "scrollHint": "Deslizar"
   },
+  "intro": {
+    "eyebrow": "Un lugar, tres maneras de quedarse",
+    "heading": "Hospitalidad campestre antioquena, sin prisa.",
+    "lead": "Laguna Escondida es un restaurante campestre con lago privado de pesca deportiva en la Vereda La Primavera, Marinilla. Sin musica de fondo ni espectaculos — solo el ritmo del agua, cinco especies que nadan en el lago, y cocina preparada con ingredientes frescos del Oriente Antioqueno.",
+    "body": "Recibimos familias, parejas y grupos que buscan desconectarse sin alejarse: a 45 minutos de Medellin por la autopista Medellin-Bogota. Construccion en guadua, vista al lago y kiosco privado para eventos intimos.",
+    "stats": [
+      { "value": "5", "label": "Especies del lago" },
+      { "value": "45", "label": "Minutos de Medellin" },
+      { "value": "60", "label": "Personas en kiosco" }
+    ]
+  },
   "experiences": {
     "eyebrow": "Experiencias",
     "heading": "Tres maneras de encontrarse con el lago.",
@@ -84,17 +95,26 @@
     ]
   },
   "fishSpecies": {
-    "heading": "Por que Laguna Escondida tiene mas variedad que cualquier truchera?",
+    "eyebrow": "Lo que vive en el lago",
+    "heading": "Cinco especies, cada una con su temporada.",
     "subtitle": "Mientras la mayoria de trucheras en el Oriente Antioqueno solo ofrecen trucha, en Laguna Escondida puedes pescar 5 especies diferentes. Esta variedad hace que cada visita sea una experiencia distinta — para pescadores de todos los niveles.",
     "speciesIn": "especies en",
     "brandName": "Laguna Escondida",
     "specieIn": "especie en",
     "typicalTrout": "trucheras tipicas",
+    "comparisonEyebrow": "Variedad del lago",
     "cta": "Conoce la pesca deportiva",
     "difficulty": {
       "Facil": "Facil",
       "Media": "Media",
       "Dificil": "Dificil"
+    },
+    "stats": {
+      "difficulty": "Dificultad",
+      "weight": "Peso medio",
+      "season": "Temporada",
+      "depth": "Profundidad",
+      "bait": "Carnada"
     }
   },
   "gallery": {

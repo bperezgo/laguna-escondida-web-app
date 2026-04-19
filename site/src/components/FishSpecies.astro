@@ -1,77 +1,138 @@
 ---
 import { sanityClient, urlFor } from '../lib/sanity';
 import { FISH_SPECIES_QUERY } from '../lib/queries/fishSpecies';
+import SectionHeading from './ui/SectionHeading.astro';
+import LinkRule from './ui/LinkRule.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 
-const speciesData = await sanityClient.fetch(FISH_SPECIES_QUERY);
-
-const difficultyBadge: Record<string, string> = {
-  Facil: 'badge-primary',
-  Media: 'badge-secondary',
-  Dificil: 'badge-accent',
+type Species = {
+  name: string;
+  latinName?: string;
+  difficulty?: string;
+  description?: string;
+  weightRange?: string;
+  season?: string;
+  depth?: string;
+  bait?: string;
+  image?: { alt?: string };
 };
+
+const speciesData: Species[] = await sanityClient.fetch(FISH_SPECIES_QUERY);
 ---
 
-<section class="section-padding bg-lake-gradient" id="especies" data-section="especies">
-  <div class="section-container">
-    <h2 class="section-heading reveal">
-      {t.fishSpecies.heading}
-    </h2>
-    <p class="section-subtitle max-w-3xl reveal stagger-1">
-      {t.fishSpecies.subtitle}
-    </p>
+<section
+  class="species-section"
+  id="especies"
+  data-section="especies"
+  data-screen-label="Especies"
+>
+  <div class="species-container">
+    <SectionHeading
+      eyebrow={t.fishSpecies.eyebrow}
+      title={t.fishSpecies.heading}
+      subtitle={t.fishSpecies.subtitle}
+      inverse
+      class="reveal"
+    />
 
-    <!-- Grid de especies -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12 reveal stagger-2">
-      {speciesData.map((species: any) => (
-        <div class="card-standard text-center">
-          <figure class="mb-4">
-            <img
-              src={urlFor(species.image).width(96).height(96).url()}
-              alt={species.image?.alt || species.name}
-              class="w-24 h-24 object-cover rounded-full mx-auto border-4 border-lake-50"
-              loading="lazy"
-            />
-          </figure>
-          <h3 class="font-display text-lg text-lake-700">{species.name}</h3>
-          <div class={`badge ${difficultyBadge[species.difficulty] || 'badge-primary'} badge-outline mt-2 font-body`}>
-            {t.fishSpecies.difficulty[species.difficulty as keyof typeof t.fishSpecies.difficulty] || species.difficulty}
-          </div>
-          <p class="text-sm text-neutral mt-2 font-body">{species.description}</p>
-        </div>
-      ))}
+    <div class="species-grid reveal stagger-1">
+      {speciesData.map((species) => {
+        const difficultyLabel = species.difficulty
+          ? (t.fishSpecies.difficulty[species.difficulty as keyof typeof t.fishSpecies.difficulty] || species.difficulty)
+          : null;
+        const hasStats = species.weightRange || species.season || species.depth || species.bait || difficultyLabel;
+        return (
+          <article class="species-card">
+            <div class="ph">
+              {species.image ? (
+                <img
+                  src={urlFor(species.image).width(240).height(240).url()}
+                  alt={species.image?.alt || species.name}
+                  loading="lazy"
+                  width="120"
+                  height="120"
+                />
+              ) : null}
+            </div>
+            <div class="species-head">
+              <h4 class="species-name">
+                {species.name}
+                {species.latinName && <span class="lat">{species.latinName}</span>}
+              </h4>
+              {species.description && <p class="species-desc">{species.description}</p>}
+            </div>
+            {hasStats && (
+              <dl class="species-stats">
+                {difficultyLabel && (
+                  <div>
+                    <dt>{t.fishSpecies.stats.difficulty}</dt>
+                    <dd>{difficultyLabel}</dd>
+                  </div>
+                )}
+                {species.weightRange && (
+                  <div>
+                    <dt>{t.fishSpecies.stats.weight}</dt>
+                    <dd>{species.weightRange}</dd>
+                  </div>
+                )}
+                {species.season && (
+                  <div>
+                    <dt>{t.fishSpecies.stats.season}</dt>
+                    <dd>{species.season}</dd>
+                  </div>
+                )}
+                {species.depth && (
+                  <div>
+                    <dt>{t.fishSpecies.stats.depth}</dt>
+                    <dd>{species.depth}</dd>
+                  </div>
+                )}
+                {species.bait && (
+                  <div>
+                    <dt>{t.fishSpecies.stats.bait}</dt>
+                    <dd>{species.bait}</dd>
+                  </div>
+                )}
+              </dl>
+            )}
+          </article>
+        );
+      })}
     </div>
 
-    <!-- Comparativa visual -->
-    <div class="bg-white rounded-brand p-8 shadow-brand max-w-2xl mx-auto reveal stagger-3" data-counter-box>
-      <div class="flex items-center justify-between mb-4">
-        <div class="text-center flex-1">
-          <p class="text-4xl font-bold text-lake-500 font-body" data-counter="5">5</p>
-          <p class="text-sm text-neutral font-body">{t.fishSpecies.speciesIn}<br/><strong>{t.fishSpecies.brandName}</strong></p>
-        </div>
-        <div class="text-3xl text-neutral/30 font-body">vs</div>
-        <div class="text-center flex-1">
-          <p class="text-4xl font-bold text-neutral/40 font-body" data-counter="1">1</p>
-          <p class="text-sm text-neutral font-body">{t.fishSpecies.specieIn}<br/>{t.fishSpecies.typicalTrout}</p>
-        </div>
+    <div class="species-compare reveal stagger-2" data-counter-box>
+      <div class="compare-col">
+        <p class="compare-num" data-counter="5">5</p>
+        <p class="compare-label">
+          {t.fishSpecies.speciesIn}<br /><strong>{t.fishSpecies.brandName}</strong>
+        </p>
+      </div>
+      <div class="compare-sep" aria-hidden="true">vs</div>
+      <div class="compare-col is-muted">
+        <p class="compare-num" data-counter="1">1</p>
+        <p class="compare-label">
+          {t.fishSpecies.specieIn}<br />{t.fishSpecies.typicalTrout}
+        </p>
       </div>
     </div>
 
-    <!-- CTA -->
-    <div class="text-center mt-10">
-      <a href="/experiencias/pesca-deportiva/"
-         class="btn btn-primary btn-lg text-white font-body font-semibold">
-        {t.fishSpecies.cta} &rarr;
-      </a>
+    <div class="species-cta reveal stagger-3">
+      <LinkRule
+        href="/experiencias/pesca-deportiva/"
+        label={t.fishSpecies.cta}
+        event="especies_cta_click"
+        location="especies"
+        inverse
+      />
     </div>
   </div>
 </section>
 
 <script is:inline>
-  (function() {
+  (function () {
     var box = document.querySelector('[data-counter-box]');
     if (!box) return;
 
@@ -88,17 +149,215 @@ const difficultyBadge: Record<string, string> = {
       requestAnimationFrame(step);
     }
 
-    var observer = new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting) {
-        box.querySelectorAll('[data-counter]').forEach(function(el) {
-          var target = parseInt(el.dataset.counter, 10);
-          el.textContent = '0';
-          animateCounter(el, target);
-        });
-        observer.disconnect();
-      }
-    }, { threshold: 0.5 });
+    var observer = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting) {
+          box.querySelectorAll('[data-counter]').forEach(function (el) {
+            var target = parseInt(el.dataset.counter, 10);
+            el.textContent = '0';
+            animateCounter(el, target);
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
 
     observer.observe(box);
   })();
 </script>
+
+<style>
+  .species-section {
+    padding-block: clamp(80px, 10vw, 160px);
+    background: var(--color-surface-inverse);
+    color: var(--color-ink-inverse);
+  }
+
+  .species-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  .species-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  @media (min-width: 720px) {
+    .species-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .species-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .species-card {
+    background: var(--color-lake-700);
+    padding: 40px 32px;
+    min-height: 420px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 28px;
+    transition: background var(--duration-3) var(--ease-out);
+  }
+
+  .species-card:hover {
+    background: var(--color-lake-600);
+  }
+
+  .ph {
+    width: 120px;
+    aspect-ratio: 1 / 1;
+    border-radius: 999px;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 10px),
+      rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .ph img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .species-head {
+    display: grid;
+    gap: 12px;
+  }
+
+  .species-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+    line-height: 1.05;
+    color: var(--color-sand-50);
+    letter-spacing: -0.01em;
+  }
+
+  .species-name .lat {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-body);
+    font-weight: 400;
+    color: rgba(250, 248, 243, 0.55);
+  }
+
+  .species-desc {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.6;
+    color: rgba(250, 248, 243, 0.7);
+  }
+
+  .species-stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.6);
+  }
+
+  .species-stats > div {
+    margin: 0;
+  }
+
+  .species-stats dt {
+    margin: 0;
+  }
+
+  .species-stats dd {
+    display: block;
+    margin: 4px 0 0;
+    font-family: var(--font-serif);
+    font-style: normal;
+    font-size: var(--text-body);
+    color: var(--color-sand-50);
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .species-compare {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 32px;
+    max-width: 640px;
+    margin-inline: auto;
+    padding: 40px 32px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .compare-col {
+    text-align: center;
+  }
+
+  .compare-num {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 1;
+    color: var(--color-earth-300);
+  }
+
+  .compare-col.is-muted .compare-num {
+    color: rgba(250, 248, 243, 0.3);
+  }
+
+  .compare-label {
+    margin: 12px 0 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.65);
+    line-height: 1.5;
+  }
+
+  .compare-label strong {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--text-body-sm);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-sand-50);
+  }
+
+  .compare-sep {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--text-body-lg);
+    color: rgba(250, 248, 243, 0.35);
+  }
+
+  .species-cta {
+    margin-top: 56px;
+    text-align: center;
+  }
+</style>

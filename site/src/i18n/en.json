@@ -43,6 +43,17 @@
     "houseNote": "\"As the afternoon fades the lake turns to a mirror \u2014 the best moment to light the dining room fireplace and wait.\"",
     "scrollHint": "Scroll"
   },
+  "intro": {
+    "eyebrow": "One place, three ways to linger",
+    "heading": "Antioquian country hospitality, without rush.",
+    "lead": "Laguna Escondida is a country restaurant with a private sport fishing lake in Vereda La Primavera, Marinilla. No background music, no scheduled shows — just the rhythm of the water, five species swimming in the lake, and food prepared with fresh ingredients from Eastern Antioquia.",
+    "body": "We welcome families, couples and small groups looking to disconnect without going far: 45 minutes from Medellin via the Medellin-Bogota highway. Bamboo construction, lake views and a private kiosk for intimate gatherings.",
+    "stats": [
+      { "value": "5", "label": "Lake species" },
+      { "value": "45", "label": "Minutes from Medellin" },
+      { "value": "60", "label": "Guests in kiosk" }
+    ]
+  },
   "experiences": {
     "eyebrow": "Experiences",
     "heading": "Three ways to meet the lake.",
@@ -84,17 +95,26 @@
     ]
   },
   "fishSpecies": {
-    "heading": "Why does Laguna Escondida have more variety than any trout farm?",
+    "eyebrow": "What lives in the lake",
+    "heading": "Five species, each with its season.",
     "subtitle": "While most trout farms in Eastern Antioquia only offer trout, at Laguna Escondida you can fish 5 different species. This variety makes every visit a unique experience — for anglers of all levels.",
     "speciesIn": "species at",
     "brandName": "Laguna Escondida",
     "specieIn": "species at",
     "typicalTrout": "typical trout farms",
+    "comparisonEyebrow": "Lake variety",
     "cta": "Discover sport fishing",
     "difficulty": {
       "Facil": "Easy",
       "Media": "Medium",
       "Dificil": "Hard"
+    },
+    "stats": {
+      "difficulty": "Difficulty",
+      "weight": "Avg. weight",
+      "season": "Season",
+      "depth": "Depth",
+      "bait": "Bait"
     }
   },
   "gallery": {
