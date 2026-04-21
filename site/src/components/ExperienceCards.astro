@@ -15,9 +15,9 @@ const hrefs = [
 const events = ['pesca_click', 'restaurante_click', 'eventos_click'];
 
 const images = [
-  { src: '/images/experiences/fishing.png', alt: 'Pesca deportiva en Laguna Escondida', position: '50% 40%' },
+  { src: '/images/experiences/fishing.png', alt: 'Pesca deportiva en Laguna Escondida', position: '50% 50%' },
   { src: '/images/experiences/restaurant.png', alt: 'Restaurante en Laguna Escondida', position: '50% 50%' },
-  { src: '/images/experiences/events.png', alt: 'Eventos privados en Laguna Escondida', position: '50% 35%' },
+  { src: '/images/experiences/events.png', alt: 'Eventos privados en Laguna Escondida', position: '50% 50%' },
 ];
 ---
 
@@ -47,8 +47,8 @@ const images = [
               alt={images[i].alt}
               loading="lazy"
               decoding="async"
-              width="1024"
-              height="1024"
+              width="1536"
+              height="2048"
               style={`object-position: ${images[i].position};`}
             />
             <div class="ph-overlay" aria-hidden="true"></div>
@@ -148,7 +148,7 @@ const images = [
 
   .num {
     position: absolute;
-    top: 20px;
+    bottom: 20px;
     left: 20px;
     font-family: var(--font-mono);
     font-size: 11px;
