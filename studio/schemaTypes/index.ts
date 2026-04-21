@@ -6,6 +6,8 @@ import experience from './experience'
 import galleryImage from './galleryImage'
 import siteSettings from './siteSettings'
 import heroSection from './heroSection'
+import introSection from './introSection'
+import ctaBandSection from './ctaBandSection'
 
 export const schemaTypes = [
   fishSpecies,
@@ -16,4 +18,6 @@ export const schemaTypes = [
   galleryImage,
   siteSettings,
   heroSection,
+  introSection,
+  ctaBandSection,
 ]

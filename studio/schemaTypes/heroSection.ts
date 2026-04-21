@@ -90,6 +90,48 @@ export default defineType({
       description: 'Ej: 4.6 en Google Maps · Marinilla, Antioquia',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'stats',
+      title: 'Stats del hero',
+      type: 'array',
+      description: 'Tres indicadores clave debajo del CTA. Ej: 5 / Especies de peces.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Etiqueta',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'value',
+              title: 'Valor',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {title: 'value', subtitle: 'label'},
+          },
+        },
+      ],
+      validation: (rule) => rule.length(3).warning('Recomendado: 3 stats.'),
+    }),
+    defineField({
+      name: 'houseNoteEyebrow',
+      title: 'Eyebrow de la nota de la casa',
+      type: 'string',
+      description: 'Ej: Nota de la Casa',
+    }),
+    defineField({
+      name: 'houseNote',
+      title: 'Nota de la casa',
+      type: 'text',
+      rows: 3,
+      description: 'Cita editorial en cursiva que aparece en la tarjeta flotante del hero.',
+    }),
   ],
   preview: {
     prepare() {

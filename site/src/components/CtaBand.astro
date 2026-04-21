@@ -1,14 +1,27 @@
 ---
 import Eyebrow from './ui/Eyebrow.astro';
 import Button from './ui/Button.astro';
+import { sanityClient } from '../lib/sanity';
+import { CTA_BAND_SECTION_QUERY, type CtaBandSectionData } from '../lib/queries/ctaBandSection';
+import { HERO_SECTION_QUERY, type HeroSectionData } from '../lib/queries/heroSection';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 
-const WA_NUMBER = '573194313781';
-const waMessage = t.hero.waMessage;
-const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+const [ctaBand, hero] = await Promise.all([
+  sanityClient.fetch<CtaBandSectionData | null>(CTA_BAND_SECTION_QUERY),
+  sanityClient.fetch<HeroSectionData | null>(HERO_SECTION_QUERY),
+]);
+
+const eyebrow = ctaBand?.eyebrow || t.ctaBand.eyebrow;
+const heading = ctaBand?.heading || t.ctaBand.heading;
+const primaryCta = ctaBand?.primaryCtaText || hero?.ctaPrimaryText || t.hero.ctaPrimary;
+const whatsappCta = ctaBand?.whatsappCtaText || t.ctaBand.whatsappCta;
+
+const waNumber = ctaBand?.whatsappNumber || hero?.whatsappNumber || '573194313781';
+const waMessage = ctaBand?.whatsappMessage || hero?.whatsappMessage || t.hero.waMessage;
+const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 ---
 
 <section
@@ -19,8 +32,8 @@ const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}
 >
   <div class="cta-container">
     <div class="cta-text reveal">
-      <Eyebrow text={t.ctaBand.eyebrow} inverse />
-      <h2 class="cta-heading">{t.ctaBand.heading}</h2>
+      <Eyebrow text={eyebrow} inverse />
+      <h2 class="cta-heading">{heading}</h2>
     </div>
     <div class="cta-actions reveal stagger-1">
       <Button
@@ -31,7 +44,7 @@ const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}
         target="_blank"
         rel="noopener"
       >
-        {t.hero.ctaPrimary}
+        {primaryCta}
         <span class="arrow" aria-hidden="true">→</span>
       </Button>
       <Button
@@ -43,7 +56,7 @@ const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}
         rel="noopener"
         withDot
       >
-        {t.ctaBand.whatsappCta}
+        {whatsappCta}
       </Button>
     </div>
   </div>

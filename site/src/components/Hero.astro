@@ -3,13 +3,13 @@ import StarRating from './StarRating.astro';
 import Eyebrow from './ui/Eyebrow.astro';
 import Button from './ui/Button.astro';
 import { sanityClient, responsiveImage } from '../lib/sanity';
-import { HERO_SECTION_QUERY } from '../lib/queries/heroSection';
+import { HERO_SECTION_QUERY, type HeroSectionData } from '../lib/queries/heroSection';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 
-const hero = await sanityClient.fetch(HERO_SECTION_QUERY);
+const hero = await sanityClient.fetch<HeroSectionData | null>(HERO_SECTION_QUERY);
 
 const heroImg = hero?.backgroundImage
   ? responsiveImage(hero.backgroundImage, [640, 1024, 1600, 1920], '100vw')
@@ -30,9 +30,9 @@ const ctaPrimary = hero?.ctaPrimaryText || t.hero.ctaPrimary;
 const ctaSecondary = hero?.ctaSecondaryText || t.hero.ctaSecondary;
 const trustBadge = hero?.trustBadgeText || t.hero.trustBadge;
 
-const stats = t.hero.stats;
-const houseNoteEyebrow = t.hero.houseNoteEyebrow;
-const houseNote = t.hero.houseNote;
+const stats = hero?.stats && hero.stats.length > 0 ? hero.stats : t.hero.stats;
+const houseNoteEyebrow = hero?.houseNoteEyebrow || t.hero.houseNoteEyebrow;
+const houseNote = hero?.houseNote || t.hero.houseNote;
 const scrollHint = t.hero.scrollHint;
 ---
 <section class="hero" id="inicio" data-section="hero" data-screen-label="Hero">

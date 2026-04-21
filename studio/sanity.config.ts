@@ -28,9 +28,24 @@ export default defineConfig({
               .child(
                 S.document().schemaType('heroSection').documentId('heroSection'),
               ),
+            S.listItem()
+              .title('Intro')
+              .id('introSection')
+              .child(
+                S.document().schemaType('introSection').documentId('introSection'),
+              ),
+            S.listItem()
+              .title('CTA Band')
+              .id('ctaBandSection')
+              .child(
+                S.document().schemaType('ctaBandSection').documentId('ctaBandSection'),
+              ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (listItem) => !['siteSettings', 'heroSection'].includes(listItem.getId()!),
+              (listItem) =>
+                !['siteSettings', 'heroSection', 'introSection', 'ctaBandSection'].includes(
+                  listItem.getId()!,
+                ),
             ),
           ]),
     }),
