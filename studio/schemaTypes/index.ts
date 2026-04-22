@@ -8,6 +8,7 @@ import siteSettings from './siteSettings'
 import heroSection from './heroSection'
 import introSection from './introSection'
 import ctaBandSection from './ctaBandSection'
+import experiencesSection from './experiencesSection'
 
 export const schemaTypes = [
   fishSpecies,
@@ -20,4 +21,5 @@ export const schemaTypes = [
   heroSection,
   introSection,
   ctaBandSection,
+  experiencesSection,
 ]

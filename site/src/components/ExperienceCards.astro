@@ -1,24 +1,18 @@
 ---
+import { sanityClient, responsiveImage } from '../lib/sanity';
+import {
+  EXPERIENCES_SECTION_QUERY,
+  EXPERIENCES_QUERY,
+  type ExperiencesSectionData,
+  type ExperienceCard,
+} from '../lib/queries/experiences';
 import SectionHeading from './ui/SectionHeading.astro';
 import LinkRule from './ui/LinkRule.astro';
-import { useTranslations, type Locale } from '../i18n';
 
-const locale = (Astro.currentLocale ?? 'es') as Locale;
-const t = useTranslations(locale);
-
-const hrefs = [
-  '/experiencias/pesca-deportiva/',
-  '/experiencias/restaurante/',
-  '/experiencias/eventos/',
-];
-
-const events = ['pesca_click', 'restaurante_click', 'eventos_click'];
-
-const images = [
-  { src: '/images/experiences/fishing.png', alt: 'Pesca deportiva en Laguna Escondida', position: '50% 50%' },
-  { src: '/images/experiences/restaurant.png', alt: 'Restaurante en Laguna Escondida', position: '50% 50%' },
-  { src: '/images/experiences/events.png', alt: 'Eventos privados en Laguna Escondida', position: '50% 50%' },
-];
+const [section, cards] = await Promise.all([
+  sanityClient.fetch<ExperiencesSectionData | null>(EXPERIENCES_SECTION_QUERY),
+  sanityClient.fetch<ExperienceCard[]>(EXPERIENCES_QUERY),
+]);
 ---
 
 <section
@@ -29,51 +23,58 @@ const images = [
 >
   <div class="experiences-container">
     <SectionHeading
-      eyebrow={t.experiences.eyebrow}
-      title={t.experiences.heading}
-      subtitle={t.experiences.subtitle}
+      eyebrow={section?.eyebrow ?? ''}
+      title={section?.heading ?? ''}
+      subtitle={section?.subtitle ?? ''}
       withRule
       class="reveal"
     />
 
     <div class="exp-grid reveal">
-      {t.experiences.cards.map((card, i) => (
-        <article class={`exp-card stagger-${i + 1}`}>
-          <div class="media">
-            <span class="num">{card.label}</span>
-            <img
-              class="ph"
-              src={images[i].src}
-              alt={images[i].alt}
-              loading="lazy"
-              decoding="async"
-              width="1536"
-              height="2048"
-              style={`object-position: ${images[i].position};`}
-            />
-            <div class="ph-overlay" aria-hidden="true"></div>
-          </div>
-          <div class="body-wrap">
-            <h3 class="h4-editorial">
-              {card.title}<br />
-              <em>{card.italicSubtitle}</em>
-            </h3>
-            <p class="body-editorial">{card.description}</p>
-            <div class="meta">
-              <span>
-                {card.metaLeftLabel} <b class="gold">{card.metaLeftValue}</b>
-              </span>
-              <span>{card.metaRight}</span>
+      {cards.map((card, i) => {
+        const imgAttrs = responsiveImage(
+          card.image,
+          [400, 800, 1200, 1600],
+          '(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw',
+        );
+        const alt = card.image?.alt ?? card.title;
+        return (
+          <article class={`exp-card stagger-${i + 1}`}>
+            <div class="media">
+              <span class="num">{card.label}</span>
+              <img
+                class="ph"
+                src={imgAttrs.src}
+                srcset={imgAttrs.srcset}
+                sizes={imgAttrs.sizes}
+                alt={alt}
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="ph-overlay" aria-hidden="true"></div>
             </div>
-            <LinkRule
-              href={hrefs[i]}
-              label={card.cta}
-              event={events[i]}
-              location="experiences"
-            />
-          </div>
-        </article>
-      ))}
+            <div class="body-wrap">
+              <h3 class="h4-editorial">
+                {card.title}<br />
+                <em>{card.italicSubtitle}</em>
+              </h3>
+              <p class="body-editorial">{card.description}</p>
+              <div class="meta">
+                <span>
+                  {card.metaLeftLabel} <b class="gold">{card.metaLeftValue}</b>
+                </span>
+                <span>{card.metaRight}</span>
+              </div>
+              <LinkRule
+                href={`/experiencias/${card.slug}/`}
+                label={card.cta}
+                event={card.eventKey}
+                location="experiences"
+              />
+            </div>
+          </article>
+        );
+      })}
     </div>
   </div>
 </section>

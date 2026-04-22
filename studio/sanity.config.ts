@@ -35,6 +35,12 @@ export default defineConfig({
                 S.document().schemaType('introSection').documentId('introSection'),
               ),
             S.listItem()
+              .title('Experiencias — Encabezado')
+              .id('experiencesSection')
+              .child(
+                S.document().schemaType('experiencesSection').documentId('experiencesSection'),
+              ),
+            S.listItem()
               .title('CTA Band')
               .id('ctaBandSection')
               .child(
@@ -43,9 +49,13 @@ export default defineConfig({
             S.divider(),
             ...S.documentTypeListItems().filter(
               (listItem) =>
-                !['siteSettings', 'heroSection', 'introSection', 'ctaBandSection'].includes(
-                  listItem.getId()!,
-                ),
+                ![
+                  'siteSettings',
+                  'heroSection',
+                  'introSection',
+                  'ctaBandSection',
+                  'experiencesSection',
+                ].includes(listItem.getId()!),
             ),
           ]),
     }),
