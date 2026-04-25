@@ -9,6 +9,9 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
     "@sanity/client": "^7.20.0",

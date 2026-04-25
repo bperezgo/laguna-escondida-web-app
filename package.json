@@ -10,6 +10,10 @@
     "funnels/*",
     "studio"
   ],
+  "dependencies": {
+    "tailwindcss": "^4.2.2",
+    "vite": "^7.0.0"
+  },
   "scripts": {
     "dev": "npm run dev --workspace=site",
     "dev:funnel:celebraciones": "npm run dev --workspace=funnels/celebraciones",
