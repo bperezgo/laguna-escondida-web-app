@@ -48,21 +48,31 @@ const t = useTranslations(locale);
           </div>
         </dl>
 
+        {t.location.lostHint && (
+          <p class="lost-hint">{t.location.lostHint}</p>
+        )}
+
         <div class="hours-block">
           <p class="hours-label">{t.location.hours}</p>
           <dl class="hours-dl">
-            <div>
-              <dt>{t.location.hoursSatSun}</dt>
-              <dd>{t.location.hoursSatSunTime}</dd>
-            </div>
-            <div>
-              <dt>{t.location.hoursHolidays}</dt>
-              <dd>{t.location.hoursHolidaysTime}</dd>
-            </div>
-            <div>
-              <dt>{t.location.hoursWeekdays}</dt>
-              <dd>{t.location.hoursWeekdaysTime}</dd>
-            </div>
+            {t.location.hoursSatSun && (
+              <div>
+                <dt>{t.location.hoursSatSun}</dt>
+                <dd>{t.location.hoursSatSunTime}</dd>
+              </div>
+            )}
+            {t.location.hoursHolidays && (
+              <div>
+                <dt>{t.location.hoursHolidays}</dt>
+                <dd>{t.location.hoursHolidaysTime}</dd>
+              </div>
+            )}
+            {t.location.hoursWeekdays && (
+              <div>
+                <dt>{t.location.hoursWeekdays}</dt>
+                <dd>{t.location.hoursWeekdaysTime}</dd>
+              </div>
+            )}
           </dl>
         </div>
 
@@ -227,6 +237,14 @@ const t = useTranslations(locale);
     font-family: var(--font-serif);
     font-size: var(--text-body);
     color: var(--color-ink-muted);
+  }
+
+  .lost-hint {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    color: var(--color-ink-muted);
+    font-style: italic;
   }
 
   .location-cta {

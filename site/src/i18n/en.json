@@ -3,7 +3,7 @@
     "locale": "en",
     "dateLocale": "en-US",
     "homeTitle": "Laguna Escondida — Sport Fishing & Country Restaurant in Marinilla, Antioquia",
-    "homeDescription": "Fish 5 species and dine by the lake. Country restaurant with Yamu, Doradas, Cachama, Red Tilapia and Nilotica in Marinilla. 45 min from Medellin.",
+    "homeDescription": "Fish 5 species and dine by the lake. Country restaurant with Yamú, Doradas, Cachama, Red Tilapia and Nilótica in Marinilla. 1 hour from Medellín.",
     "blogTitle": "Blog — Laguna Escondida | Fishing, Food & Nature",
     "blogDescription": "Fishing guides, fresh fish recipes and things to do in Eastern Antioquia. Learn about sport fishing and country cuisine.",
     "categoryTitleSuffix": "— Laguna Escondida Blog",
@@ -24,11 +24,11 @@
     "brandName": "Laguna Escondida"
   },
   "hero": {
-    "eyebrow": "45 minutes from Medellin \u00b7 Marinilla, Antioquia",
+    "eyebrow": "Country restaurant and sport fishing in Vereda La Primavera, Marinilla.",
     "line1": "Fish 5 different species.",
     "line2": "Dine by the lake.",
-    "line3": "45 minutes from Medellin.",
-    "subheadline": "Country restaurant and sport fishing in Marinilla, Antioquia. Yamu, Doradas, Cachama, Red Tilapia and Nilotica — all in one place.",
+    "line3": "1 hour from Medellín.",
+    "subheadline": "Country restaurant and sport fishing in Marinilla, Antioquia. Yamú, Doradas, Cachama, Red Tilapia and Nilótica — all in one place.",
     "ctaPrimary": "Book a visit",
     "ctaSecondary": "See experiences",
     "trustBadge": "4.6 on Google Maps \u00b7 Marinilla, Antioquia",
@@ -36,7 +36,7 @@
     "waMessage": "Hi, I'd like to book a visit at Laguna Escondida",
     "stats": [
       { "label": "Fish species", "value": "5" },
-      { "label": "From Medellin", "value": "45 min" },
+      { "label": "From Medellín", "value": "1 h" },
       { "label": "Lakefront", "value": "Dining" }
     ],
     "houseNoteEyebrow": "House Note",
@@ -46,18 +46,18 @@
   "intro": {
     "eyebrow": "One place, three ways to linger",
     "heading": "Antioquian country hospitality, without rush.",
-    "lead": "Laguna Escondida is a country restaurant with a private sport fishing lake in Vereda La Primavera, Marinilla. No background music, no scheduled shows — just the rhythm of the water, five species swimming in the lake, and food prepared with fresh ingredients from Eastern Antioquia.",
-    "body": "We welcome families, couples and small groups looking to disconnect without going far: 45 minutes from Medellin via the Medellin-Bogota highway. Bamboo construction, lake views and a private kiosk for intimate gatherings.",
+    "lead": "Laguna Escondida is a country restaurant with a private sport fishing lake in Vereda La Primavera, Marinilla. Five species swim in the lake. The kitchen works with fresh ingredients from Eastern Antioquia. Built in bamboo, with a direct view of the water.",
+    "body": "We welcome families, couples and groups looking to disconnect without going far: 1 hour from Medellín via the Medellín-Bogotá highway.",
     "stats": [
       { "value": "5", "label": "Lake species" },
-      { "value": "45", "label": "Minutes from Medellin" },
+      { "value": "1 h", "label": "From Medellín" },
       { "value": "60", "label": "Guests in kiosk" }
     ]
   },
   "experiences": {
     "eyebrow": "Experiences",
     "heading": "Three ways to meet the lake.",
-    "subtitle": "Laguna Escondida is a country restaurant with a sport fishing lake in Vereda La Primavera, Marinilla. Each experience stands on its own — combine them in a single day or book them separately.",
+    "subtitle": "Fish, dine and celebrate — each experience stands on its own or combine all three in a single day.",
     "cards": [
       {
         "label": "01 / Fish",
@@ -74,7 +74,7 @@
         "label": "02 / Eat",
         "title": "Country dining room",
         "italicSubtitle": "by the water",
-        "description": "Country restaurant overlooking the lake. Fried Yamu, Tilapia, Trout and more. Bamboo construction, authentic rustic atmosphere.",
+        "description": "Country restaurant with a direct view of the lake. Fried Yamú, Tilapia, Doradas — fresh cooking with the same fish from the lake. Bamboo construction, tables with a view of the water.",
         "metaLeftLabel": "Menu",
         "metaLeftValue": "Country style",
         "metaRight": "Open-air bamboo",
@@ -85,7 +85,7 @@
         "label": "03 / Celebrate",
         "title": "Private events",
         "italicSubtitle": "in a lakefront kiosk",
-        "description": "Birthdays, gender reveals and gatherings with a private kiosk. Country venue for up to 60 guests by the lake.",
+        "description": "Birthdays, gender reveals and gatherings with a private kiosk by the lake. Up to 60 guests, exclusive use, country setting — without the noise of an events hall.",
         "metaLeftLabel": "Capacity",
         "metaLeftValue": "up to 60",
         "metaRight": "Exclusive use",
@@ -124,8 +124,8 @@
     "cta": "View full gallery"
   },
   "reviews": {
-    "eyebrow": "Recent guests",
-    "heading": "What do our visitors say?",
+    "eyebrow": "Recent visitors",
+    "heading": "4.6 on Google Maps · Families, couples and anglers who came back to tell the story.",
     "viewOnMaps": "View on Google Maps",
     "leaveReview": "Leave a review on Google",
     "items": [
@@ -149,25 +149,26 @@
   "location": {
     "eyebrow": "Getting here",
     "heading": "How to get to Laguna Escondida?",
-    "subtitle": "Laguna Escondida is located in Vereda La Primavera, Marinilla, Antioquia. It's 45 minutes from Medellin and 15 minutes from Rionegro via the Medellin-Bogota highway.",
+    "subtitle": "We are in Vereda La Primavera, Marinilla, Antioquia. From the main square in Marinilla, take the road toward Hogar Infantil Semillitas and follow it up to La Primavera.",
     "mapTitle": "Laguna Escondida location on Google Maps",
-    "fromMedellin": "From Medellin",
-    "fromMedellinDesc": "Take the Medellin-Bogota highway. Pass the Santa Elena toll. In Marinilla, take the exit toward Vereda La Primavera. Estimated time: <strong>45 minutes</strong>.",
+    "fromMedellin": "From Medellín",
+    "fromMedellinDesc": "Via the Medellín-Bogotá highway to Marinilla. Estimated time: <strong>1 hour</strong>.",
     "fromRionegro": "From Rionegro",
-    "fromRionegroDesc": "Straight along the road to Marinilla. Arrive in <strong>15 minutes</strong> without traffic.",
+    "fromRionegroDesc": "Direct road to Marinilla. Estimated time: <strong>15 minutes</strong>.",
+    "lostHint": "Lost? Message us on WhatsApp and we'll send you the exact location.",
     "hours": "Hours",
-    "hoursSatSun": "Saturdays and Sundays:",
-    "hoursSatSunTime": "9:00 AM - 6:00 PM",
-    "hoursHolidays": "Holidays:",
-    "hoursHolidaysTime": "9:00 AM - 6:00 PM",
-    "hoursWeekdays": "Weekdays:",
-    "hoursWeekdaysTime": "By reservation only",
+    "hoursSatSun": "Every day:",
+    "hoursSatSunTime": "10:00 AM – 10:00 PM",
+    "hoursHolidays": "",
+    "hoursHolidaysTime": "",
+    "hoursWeekdays": "",
+    "hoursWeekdaysTime": "",
     "openInMaps": "Open in Google Maps"
   },
   "blog": {
     "eyebrow": "Lake journal",
-    "heading": "Learn about fishing and country cuisine",
-    "subtitle": "Fishing guides, fresh fish recipes and things to do in Eastern Antioquia.",
+    "heading": "Stories of fishing, recipes from the lake and things to do in Eastern Antioquia.",
+    "subtitle": "",
     "viewAll": "View all posts",
     "backToBlog": "Back to blog",
     "by": "By",
@@ -176,8 +177,8 @@
     "allArticlesIn": "All articles in the category"
   },
   "ctaBand": {
-    "eyebrow": "Reservations",
-    "heading": "Book your lake visit before the weekend fills up.",
+    "eyebrow": "The lake is waiting this weekend",
+    "heading": "Sundays and holidays fill up fast. Reserve your spot and arrive without a rush.",
     "whatsappCta": "Message on WhatsApp"
   },
   "footer": {
@@ -194,7 +195,7 @@
     "address1": "Vereda La Primavera, Marinilla",
     "address2": "Antioquia, Colombia",
     "whatsappLabel": "WhatsApp: +57 319 431 3781",
-    "schedule": "Tue-Sun and holidays: 9:00 AM - 6:00 PM",
+    "schedule": "Every day: 10:00 AM – 10:00 PM",
     "followTitle": "Follow us",
     "copyright": "© 2026 Laguna Escondida. All rights reserved.",
     "privacy": "Privacy policy",
