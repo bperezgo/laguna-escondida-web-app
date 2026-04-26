@@ -76,7 +76,7 @@ const navLinks = [
 
 <style>
   .site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -351,11 +351,6 @@ const navLinks = [
   }
 </style>
 
-<style is:global>
-  body:has(.hero) .site-header {
-    position: fixed;
-  }
-</style>
 
 <script is:inline>
   (function () {
