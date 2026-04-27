@@ -1,12 +1,45 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Eyebrow from '../../components/ui/Eyebrow.astro';
-import menuData from '../../../../menu.json';
+import { sanityClient, urlFor } from '../../lib/sanity';
 
-const { restaurant, categories } = menuData;
-type Dish = { id: string; name: string; description: string; price: number; image?: string };
-type Category = { id: string; name: string; order: number; dishes: Dish[] };
-const sortedCategories = ([...categories].sort((a, b) => a.order - b.order)) as Category[];
+type Dish = {
+  _key: string;
+  name: string;
+  description?: string;
+  price: number;
+  available: boolean;
+  image?: { asset: { _ref: string }; alt?: string };
+};
+type Category = {
+  _id: string;
+  name: string;
+  slug: { current: string };
+  order: number;
+  dishes: Dish[];
+};
+
+const categories = await sanityClient.fetch<Category[]>(
+  `*[_type == "menuCategory"] | order(order asc) {
+    _id,
+    name,
+    slug,
+    order,
+    dishes[] {
+      _key,
+      name,
+      description,
+      price,
+      available,
+      image { asset, alt }
+    }
+  }`
+);
+
+const sortedCategories = categories.map((cat) => ({
+  ...cat,
+  dishes: (cat.dishes ?? []).filter((d) => d.available !== false),
+}));
 
 const formatPrice = (price: number): string =>
   '$' + price.toLocaleString('es-CO');
@@ -20,8 +53,8 @@ const formatPrice = (price: number): string =>
     <div class="hero-container">
       <div class="hero-content">
         <Eyebrow text="Carta · Cocina campestre" inverse />
-        <h1 class="hero-title">{restaurant.name}</h1>
-        <p class="hero-lead">{restaurant.tagline}</p>
+        <h1 class="hero-title">Laguna Escondida</h1>
+        <p class="hero-lead">Sabores auténticos junto a la laguna</p>
       </div>
     </div>
   </header>
@@ -32,7 +65,7 @@ const formatPrice = (price: number): string =>
         {sortedCategories.map((cat, i) => (
           <button
             role="tab"
-            data-target={cat.id}
+            data-target={cat.slug.current}
             aria-selected={i === 0 ? 'true' : 'false'}
             class:list={['tab-btn', i === 0 && 'is-active']}
           >
@@ -46,7 +79,7 @@ const formatPrice = (price: number): string =>
   <main class="menu-main">
     <div class="menu-container">
       {sortedCategories.map((cat, i) => (
-        <section id={cat.id} data-section={`menu-${cat.id}`} class="menu-category">
+        <section id={cat.slug.current} data-section={`menu-${cat.slug.current}`} class="menu-category">
           <header class="category-head">
             <p class="category-index">{String(i + 1).padStart(2, '0')}</p>
             <h2 class="category-title">{cat.name}</h2>
@@ -55,9 +88,15 @@ const formatPrice = (price: number): string =>
           <ul class="dishes-list">
             {cat.dishes.map((dish) => (
               <li class="dish-item">
-                {dish.image && (
+                {dish.image?.asset && (
                   <div class="dish-media">
-                    <img src={dish.image} alt={dish.name} width="128" height="128" loading="lazy" />
+                    <img
+                      src={urlFor(dish.image).width(192).height(192).quality(80).auto('format').url()}
+                      alt={dish.image.alt ?? dish.name}
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                    />
                   </div>
                 )}
                 <div class="dish-body">

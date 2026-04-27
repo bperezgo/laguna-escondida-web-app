@@ -9,6 +9,8 @@ import heroSection from './heroSection'
 import introSection from './introSection'
 import ctaBandSection from './ctaBandSection'
 import experiencesSection from './experiencesSection'
+import menuDish from './menuDish'
+import menuCategory from './menuCategory'
 
 export const schemaTypes = [
   fishSpecies,
@@ -22,4 +24,6 @@ export const schemaTypes = [
   introSection,
   ctaBandSection,
   experiencesSection,
+  menuDish,
+  menuCategory,
 ]
