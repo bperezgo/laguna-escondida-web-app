@@ -25,7 +25,7 @@ rmSync(DEPLOY, { recursive: true, force: true });
 mkdirSync(DEPLOY, { recursive: true });
 
 // ── Build main site ────────────────────────────────────────────
-run('npm run build --workspace=site');
+run('pnpm --filter laguna-site build');
 cpSync(join(ROOT, 'site', 'dist'), DEPLOY, { recursive: true });
 
 // ── Build each funnel ──────────────────────────────────────────
@@ -36,7 +36,7 @@ const funnels = readdirSync(funnelsDir).filter((name) => {
 });
 
 for (const funnel of funnels) {
-  run(`npm run build --workspace=funnels/${funnel}`);
+  run(`pnpm --filter funnel-${funnel} build`);
 
   const funnelDist = join(funnelsDir, funnel, 'dist');
   const target = join(DEPLOY, 'f', funnel);

@@ -1,0 +1,8 @@
+packages:
+  - site
+  - funnels/*
+  - studio
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

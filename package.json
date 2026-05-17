@@ -5,21 +5,14 @@
   "engines": {
     "node": ">=22.12.0"
   },
-  "workspaces": [
-    "site",
-    "funnels/*",
-    "studio"
-  ],
-  "dependencies": {
-    "vite": "^7.0.0"
-  },
+  "packageManager": "pnpm@11.1.2",
   "scripts": {
-    "dev": "npm run dev --workspace=site",
-    "dev:funnel:celebraciones": "npm run dev --workspace=funnels/celebraciones",
-    "dev:studio": "npm run dev --workspace=studio",
+    "dev": "pnpm --filter laguna-site dev",
+    "dev:funnel:celebraciones": "pnpm --filter funnel-celebraciones dev",
+    "dev:studio": "pnpm --filter laguna-studio dev",
     "build": "node build.mjs",
-    "build:site": "npm run build --workspace=site",
-    "build:funnel:celebraciones": "npm run build --workspace=funnels/celebraciones",
-    "build:studio": "npm run build --workspace=studio"
+    "build:site": "pnpm --filter laguna-site build",
+    "build:funnel:celebraciones": "pnpm --filter funnel-celebraciones build",
+    "build:studio": "pnpm --filter laguna-studio build"
   }
 }
