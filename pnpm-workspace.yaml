@@ -3,6 +3,10 @@ packages:
   - funnels/*
   - studio
 
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
+# pnpm 11 gates dependency build scripts behind an explicit allow-list.
+# esbuild and sharp need their native / postinstall build steps to run.
+# NOTE: pnpm 11 uses the `allowBuilds` map; the older `onlyBuiltDependencies`
+# list is no longer honored and was being silently ignored in CI.
+allowBuilds:
+  esbuild: true
+  sharp: true

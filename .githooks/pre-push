@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Full gate before pushing: run the exact CI pipeline (install + build).
+# Slower than pre-commit, but push is less frequent — and this is the last
+# line of defense before the Cloudflare build runs the same commands.
+#
+# Skip in an emergency with:  git push --no-verify
+set -euo pipefail
+
+HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$(git rev-parse --show-toplevel)"
+# shellcheck source=/dev/null
+. "$HOOK_DIR/common.sh"
+
+echo "── pre-push: mirroring the full CI build ──"
+run_install_check
+run_build_check
+echo "✔ pre-push checks passed — safe to push"

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Fast gate on every commit: verify dependencies install exactly like CI.
+# This catches lockfile drift and the "ignored build scripts" error that
+# fails the Cloudflare build — before it ever reaches CI.
+#
+# Skip in an emergency with:  git commit --no-verify
+set -euo pipefail
+
+HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$(git rev-parse --show-toplevel)"
+# shellcheck source=/dev/null
+. "$HOOK_DIR/common.sh"
+
+echo "── pre-commit: verifying dependencies (mirrors CI install) ──"
+run_install_check
+echo "✔ pre-commit checks passed"

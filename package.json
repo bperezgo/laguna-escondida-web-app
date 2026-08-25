@@ -7,6 +7,7 @@
   },
   "packageManager": "pnpm@11.1.2",
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks || true",
     "dev": "pnpm --filter laguna-site dev",
     "dev:funnel:celebraciones": "pnpm --filter funnel-celebraciones dev",
     "dev:studio": "pnpm --filter laguna-studio dev",
