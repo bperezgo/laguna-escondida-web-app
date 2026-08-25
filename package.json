@@ -14,6 +14,9 @@
     "build": "node build.mjs",
     "build:site": "pnpm --filter laguna-site build",
     "build:funnel:celebraciones": "pnpm --filter funnel-celebraciones build",
-    "build:studio": "pnpm --filter laguna-studio build"
+    "build:studio": "pnpm --filter laguna-studio build",
+    "check": "pnpm --filter laguna-site check && pnpm --filter funnel-celebraciones check",
+    "validate:analytics": "node scripts/validate-analytics.mjs",
+    "validate": "pnpm run check && pnpm run build && pnpm run validate:analytics"
   }
 }

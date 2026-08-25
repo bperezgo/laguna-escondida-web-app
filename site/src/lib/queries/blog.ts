@@ -1,4 +1,4 @@
-import type { PortableTextBlock } from '@portabletext/types';
+import type { TypedObject } from 'astro-portabletext/types';
 
 export interface SanitySlug {
   current: string;
@@ -39,7 +39,7 @@ export interface BlogPostListItem extends BlogPostPreview {
 }
 
 export interface BlogPost extends BlogPostListItem {
-  content: PortableTextBlock[];
+  content: TypedObject[];
 }
 
 export const BLOG_PREVIEW_QUERY = `*[_type == "blogPost"] | order(publishedAt desc) [0...3] {

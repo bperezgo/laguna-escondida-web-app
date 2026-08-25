@@ -125,6 +125,32 @@ const formattedDate = (() => {
   </article>
 
   <Footer />
+
+  <!-- Blog read tracking: fires once when 75% of the article has been read -->
+  <script is:inline>
+    (function() {
+      var article = document.querySelector('.blog-content');
+      if (!article) return;
+      var fired = false;
+      function check() {
+        if (fired) return;
+        var articleTop = article.getBoundingClientRect().top + window.scrollY;
+        var read = window.scrollY + window.innerHeight - articleTop;
+        if (article.offsetHeight > 0 && read / article.offsetHeight >= 0.75) {
+          fired = true;
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ 'event': 'blog_article_read', 'event_location': 'blog-post' });
+          window.removeEventListener('scroll', onScroll);
+        }
+      }
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) { requestAnimationFrame(function(){ check(); ticking = false; }); ticking = true; }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      check();
+    })();
+  </script>
 </BaseLayout>
 
 <style>

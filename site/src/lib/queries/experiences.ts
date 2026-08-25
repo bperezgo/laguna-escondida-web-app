@@ -15,8 +15,7 @@ export const EXPERIENCES_QUERY = `*[_type == "experience"] | order(order asc) {
   metaLeftLabel,
   metaLeftValue,
   metaRight,
-  cta,
-  eventKey
+  cta
 }`;
 
 export type ExperiencesSectionData = {
@@ -37,5 +36,4 @@ export type ExperienceCard = {
   metaLeftValue: string;
   metaRight: string;
   cta: string;
-  eventKey: string;
 };

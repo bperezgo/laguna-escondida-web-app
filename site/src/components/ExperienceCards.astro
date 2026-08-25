@@ -68,8 +68,8 @@ const [section, cards] = await Promise.all([
               <LinkRule
                 href={`/experiencias/${card.slug}/`}
                 label={card.cta}
-                event={card.eventKey}
-                location="experiences"
+                event="experience_card_click"
+                location={card.slug}
               />
             </div>
           </article>

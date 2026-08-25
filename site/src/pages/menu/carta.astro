@@ -66,6 +66,8 @@ const formatPrice = (price: number): string =>
           <button
             role="tab"
             data-target={cat.slug.current}
+            data-event="menu_category_view"
+            data-location={cat.slug.current}
             aria-selected={i === 0 ? 'true' : 'false'}
             class:list={['tab-btn', i === 0 && 'is-active']}
           >

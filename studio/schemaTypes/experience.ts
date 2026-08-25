@@ -84,13 +84,6 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'eventKey',
-      title: 'Clave de evento (analytics)',
-      type: 'string',
-      description: 'Ej: pesca_click, restaurante_click, eventos_click',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'icon',
       title: 'Icono SVG (path data)',
       description: 'El contenido del atributo "d" del path SVG. Opcional.',

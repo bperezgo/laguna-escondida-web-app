@@ -44,3 +44,16 @@ run_build_check() {
   echo "▶ pnpm build   (mirroring CI)"
   CI=true pnpm build
 }
+
+# Type/template lint for both Astro apps (astro check on site + funnel).
+run_lint_check() {
+  echo "▶ pnpm run check   (astro check: types + templates)"
+  CI=true pnpm run check
+}
+
+# Static analytics validation against the built deploy/ output.
+# Run this AFTER run_build_check so deploy/ exists.
+run_analytics_check() {
+  echo "▶ pnpm run validate:analytics   (tracking attributes in deploy/)"
+  CI=true pnpm run validate:analytics
+}

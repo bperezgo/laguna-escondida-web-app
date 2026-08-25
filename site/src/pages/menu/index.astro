@@ -50,6 +50,8 @@ const waHref = whatsappHref(waMessage);
           <button
             role="tab"
             data-target={cat.id}
+            data-event="menu_category_view"
+            data-location={cat.id}
             aria-selected={i === 0 ? 'true' : 'false'}
             class:list={['tab-btn', i === 0 && 'is-active']}
           >

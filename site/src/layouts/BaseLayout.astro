@@ -200,18 +200,60 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
   <!-- Cookie consent / Consent Mode v2 banner -->
   <CookieConsent />
 
-  <!-- DataLayer event pusher -->
+  <!-- DataLayer event pusher (explicit data-event + outbound links) -->
   <script is:inline>
     document.addEventListener('click', function(e) {
+      window.dataLayer = window.dataLayer || [];
+
       var target = e.target.closest('[data-event]');
       if (target) {
-        window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           'event': target.getAttribute('data-event'),
           'event_location': target.getAttribute('data-location') || 'unknown'
         });
+        return;
+      }
+
+      // Outbound links without a dedicated data-event (e.g. links inside blog content)
+      var link = e.target.closest('a[href]');
+      if (link && link.hostname && link.hostname !== window.location.hostname) {
+        window.dataLayer.push({
+          'event': 'outbound_link_click',
+          'event_location': 'outbound',
+          'outbound_url': link.href
+        });
       }
     });
+  </script>
+
+  <!-- Page scroll depth (25 / 50 / 75 / 100) -->
+  <script is:inline>
+    (function() {
+      var thresholds = [25, 50, 75, 100];
+      var fired = {};
+      function check() {
+        var doc = document.documentElement;
+        var scrollable = doc.scrollHeight - window.innerHeight;
+        if (scrollable <= 0) return;
+        var pct = (window.scrollY / scrollable) * 100;
+        for (var i = 0; i < thresholds.length; i++) {
+          var t = thresholds[i];
+          if (pct >= t && !fired[t]) {
+            fired[t] = true;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ 'event': 'page_scroll_depth', 'scroll_depth': t });
+          }
+        }
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(function() { check(); ticking = false; });
+          ticking = true;
+        }
+      }, { passive: true });
+      check();
+    })();
   </script>
 
   <!-- Scroll-reveal observer -->
