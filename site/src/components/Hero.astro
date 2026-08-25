@@ -4,6 +4,7 @@ import Eyebrow from './ui/Eyebrow.astro';
 import Button from './ui/Button.astro';
 import { sanityClient, responsiveImage } from '../lib/sanity';
 import { HERO_SECTION_QUERY, type HeroSectionData } from '../lib/queries/heroSection';
+import { WHATSAPP_NUMBER } from '../lib/whatsapp';
 import { useTranslations, type Locale } from '../i18n';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
@@ -22,7 +23,7 @@ const line2 = hero?.headline?.line2 || t.hero.line2;
 const line3 = hero?.headline?.line3 || t.hero.line3;
 const subheadline = hero?.subheadline || t.hero.subheadline;
 
-const waNumber = hero?.whatsappNumber || '57XXXXXXXXXX';
+const waNumber = hero?.whatsappNumber || WHATSAPP_NUMBER;
 const waMessage = hero?.whatsappMessage || t.hero.waMessage;
 const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 

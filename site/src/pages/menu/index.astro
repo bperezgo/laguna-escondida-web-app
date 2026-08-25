@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Eyebrow from '../../components/ui/Eyebrow.astro';
 import Button from '../../components/ui/Button.astro';
+import { whatsappHref } from '../../lib/whatsapp';
 import menuData from '../../../../menu.json';
 
 const { restaurant, categories } = menuData;
@@ -14,9 +15,8 @@ const sortedCategories = ([...categories].sort((a, b) => a.order - b.order)) as 
 const formatPrice = (price: number): string =>
   '$' + price.toLocaleString('es-CO');
 
-const waNumber = '573194313781';
 const waMessage = 'Hola, quiero reservar una mesa en el restaurante de Laguna Escondida';
-const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+const waHref = whatsappHref(waMessage);
 ---
 
 <BaseLayout

@@ -1,10 +1,11 @@
 ---
 import { useTranslations, type Locale } from '../i18n';
+import { whatsappHref } from '../lib/whatsapp';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
 
-const waHref = 'https://wa.me/573194313781?text=Hola%2C%20quiero%20reservar%20en%20Laguna%20Escondida';
+const waHref = whatsappHref('Hola, quiero reservar en Laguna Escondida');
 
 const navLinks = [
   { href: '/#experiencias', label: t.navbar.experiences },

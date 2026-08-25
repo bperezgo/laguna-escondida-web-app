@@ -1,10 +1,10 @@
 ---
 import Eyebrow from '../ui/Eyebrow.astro';
 import Button from '../ui/Button.astro';
+import { whatsappHref } from '../../lib/whatsapp';
 
-const WA_NUMBER = '573194313781';
 const WA_MESSAGE = 'Hola, quiero hacer una reserva de evento en Laguna Escondida. ¿Tienen disponibilidad?';
-const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
+const waHref = whatsappHref(WA_MESSAGE);
 ---
 
 <section class="eventos-cta" id="cta-eventos" data-section="eventos-cta" data-screen-label="CTA eventos">

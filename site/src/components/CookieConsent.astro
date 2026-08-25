@@ -1,0 +1,228 @@
+---
+// Cookie consent banner — Ley 1581 de 2012 (Habeas Data, Colombia).
+// Works with Google Consent Mode v2: BaseLayout sets consent defaults to
+// "denied" BEFORE GTM loads. This banner flips them to "granted" on Accept
+// and boots the Meta/TikTok pixels. "Solo necesarias" keeps everything denied.
+// Choice is persisted in localStorage under 'cookie_consent' ('accepted' | 'rejected').
+---
+
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-label="Aviso de cookies"
+  aria-live="polite"
+  class="cookie-banner"
+  style="display:none"
+>
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <span class="cookie-eyebrow">Privacidad</span>
+      <strong>Usamos cookies</strong>
+      <p>
+        Usamos cookies propias y de terceros (Google Analytics, Meta, TikTok) para analizar
+        el tráfico y mejorar tu experiencia. Al hacer clic en <em>Aceptar</em> consientes su
+        uso. Puedes rechazarlas y seguir navegando con normalidad.
+        <a href="/privacidad" class="cookie-link">Ver política de privacidad</a>
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button" class="cookie-btn cookie-btn-ghost">
+        Solo necesarias
+      </button>
+      <button id="cookie-accept" type="button" class="cookie-btn cookie-btn-primary">
+        Aceptar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = 'cookie_consent';
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    function getConsent() {
+      try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+    }
+    function setConsent(value) {
+      try { localStorage.setItem(STORAGE_KEY, value); } catch (e) {}
+    }
+    function hide() {
+      banner.classList.add('cookie-banner--hide');
+      setTimeout(function () { banner.remove(); }, 300);
+    }
+    function grantConsent() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+          ad_storage: 'granted',
+          analytics_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted'
+        });
+      }
+      window.__consentGranted = true;
+      // Boot pixels that were held back until consent (defined in BaseLayout).
+      if (typeof window.__initMetaPixel === 'function') window.__initMetaPixel();
+      if (typeof window.__initTikTokPixel === 'function') window.__initTikTokPixel();
+    }
+
+    // Already decided in a previous visit → consent was already applied on load.
+    if (getConsent()) return;
+
+    banner.style.display = '';
+
+    var accept = document.getElementById('cookie-accept');
+    var reject = document.getElementById('cookie-reject');
+
+    if (accept) {
+      accept.addEventListener('click', function () {
+        setConsent('accepted');
+        grantConsent();
+        hide();
+      });
+    }
+    if (reject) {
+      reject.addEventListener('click', function () {
+        setConsent('rejected');
+        hide();
+      });
+    }
+  })();
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: clamp(12px, 3vw, 24px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(94vw, 46rem);
+    background: var(--color-lake-800);
+    color: var(--color-sand-50);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    box-shadow: 0 12px 40px rgba(7, 19, 14, 0.45);
+    z-index: 9999;
+    transition: opacity var(--duration-2, 320ms) var(--ease-out),
+      transform var(--duration-2, 320ms) var(--ease-out);
+  }
+
+  .cookie-banner--hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+    pointer-events: none;
+  }
+
+  .cookie-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  @media (min-width: 720px) {
+    .cookie-inner {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+    }
+  }
+
+  .cookie-text {
+    flex: 1;
+  }
+
+  .cookie-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-earth-300);
+    margin-bottom: 6px;
+  }
+
+  .cookie-text strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.15rem;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    color: var(--color-sand-50);
+  }
+
+  .cookie-text p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm, 0.875rem);
+    line-height: 1.55;
+    color: rgba(250, 248, 243, 0.75);
+  }
+
+  .cookie-text em {
+    font-style: italic;
+    color: var(--color-sand-50);
+  }
+
+  .cookie-link {
+    color: var(--color-earth-300);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+    transition: color var(--duration-1, 180ms) var(--ease-out);
+  }
+
+  .cookie-link:hover {
+    color: var(--color-earth-200);
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  .cookie-btn {
+    cursor: pointer;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 10px 22px;
+    white-space: nowrap;
+    transition: background var(--duration-1, 180ms) var(--ease-out),
+      border-color var(--duration-1, 180ms) var(--ease-out),
+      color var(--duration-1, 180ms) var(--ease-out);
+  }
+
+  .cookie-btn-primary {
+    background: var(--color-earth-300);
+    color: var(--color-lake-900);
+    border: 1px solid var(--color-earth-300);
+  }
+
+  .cookie-btn-primary:hover {
+    background: var(--color-earth-200);
+    border-color: var(--color-earth-200);
+  }
+
+  .cookie-btn-ghost {
+    background: transparent;
+    color: rgba(250, 248, 243, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .cookie-btn-ghost:hover {
+    color: var(--color-sand-50);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cookie-banner {
+      transition: none;
+    }
+  }
+</style>

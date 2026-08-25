@@ -1,5 +1,6 @@
 ---
 import SectionHeading from '../ui/SectionHeading.astro';
+import { whatsappHref } from '../../lib/whatsapp';
 
 const preguntas = [
   {
@@ -28,9 +29,8 @@ const preguntas = [
   },
 ];
 
-const WA_NUMBER = '573194313781';
 const WA_MESSAGE = 'Hola, tengo una pregunta sobre eventos en Laguna Escondida';
-const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
+const waHref = whatsappHref(WA_MESSAGE);
 ---
 
 <section class="faq-section" id="faq-eventos" data-section="eventos-faq" data-screen-label="FAQ eventos">

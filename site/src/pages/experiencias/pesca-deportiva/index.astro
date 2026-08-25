@@ -12,6 +12,7 @@ import LinkRule from '../../../components/ui/LinkRule.astro';
 import { sanityClient, urlFor, responsiveImage } from '../../../lib/sanity';
 import { FISH_SPECIES_QUERY } from '../../../lib/queries/fishSpecies';
 import { HERO_SECTION_QUERY } from '../../../lib/queries/heroSection';
+import { whatsappHref } from '../../../lib/whatsapp';
 
 const speciesData = await sanityClient.fetch(FISH_SPECIES_QUERY);
 const hero = await sanityClient.fetch(HERO_SECTION_QUERY);
@@ -20,9 +21,8 @@ const heroImg = hero?.backgroundImage
   ? responsiveImage(hero.backgroundImage, [640, 1024, 1600, 1920], '100vw')
   : { src: '/images/hero/lago-comedor-vista.jpg', srcset: '', sizes: '' };
 
-const WA_NUMBER = '573194313781';
 const WA_MESSAGE = 'Hola, quiero reservar una visita de pesca deportiva en Laguna Escondida';
-const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
+const waHref = whatsappHref(WA_MESSAGE);
 
 const speciesExtra: Record<string, { flavor: string; technique: string; avgWeight: string }> = {
   'Yamu': {

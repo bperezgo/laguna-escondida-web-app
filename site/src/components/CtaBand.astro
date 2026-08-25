@@ -5,6 +5,7 @@ import { sanityClient } from '../lib/sanity';
 import { CTA_BAND_SECTION_QUERY, type CtaBandSectionData } from '../lib/queries/ctaBandSection';
 import { HERO_SECTION_QUERY, type HeroSectionData } from '../lib/queries/heroSection';
 import { useTranslations, type Locale } from '../i18n';
+import { WHATSAPP_NUMBER } from '../lib/whatsapp';
 
 const locale = (Astro.currentLocale ?? 'es') as Locale;
 const t = useTranslations(locale);
@@ -19,7 +20,7 @@ const heading = ctaBand?.heading || t.ctaBand.heading;
 const primaryCta = ctaBand?.primaryCtaText || hero?.ctaPrimaryText || t.hero.ctaPrimary;
 const whatsappCta = ctaBand?.whatsappCtaText || t.ctaBand.whatsappCta;
 
-const waNumber = ctaBand?.whatsappNumber || hero?.whatsappNumber || '573194313781';
+const waNumber = ctaBand?.whatsappNumber || hero?.whatsappNumber || WHATSAPP_NUMBER;
 const waMessage = ctaBand?.whatsappMessage || hero?.whatsappMessage || t.hero.waMessage;
 const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 ---

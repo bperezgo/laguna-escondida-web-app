@@ -8,8 +8,8 @@ import type {
 } from '../types/funnel';
 
 // ── WhatsApp config ─────────────────────────────────────────────
-// Update this with the real WhatsApp Business number
-const WHATSAPP_NUMBER = '573194313781';
+// Injected via env (PUBLIC_WHATSAPP_NUMBER) so the number is not committed.
+const WHATSAPP_NUMBER = import.meta.env.PUBLIC_WHATSAPP_NUMBER ?? '';
 const WHATSAPP_MESSAGE = encodeURIComponent(
   'Hola! Vi el perfil de Laguna Escondida y me interesa información para celebrar un evento. 🎉'
 );
