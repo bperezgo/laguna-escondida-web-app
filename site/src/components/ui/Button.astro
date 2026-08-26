@@ -1,11 +1,13 @@
 ---
+import type { AnalyticsEvent } from '../../lib/tracking/events';
+
 type Variant = 'primary' | 'secondary' | 'ghost' | 'whatsapp' | 'inverse-primary' | 'inverse-secondary';
 
 interface Props {
   variant?: Variant;
   href?: string;
   type?: 'button' | 'submit' | 'reset';
-  event?: string;
+  event?: AnalyticsEvent;
   location?: string;
   target?: string;
   rel?: string;

@@ -1,8 +1,10 @@
 ---
+import type { AnalyticsEvent } from '../../lib/tracking/events';
+
 interface Props {
   href: string;
   label: string;
-  event?: string;
+  event?: AnalyticsEvent;
   location?: string;
   inverse?: boolean;
   target?: string;

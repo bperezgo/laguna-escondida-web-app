@@ -30,6 +30,7 @@ Also read the reference files in this skill:
 - `references/design-system.md` → token generation rules
 - `references/component-patterns.md` → conversion-focused component patterns
 - `references/astro-conventions.md` → project structure and conventions
+- `references/analytics-conventions.md` → tracking contract (events, consent, validator)
 
 ## Step 2 — Extract design tokens from business context
 
@@ -156,6 +157,8 @@ Conversion rules that apply to ALL components:
 - Mobile-first: all layouts stack vertically on small screens
 - Above-the-fold hero must load under 100ms — no heavy images, no blocking JS
 - Urgency/scarcity elements only generated if explicitly present in funnel_output
+- Every CTA carries `data-event` (from the registry) + `data-location`, and every
+  major `<section>` carries `data-section` — see `references/analytics-conventions.md`
 
 ## Step 7 — Generate config files
 
@@ -198,6 +201,14 @@ Run through these before declaring the project complete:
 - [ ] FAQ uses exact objection language from `funnel_output/07_objeciones.md` if available
 - [ ] Social proof section present if `funnel_output/08_social_proof.md` exists
 
+**Analytics & Tracking** (see `references/analytics-conventions.md`)
+- [ ] `src/lib/tracking/events.ts` registry exists; no event string is hardcoded
+- [ ] Every CTA has `data-event` (from the registry) + `data-location`
+- [ ] Every major `<section>` has `data-section`; `funnel_section_view` + `page_scroll_depth` fire
+- [ ] Consent Mode v2: defaults denied before tags, banner flips to granted, pixels held until consent
+- [ ] `/gracias` fires `generate_lead` (+ Meta `Lead` / TikTok `SubmitForm`) on load
+- [ ] `scripts/validate-analytics.mjs` passes against the build
+
 **Deploy readiness**
 - [ ] `package.json` has `build`, `dev`, and `preview` scripts
 - [ ] Both `vercel.json` and `netlify.toml` are present
@@ -221,3 +232,4 @@ Read these before generating code — they contain the actual patterns and schem
 - `references/design-system.md` → token schema, palette generation, font pairs
 - `references/component-patterns.md` → HTML structure for each component type
 - `references/astro-conventions.md` → config files, data layer schema, TS types
+- `references/analytics-conventions.md` → event registry, consent mode, validator gate

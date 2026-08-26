@@ -30,23 +30,43 @@
 
 <script>
   const STORAGE_KEY = 'cookie_consent';
+  const w = window as any;
   const banner = document.getElementById('cookie-banner') as HTMLElement | null;
 
-  // Hide immediately if already decided
+  function hide() {
+    banner?.classList.add('cookie-banner--hide');
+    setTimeout(() => banner?.remove(), 300);
+  }
+
+  // Flip Consent Mode to granted and boot the pixels that were held until consent.
+  function grantConsent() {
+    if (typeof w.gtag === 'function') {
+      w.gtag('consent', 'update', {
+        ad_storage: 'granted',
+        analytics_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+      });
+    }
+    w.__consentGranted = true;
+    if (typeof w.__initMetaPixel === 'function') w.__initMetaPixel();
+    if (typeof w.__initTikTokPixel === 'function') w.__initTikTokPixel();
+  }
+
+  // Hide immediately if already decided (consent already applied on load).
   if (localStorage.getItem(STORAGE_KEY)) {
     banner?.remove();
   }
 
   document.getElementById('cookie-accept')?.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY, 'accepted');
-    banner?.classList.add('cookie-banner--hide');
-    setTimeout(() => banner?.remove(), 300);
+    grantConsent();
+    hide();
   });
 
   document.getElementById('cookie-reject')?.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY, 'rejected');
-    banner?.classList.add('cookie-banner--hide');
-    setTimeout(() => banner?.remove(), 300);
+    hide();
   });
 </script>
 

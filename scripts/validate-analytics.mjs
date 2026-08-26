@@ -2,20 +2,30 @@
  * Static analytics validation (Capa 1 de playbooks/testing-strategy-analytics.md).
  *
  * Runs against the built HTML (default: deploy/, the merged monorepo output from
- * build.mjs) and fails the build if tracking attributes are missing. This is a
- * deploy gate: a refactor that silently drops a data-event/data-location/
- * data-section — or a missing pixel on a funnel — stops the deploy.
+ * build.mjs) and fails the build if tracking is wrong. Deploy gate: a refactor
+ * that silently drops an event, misspells one, or forgets a data-location stops
+ * the deploy.
  *
- * Dependency-free on purpose (no jsdom): regex over the generated HTML so it can
- * run anywhere without an install step.
+ * Checks:
+ *   1.  Every [data-event] has a data-location (all pages).
+ *   1b. No data-event value that isn't in the event registry (typo guard).
+ *   2.  Key pages have a WhatsApp CTA.
+ *   3.  Home exposes its required data-sections.
+ *   4.  Funnel pages ship tracking + enough tracked sections.
+ *   5.  Conversion pages fire a conversion on load.
+ *   6.  Per-page "expected events" manifest — the events that MUST be present.
+ *
+ * Dependency-free on purpose (no jsdom): regex over the generated HTML/JS so it
+ * runs anywhere without an install step.
  *
  * Usage: node scripts/validate-analytics.mjs [dir]   (dir defaults to "deploy")
  */
 
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 
 const DEPLOY_DIR = process.argv[2] || process.env.VALIDATE_DIR || 'deploy';
+const REGISTRY_PATH = process.env.EVENTS_REGISTRY || 'site/src/lib/tracking/events.ts';
 
 // Pages that MUST have at least one WhatsApp CTA with tracking.
 const PAGES_WITH_WA_CTA = [
@@ -35,6 +45,22 @@ const FUNNEL_PAGES = ['f/celebraciones/index.html'];
 
 // Conversion pages must fire a conversion on load.
 const CONVERSION_PAGES = ['f/celebraciones/gracias/index.html'];
+
+// Per-page expected events (regression lock). Each listed event MUST appear in
+// the page — as a data-event attribute, or (behavioral/JS) in the page haystack.
+const EXPECTED_EVENTS = {
+  'index.html': ['whatsapp_click', 'experience_card_click', 'maps_click', 'page_scroll_depth'],
+  'menu/index.html': ['whatsapp_click', 'menu_category_view'],
+  'menu/carta/index.html': ['menu_category_view'],
+  'experiencias/restaurante/index.html': ['whatsapp_click'],
+  'experiencias/pesca-deportiva/index.html': ['whatsapp_click'],
+  'experiencias/eventos/index.html': ['whatsapp_click', 'eventos_ver_paquetes'],
+  'f/celebraciones/index.html': ['funnel_whatsapp_click', 'funnel_section_view'],
+};
+
+// Applied to every blog post page (contenido/<slug>/index.html), excluding the
+// list page and category pages.
+const BLOG_POST_EVENTS = ['blog_back_click', 'blog_article_read'];
 
 const errors = [];
 const warnings = [];
@@ -56,14 +82,6 @@ async function collectHtml(dir) {
   return out;
 }
 
-async function read(page) {
-  try {
-    return await readFile(join(DEPLOY_DIR, page), 'utf-8');
-  } catch {
-    return null;
-  }
-}
-
 /** Collect files with a given extension under a directory. */
 async function collectByExt(dir, ext) {
   const out = [];
@@ -81,18 +99,38 @@ async function collectByExt(dir, ext) {
   return out;
 }
 
+async function read(page) {
+  try {
+    return await readFile(join(DEPLOY_DIR, page), 'utf-8');
+  } catch {
+    return null;
+  }
+}
+
 /**
- * Astro bundles processed <script> tags into _astro/*.js, so tracking/conversion
- * code is NOT in the page HTML. This returns the page HTML plus all JS bundles
- * scoped to the page's funnel (f/<name>) so string checks can find them.
+ * Page HTML plus (for funnels only) its bundled JS. Astro moves processed
+ * <script> tags into f/<name>/_astro/*.js, so funnel tracking/conversion code
+ * isn't in the HTML. Site behavioral events are is:inline, so they stay in HTML.
  */
 async function pageHaystack(page) {
   const html = (await read(page)) ?? '';
   const parts = page.split('/');
-  const rootRel = parts[0] === 'f' && parts.length > 1 ? join('f', parts[1]) : '';
-  const jsFiles = await collectByExt(join(DEPLOY_DIR, rootRel), '.js');
+  if (parts[0] !== 'f' || parts.length < 2) return html;
+  const jsFiles = await collectByExt(join(DEPLOY_DIR, 'f', parts[1]), '.js');
   const js = (await Promise.all(jsFiles.map((f) => readFile(f, 'utf-8')))).join('\n');
   return html + '\n' + js;
+}
+
+/** Read the event registry (events.ts) as text and extract the event names. */
+async function loadRegistry() {
+  try {
+    const src = await readFile(REGISTRY_PATH, 'utf-8');
+    const block = src.match(/ANALYTICS_EVENTS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+    if (!block) return null;
+    return new Set([...block[1].matchAll(/['"]([a-z0-9_]+)['"]/gi)].map((m) => m[1]));
+  } catch {
+    return null;
+  }
 }
 
 /** Every opening tag that has data-event must also have data-location. */
@@ -101,8 +139,7 @@ function findEventsMissingLocation(html) {
   const tagRe = /<[a-zA-Z][^>]*\bdata-event\b[^>]*>/g;
   let m;
   while ((m = tagRe.exec(html)) !== null) {
-    const tag = m[0];
-    if (!/\bdata-location\b/.test(tag)) offenders.push(tag.slice(0, 140));
+    if (!/\bdata-location\b/.test(m[0])) offenders.push(m[0].slice(0, 140));
   }
   return offenders;
 }
@@ -123,12 +160,27 @@ function hasTrackingScript(html) {
   );
 }
 
-// ── 1. Global: no data-event without data-location (all pages) ──────────────
+/** Assert each expected event is present in a page's haystack. */
+async function assertExpectedEvents(page, expected) {
+  const hay = await pageHaystack(page);
+  if (!hay.trim()) {
+    errors.push(`${page}: file not found — expected events cannot be verified`);
+    return;
+  }
+  for (const ev of expected) {
+    const present =
+      hay.includes(`data-event="${ev}"`) || hay.includes(`'${ev}'`) || hay.includes(`"${ev}"`);
+    if (!present) errors.push(`${page}: expected event "${ev}" not found`);
+  }
+}
+
+// ── 1. Global: data-location present + collect used events ──────────────────
 const allHtml = await collectHtml(DEPLOY_DIR);
 if (allHtml.length === 0) {
   console.error(`❌ No HTML found in "${DEPLOY_DIR}/". Run the build first (node build.mjs).`);
   process.exit(1);
 }
+const usedEvents = new Set();
 for (const file of allHtml) {
   const html = await readFile(file, 'utf-8');
   const offenders = findEventsMissingLocation(html);
@@ -136,6 +188,19 @@ for (const file of allHtml) {
     const rel = relative(DEPLOY_DIR, file).split(sep).join('/');
     errors.push(`${rel}: ${offenders.length} element(s) with data-event but missing data-location`);
     offenders.slice(0, 3).forEach((t) => errors.push(`    ↳ ${t}`));
+  }
+  for (const m of html.matchAll(/data-event="([^"]+)"/g)) usedEvents.add(m[1]);
+}
+
+// ── 1b. No data-event value that isn't in the registry ──────────────────────
+const registry = await loadRegistry();
+if (!registry) {
+  warnings.push(`Could not read event registry at "${REGISTRY_PATH}" — skipping typo guard`);
+} else {
+  for (const ev of usedEvents) {
+    if (!registry.has(ev)) {
+      errors.push(`Unknown event "${ev}" is not in the registry (${REGISTRY_PATH}). Add it or fix the typo.`);
+    }
   }
 }
 
@@ -185,10 +250,19 @@ for (const page of CONVERSION_PAGES) {
   }
   const hay = await pageHaystack(page);
   const fires =
-    hay.includes('generate_lead') ||
-    hay.includes('SubmitForm') ||
-    /['"]Lead['"]/.test(hay);
+    hay.includes('generate_lead') || hay.includes('SubmitForm') || /['"]Lead['"]/.test(hay);
   if (!fires) errors.push(`${page}: no conversion event (generate_lead / Lead / SubmitForm) on load`);
+}
+
+// ── 6. Per-page expected events (regression lock) ───────────────────────────
+for (const [page, expected] of Object.entries(EXPECTED_EVENTS)) {
+  await assertExpectedEvents(page, expected);
+}
+for (const file of allHtml) {
+  const rel = relative(DEPLOY_DIR, file).split(sep).join('/');
+  if (/^contenido\/[^/]+\/index\.html$/.test(rel) && !rel.startsWith('contenido/categoria/')) {
+    await assertExpectedEvents(rel, BLOG_POST_EVENTS);
+  }
 }
 
 // ── Report ──────────────────────────────────────────────────────────────────
@@ -204,4 +278,6 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`✅ Analytics validation passed (${allHtml.length} page(s) checked in "${DEPLOY_DIR}/")`);
+console.log(
+  `✅ Analytics validation passed (${allHtml.length} page(s), ${usedEvents.size} distinct events, registry ${registry ? 'OK' : 'skipped'})`,
+);

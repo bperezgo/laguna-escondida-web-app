@@ -475,7 +475,10 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600
 <body>
   <slot />
 
-  <!-- Analytics (populated from .env) -->
+  <!-- Analytics — this is the MINIMAL stub (GA only). For the full tracking
+       contract (event registry, data-event/data-location, section + scroll
+       tracking, Consent Mode v2, Meta/TikTok pixels, and the validator gate)
+       follow references/analytics-conventions.md — it supersedes this stub. -->
   {import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
     <script
       async
