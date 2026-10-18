@@ -28,6 +28,13 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'menuTagline',
+      title: 'Frase del menu',
+      type: 'string',
+      description: 'Subtitulo bajo el nombre en /menu y /menu/carta',
+      group: 'general',
+    }),
+    defineField({
       name: 'siteImage',
       title: 'Imagen principal (Open Graph)',
       type: 'image',

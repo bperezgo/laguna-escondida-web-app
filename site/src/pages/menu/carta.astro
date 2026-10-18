@@ -1,48 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Eyebrow from '../../components/ui/Eyebrow.astro';
-import { sanityClient, urlFor } from '../../lib/sanity';
+import { urlFor } from '../../lib/sanity';
+import { getMenuCategories, getMenuSettings, formatPrice } from '../../lib/queries/menu';
 
-type Dish = {
-  _key: string;
-  name: string;
-  description?: string;
-  price: number;
-  available: boolean;
-  image?: { asset: { _ref: string }; alt?: string };
-};
-type Category = {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  order: number;
-  dishes: Dish[];
-};
-
-const categories = await sanityClient.fetch<Category[]>(
-  `*[_type == "menuCategory"] | order(order asc) {
-    _id,
-    name,
-    slug,
-    order,
-    dishes[] {
-      _key,
-      name,
-      description,
-      price,
-      available,
-      image { asset, alt }
-    }
-  }`
-);
-
-const sortedCategories = categories.map((cat) => ({
-  ...cat,
-  dishes: (cat.dishes ?? []).filter((d) => d.available !== false),
-}));
-
-const formatPrice = (price: number): string =>
-  '$' + price.toLocaleString('es-CO');
+const [sortedCategories, { businessName, menuTagline }] = await Promise.all([
+  getMenuCategories(),
+  getMenuSettings(),
+]);
 ---
 
 <BaseLayout
@@ -53,8 +18,8 @@ const formatPrice = (price: number): string =>
     <div class="hero-container">
       <div class="hero-content">
         <Eyebrow text="Carta · Cocina campestre" inverse />
-        <h1 class="hero-title">Laguna Escondida</h1>
-        <p class="hero-lead">Sabores auténticos junto a la laguna</p>
+        <h1 class="hero-title">{businessName}</h1>
+        <p class="hero-lead">{menuTagline}</p>
       </div>
     </div>
   </header>
