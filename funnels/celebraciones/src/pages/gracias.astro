@@ -1,6 +1,7 @@
 ---
 import FunnelLayout from '../layouts/FunnelLayout.astro';
 import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
 import { whatsappLink } from '../data/funnel';
 ---
 
@@ -10,7 +11,9 @@ import { whatsappLink } from '../data/funnel';
 >
   <section data-section="gracias" class="min-h-screen flex items-center justify-center py-20">
     <div class="section-wrapper max-w-2xl text-center">
-      <div class="text-5xl mb-6">🎉</div>
+      <div class="flex justify-center mb-6" style="color: var(--color-primary);">
+        <Icon name="party-popper" size={48} />
+      </div>
       <h1 class="text-4xl font-bold mb-4" style="color: var(--color-neutral-900);">
         ¡Gracias por escribirnos!
       </h1>
@@ -22,7 +25,8 @@ import { whatsappLink } from '../data/funnel';
       </p>
       <Button href={whatsappLink} variant="whatsapp" size="lg" target="_blank"
         data-event="funnel_whatsapp_click" data-location="gracias">
-        💬 Escribir por WhatsApp
+        <Icon name="message-circle" />
+        Escribir por WhatsApp
       </Button>
 
       <div class="mt-12 p-6 rounded-2xl text-left"
@@ -32,19 +36,19 @@ import { whatsappLink } from '../data/funnel';
         </h2>
         <ul class="space-y-2">
           <li class="flex items-start gap-2">
-            <span style="color: var(--color-primary);">📍</span>
+            <span class="mt-0.5" style="color: var(--color-primary);"><Icon name="map-pin" /></span>
             <span style="color: var(--color-neutral-700);">
               <strong>Ubicación:</strong> Vereda La Primavera, Marinilla — 45 min de Medellín
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span style="color: var(--color-primary);">🌧️</span>
+            <span class="mt-0.5" style="color: var(--color-primary);"><Icon name="cloud-rain" /></span>
             <span style="color: var(--color-neutral-700);">
               <strong>Garantía de clima:</strong> Si llueve, reprogramamos sin costo
             </span>
           </li>
           <li class="flex items-start gap-2">
-            <span style="color: var(--color-primary);">👀</span>
+            <span class="mt-0.5" style="color: var(--color-primary);"><Icon name="eye" /></span>
             <span style="color: var(--color-neutral-700);">
               <strong>¿No conoces el lugar?</strong> Ven a almorzar un domingo y conoce antes de reservar
             </span>

@@ -1,5 +1,6 @@
 ---
 import SectionWrapper from './ui/SectionWrapper.astro';
+import Icon from './ui/Icon.astro';
 import VideoGallery from './VideoGallery.astro';
 import { socialProof } from '../data/funnel';
 ---
@@ -15,9 +16,10 @@ import { socialProof } from '../data/funnel';
     <!-- Credibility badges -->
     <div class="flex flex-wrap gap-3 justify-center mb-14">
       {socialProof.credibility.map((item) => (
-        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
+        <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium"
           style="background: var(--color-primary-light); color: var(--color-primary);">
-          {item}
+          <Icon name={item.icon} size={16} />
+          {item.text}
         </span>
       ))}
     </div>
@@ -33,8 +35,9 @@ import { socialProof } from '../data/funnel';
         <div class="flex flex-col p-6 rounded-2xl"
           style="border: 1px solid var(--color-neutral-200); background: white;">
 
-          <div class="flex gap-1 mb-4" style="color: var(--color-accent);">
-            ★★★★★
+          <div class="flex gap-1 mb-4" role="img" aria-label="5 de 5 estrellas"
+            style="color: var(--color-accent);">
+            {Array.from({ length: 5 }, () => <Icon name="star" size={18} fill="currentColor" />)}
           </div>
 
           <blockquote class="flex-1 text-base leading-relaxed mb-6"

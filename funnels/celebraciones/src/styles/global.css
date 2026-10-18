@@ -46,14 +46,34 @@
   p {
     line-height: 1.7;
   }
+
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Primary green on near-black is 2.45:1 — use the light ring on dark surfaces. */
+  .on-dark :focus-visible {
+    outline-color: var(--color-ring-on-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-full
-           font-semibold text-white transition-all duration-200
-           hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg;
+           font-semibold transition-[background-color,box-shadow] duration-200
+           shadow-md hover:shadow-lg;
     background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
   .btn-primary:hover {
     background-color: var(--color-primary-dark);
@@ -61,12 +81,13 @@
 
   .btn-whatsapp {
     @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full
-           font-semibold text-white transition-all duration-200
-           hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg;
-    background-color: #25D366;
+           font-semibold transition-[background-color,box-shadow] duration-200
+           shadow-md hover:shadow-lg;
+    background-color: var(--color-whatsapp);
+    color: var(--color-on-whatsapp);
   }
   .btn-whatsapp:hover {
-    background-color: #1da851;
+    background-color: var(--color-whatsapp-dark);
   }
 
   .section-wrapper {

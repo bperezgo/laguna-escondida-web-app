@@ -1,13 +1,24 @@
 // src/types/funnel.ts
 // All data shapes for the Laguna Escondida events funnel.
 
+// Lucide icons available to data (see components/ui/Icon.astro).
+export type IconName =
+  | 'camera' | 'check' | 'circle-check' | 'circle-x' | 'cloud-rain' | 'eye'
+  | 'fish' | 'house' | 'leaf' | 'map-pin' | 'message-circle' | 'party-popper'
+  | 'plus' | 'shield-check' | 'square-parking' | 'star' | 'utensils';
+
+export interface IconText {
+  icon: IconName;
+  text: string;
+}
+
 export interface Stat {
   value: string;
   label: string;
 }
 
 export interface HeroData {
-  credibilityPill?: string;
+  credibilityPill?: IconText[];
   headline:         string;
   subheadline:      string;
   ctaText:          string;
@@ -26,10 +37,7 @@ export interface ProblemData {
   bridge?:    string;
 }
 
-export interface SolutionFeature {
-  icon:  string;
-  text:  string;
-}
+export type SolutionFeature = IconText;
 
 export interface SolutionData {
   eyebrow:    string;
@@ -67,7 +75,7 @@ export interface OfferData {
   headline:    string;
   subheadline: string;
   packages:    PackageData[];
-  bonuses:     string[];
+  bonuses:     IconText[];
   ctaText:     string;
   ctaHref:     string;
   guarantee?:  string;
@@ -113,7 +121,7 @@ export interface VideoTestimonial {
 export interface SocialProofData {
   eyebrow:      string;
   headline:     string;
-  credibility:  string[];
+  credibility:  IconText[];
   videos?:      VideoTestimonial[];
   testimonials: Testimonial[];
   note?:        string;
@@ -122,7 +130,7 @@ export interface SocialProofData {
 export interface GuaranteeData {
   eyebrow:    string;
   headline:   string;
-  guarantees: { title: string; description: string }[];
+  guarantees: { icon: IconName; title: string; description: string }[];
 }
 
 export interface FinalCTAData {

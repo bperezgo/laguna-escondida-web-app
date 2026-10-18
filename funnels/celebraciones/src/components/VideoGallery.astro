@@ -13,7 +13,6 @@ const { videos } = Astro.props;
     <div class="video-card">
       <div class="video-wrapper">
         <video
-          autoplay
           muted
           loop
           playsinline
@@ -32,6 +31,8 @@ const { videos } = Astro.props;
 </div>
 
 <script>
+  // Autoplay only when the visitor hasn't asked for reduced motion; otherwise show controls.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const videos = document.querySelectorAll<HTMLVideoElement>('video[data-lazy]');
   const observer = new IntersectionObserver(
     (entries) => {
@@ -42,6 +43,11 @@ const { videos } = Astro.props;
             source.src = source.dataset.src!;
           });
           video.load();
+          if (reduceMotion) {
+            video.controls = true;
+          } else {
+            video.play().catch(() => { video.controls = true; });
+          }
           observer.unobserve(video);
         }
       });

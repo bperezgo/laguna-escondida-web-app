@@ -1,6 +1,7 @@
 ---
 import Button from './ui/Button.astro';
 import SectionWrapper from './ui/SectionWrapper.astro';
+import Icon from './ui/Icon.astro';
 import { finalCta } from '../data/funnel';
 ---
 
@@ -18,12 +19,14 @@ import { finalCta } from '../data/funnel';
 
     <Button href={finalCta.ctaHref} variant="whatsapp" size="lg" target="_blank"
       data-event="funnel_whatsapp_click" data-location="final-cta">
-      💬 {finalCta.ctaText}
+      <Icon name="message-circle" />
+      {finalCta.ctaText}
     </Button>
 
     {finalCta.guarantee && (
-      <p class="mt-6 text-sm" style="color: rgb(255 255 255 / 0.5);">
-        🛡️ {finalCta.guarantee}
+      <p class="mt-6 text-sm inline-flex items-center gap-1.5" style="color: rgb(255 255 255 / 0.6);">
+        <Icon name="shield-check" size={16} />
+        {finalCta.guarantee}
       </p>
     )}
 

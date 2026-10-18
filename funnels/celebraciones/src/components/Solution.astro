@@ -1,5 +1,6 @@
 ---
 import SectionWrapper from './ui/SectionWrapper.astro';
+import Icon from './ui/Icon.astro';
 import { solution } from '../data/funnel';
 ---
 
@@ -20,7 +21,7 @@ import { solution } from '../data/funnel';
       {solution.features.map((feature) => (
         <div class="flex items-start gap-3 p-5 rounded-xl"
           style="background: white; border: 1px solid var(--color-neutral-200);">
-          <span class="text-2xl flex-shrink-0">{feature.icon}</span>
+          <span style="color: var(--color-primary);"><Icon name={feature.icon} size={24} /></span>
           <p class="font-medium" style="color: var(--color-neutral-700);">{feature.text}</p>
         </div>
       ))}

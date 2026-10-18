@@ -1,6 +1,7 @@
 ---
 import Button from './ui/Button.astro';
 import SectionWrapper from './ui/SectionWrapper.astro';
+import Icon from './ui/Icon.astro';
 import { offer } from '../data/funnel';
 ---
 
@@ -21,10 +22,10 @@ import { offer } from '../data/funnel';
       {offer.packages.map((pkg) => (
         <div
           class={`flex flex-col rounded-2xl overflow-hidden ${
-            pkg.highlighted ? 'ring-2 scale-[1.02]' : ''
+            pkg.highlighted ? 'ring-2 ring-[var(--color-primary)] scale-[1.02]' : ''
           }`}
           style={`border: 1px solid var(--color-neutral-200); background: white;
-                  ${pkg.highlighted ? `ring-color: var(--color-primary); border-color: var(--color-primary);` : ''}`}
+                  ${pkg.highlighted ? 'border-color: var(--color-primary);' : ''}`}
         >
           {pkg.highlighted && (
             <div class="px-4 py-2 text-center text-sm font-semibold text-white"
@@ -53,7 +54,7 @@ import { offer } from '../data/funnel';
             <ul class="space-y-2 mb-6 flex-1">
               {pkg.features.map((feature) => (
                 <li class="flex items-start gap-2 text-sm">
-                  <span class="flex-shrink-0 mt-0.5" style="color: var(--color-primary);">✓</span>
+                  <span class="mt-0.5" style="color: var(--color-primary);"><Icon name="check" size={16} /></span>
                   <span style="color: var(--color-neutral-700);">{feature}</span>
                 </li>
               ))}
@@ -72,7 +73,8 @@ import { offer } from '../data/funnel';
               data-event="funnel_whatsapp_click"
               data-location={`offer-${pkg.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              💬 {offer.ctaText}
+              <Icon name="message-circle" />
+              {offer.ctaText}
             </Button>
           </div>
         </div>
@@ -87,16 +89,19 @@ import { offer } from '../data/funnel';
       </h3>
       <div class="flex flex-col md:flex-row gap-4 justify-center">
         {offer.bonuses.map((bonus) => (
-          <p class="text-center font-medium" style="color: var(--color-neutral-700);">
-            {bonus}
+          <p class="inline-flex items-start justify-center gap-2 text-center font-medium"
+            style="color: var(--color-neutral-700);">
+            <span class="mt-0.5" style="color: var(--color-primary);"><Icon name={bonus.icon} /></span>
+            {bonus.text}
           </p>
         ))}
       </div>
     </div>
 
     {offer.guarantee && (
-      <p class="mt-6 text-center text-sm" style="color: var(--color-neutral-500);">
-        🛡️ {offer.guarantee}
+      <p class="mt-6 flex items-center justify-center gap-1.5 text-sm" style="color: var(--color-neutral-500);">
+        <Icon name="shield-check" size={16} />
+        {offer.guarantee}
       </p>
     )}
 

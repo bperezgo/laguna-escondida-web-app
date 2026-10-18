@@ -17,17 +17,20 @@ export const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_ME
 
 // ── Hero ────────────────────────────────────────────────────────
 export const hero: HeroData = {
-  credibilityPill: '⭐ 4.6 en Google Maps · 📍 Marinilla, Antioquia',
+  credibilityPill: [
+    { icon: 'star',    text: '4.6 en Google Maps' },
+    { icon: 'map-pin', text: 'Marinilla, Antioquia' },
+  ],
   headline: 'Tu celebración campestre con lago, pesca y restaurante incluido',
   subheadline: 'Sin alquilar finca. Sin llevar comida. Sin estrés. Reserva tu fecha y nosotros nos encargamos del resto.',
   ctaText: 'Quiero reservar mi fecha',
   ctaHref: whatsappLink,
   secondaryCta: 'Ver paquetes y precios',
   secondaryHref: '#paquetes',
-  trustNote: '🌧️ Garantía de clima: reprogramamos sin costo si llueve',
+  trustNote: 'Garantía de clima: reprogramamos sin costo si llueve',
   stats: [
     { value: '5', label: 'especies de peces' },
-    { value: '4.6⭐', label: 'Google Maps' },
+    { value: '4.6', label: 'en Google Maps' },
     { value: '45 min', label: 'de Medellín' },
     { value: '$300K', label: 'desde COP' },
   ],
@@ -55,14 +58,14 @@ export const solution: SolutionData = {
   headline: 'Un espacio campestre con lago, pesca deportiva y restaurante — todo en un mismo lugar',
   intro: 'Aquí no alquilas una finca vacía. Aquí llegas, celebras y disfrutas.',
   features: [
-    { icon: '🎣', text: 'Lago con 5 especies de peces (no solo trucha)' },
-    { icon: '🏡', text: 'Espacio privado reservado solo para tu grupo' },
-    { icon: '🍽️', text: 'Restaurante con comida fresca incluida' },
-    { icon: '🌿', text: 'Zona verde y canchas para niños' },
-    { icon: '📸', text: 'Construcción rústica en guadua — fotos increíbles sin decoración costosa' },
-    { icon: '🅿️', text: 'Parqueadero amplio para todos los invitados' },
+    { icon: 'fish', text: 'Lago con 5 especies de peces (no solo trucha)' },
+    { icon: 'house', text: 'Espacio privado reservado solo para tu grupo' },
+    { icon: 'utensils', text: 'Restaurante con comida fresca incluida' },
+    { icon: 'leaf', text: 'Zona verde y canchas para niños' },
+    { icon: 'camera', text: 'Construcción rústica en guadua — fotos increíbles sin decoración costosa' },
+    { icon: 'square-parking', text: 'Parqueadero amplio para todos los invitados' },
   ],
-  highlight: 'Tus invitados pueden pescar su propia comida — y nosotros se la preparamos 🎣🍽️',
+  highlight: 'Tus invitados pueden pescar su propia comida — y nosotros se la preparamos',
 };
 
 // ── How it works ────────────────────────────────────────────────
@@ -148,8 +151,8 @@ export const offer: OfferData = {
     },
   ],
   bonuses: [
-    '🎣 BONUS: Lo que pesquen tus invitados, lo preparamos sin costo extra',
-    '📸 BONUS: Lago + mural + guadua como backdrop natural para fotos espectaculares',
+    { icon: 'fish',   text: 'BONUS: Lo que pesquen tus invitados, lo preparamos sin costo extra' },
+    { icon: 'camera', text: 'BONUS: Lago + mural + guadua como backdrop natural para fotos espectaculares' },
   ],
   ctaText: 'Quiero cotizar mi evento',
   ctaHref: whatsappLink,
@@ -180,11 +183,11 @@ export const socialProof: SocialProofData = {
   eyebrow: 'Lo que dicen quienes celebran aquí',
   headline: 'Familias del Oriente Antioqueño ya celebran en Laguna Escondida',
   credibility: [
-    '⭐ 4.6 en Google Maps',
-    '📍 Vereda La Primavera, Marinilla',
-    '🎣 5 especies de peces — no solo trucha',
-    '🌿 Espacio campestre en guadua natural',
-    '🅿️ Parqueadero amplio',
+    { icon: 'star',           text: '4.6 en Google Maps' },
+    { icon: 'map-pin',        text: 'Vereda La Primavera, Marinilla' },
+    { icon: 'fish',           text: '5 especies de peces — no solo trucha' },
+    { icon: 'leaf',           text: 'Espacio campestre en guadua natural' },
+    { icon: 'square-parking', text: 'Parqueadero amplio' },
   ],
   videos: [
     {
@@ -264,11 +267,13 @@ export const guarantee: GuaranteeData = {
   headline: 'Tu plata y tu plan están protegidos',
   guarantees: [
     {
-      title: '🌧️ Garantía de Clima',
+      icon: 'cloud-rain',
+      title: 'Garantía de Clima',
       description: 'Si el día de tu evento el clima no permite disfrutar al aire libre, reprogramamos tu celebración a otra fecha sin ningún costo adicional. Tu anticipo queda 100% protegido.',
     },
     {
-      title: '👀 Garantía "Visita Primero"',
+      icon: 'eye',
+      title: 'Garantía "Visita Primero"',
       description: 'Ven a conocer Laguna Escondida antes de reservar. Almuerza con tu familia un domingo. Si decides reservar, te descontamos el almuerzo del precio del evento. Cero riesgo — primero conoces, después decides.',
     },
   ],

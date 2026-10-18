@@ -1,5 +1,6 @@
 ---
 import SectionWrapper from './ui/SectionWrapper.astro';
+import Icon from './ui/Icon.astro';
 import { forWho } from '../data/funnel';
 ---
 
@@ -20,7 +21,7 @@ import { forWho } from '../data/funnel';
         <ul class="space-y-3">
           {forWho.isFor.map((item) => (
             <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 mt-0.5 text-lg" style="color: var(--color-primary);">✅</span>
+              <span class="mt-0.5" style="color: var(--color-primary);"><Icon name="circle-check" /></span>
               <p style="color: var(--color-neutral-700);">{item}</p>
             </li>
           ))}
@@ -29,18 +30,18 @@ import { forWho } from '../data/funnel';
 
       <!-- Not for -->
       <div>
-        <h3 class="font-semibold text-lg mb-4" style="color: var(--color-neutral-500);">
+        <h3 class="font-semibold text-lg mb-4" style="color: var(--color-muted-foreground);">
           Tal vez no es para ti si...
         </h3>
         <ul class="space-y-3">
           {forWho.notFor.map((item) => (
             <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 mt-0.5 text-lg">❌</span>
-              <p style="color: var(--color-neutral-500);">{item}</p>
+              <span class="mt-0.5" style="color: var(--color-muted-foreground);"><Icon name="circle-x" /></span>
+              <p style="color: var(--color-muted-foreground);">{item}</p>
             </li>
           ))}
         </ul>
-        <p class="mt-4 text-sm italic" style="color: var(--color-neutral-500);">
+        <p class="mt-4 text-sm italic" style="color: var(--color-muted-foreground);">
           Ser honestos genera confianza. No queremos prometerte algo que no somos.
         </p>
       </div>

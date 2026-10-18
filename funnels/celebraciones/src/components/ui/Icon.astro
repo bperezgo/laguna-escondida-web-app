@@ -1,0 +1,54 @@
+---
+// Decorative Lucide icon. Always aria-hidden — the adjacent text carries meaning.
+import Camera from '@lucide/astro/icons/camera';
+import Check from '@lucide/astro/icons/check';
+import CircleCheck from '@lucide/astro/icons/circle-check';
+import CircleX from '@lucide/astro/icons/circle-x';
+import CloudRain from '@lucide/astro/icons/cloud-rain';
+import Eye from '@lucide/astro/icons/eye';
+import Fish from '@lucide/astro/icons/fish';
+import House from '@lucide/astro/icons/house';
+import Leaf from '@lucide/astro/icons/leaf';
+import MapPin from '@lucide/astro/icons/map-pin';
+import MessageCircle from '@lucide/astro/icons/message-circle';
+import PartyPopper from '@lucide/astro/icons/party-popper';
+import Plus from '@lucide/astro/icons/plus';
+import ShieldCheck from '@lucide/astro/icons/shield-check';
+import SquareParking from '@lucide/astro/icons/square-parking';
+import Star from '@lucide/astro/icons/star';
+import Utensils from '@lucide/astro/icons/utensils';
+import type { IconName } from '../../types/funnel';
+
+interface Props {
+  name:   IconName;
+  size?:  number;
+  class?: string;
+  fill?:  string;
+}
+
+const { name, size = 20, class: className = '', fill = 'none' } = Astro.props;
+
+const icons = {
+  'camera':         Camera,
+  'check':          Check,
+  'circle-check':   CircleCheck,
+  'circle-x':       CircleX,
+  'cloud-rain':     CloudRain,
+  'eye':            Eye,
+  'fish':           Fish,
+  'house':          House,
+  'leaf':           Leaf,
+  'map-pin':        MapPin,
+  'message-circle': MessageCircle,
+  'party-popper':   PartyPopper,
+  'plus':           Plus,
+  'shield-check':   ShieldCheck,
+  'square-parking': SquareParking,
+  'star':           Star,
+  'utensils':       Utensils,
+} satisfies Record<IconName, unknown>;
+
+const Component = icons[name];
+---
+
+<Component size={size} fill={fill} class={`flex-shrink-0 ${className}`} aria-hidden="true" focusable="false" />

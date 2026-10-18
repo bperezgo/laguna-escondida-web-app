@@ -1,5 +1,6 @@
 ---
 import SectionWrapper from './ui/SectionWrapper.astro';
+import Icon from './ui/Icon.astro';
 import { faq } from '../data/funnel';
 ---
 
@@ -18,13 +19,12 @@ import { faq } from '../data/funnel';
           style="border: 1px solid var(--color-neutral-200); background: white;">
           <summary
             class="flex items-center justify-between p-5 cursor-pointer font-semibold
-                   list-none select-none"
+                   list-none select-none [&::-webkit-details-marker]:hidden"
             style="color: var(--color-neutral-900);">
             {item.question}
-            <span class="ml-4 flex-shrink-0 transition-transform duration-200
-                         group-open:rotate-45 text-xl"
+            <span class="ml-4 flex-shrink-0 transition-transform duration-200 group-open:rotate-45"
               style="color: var(--color-primary);">
-              +
+              <Icon name="plus" />
             </span>
           </summary>
           <div class="px-5 pb-5" style="color: var(--color-neutral-700); line-height: 1.7;">
