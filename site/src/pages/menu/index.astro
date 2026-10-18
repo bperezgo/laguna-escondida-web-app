@@ -5,15 +5,13 @@ import Footer from '../../components/Footer.astro';
 import Eyebrow from '../../components/ui/Eyebrow.astro';
 import Button from '../../components/ui/Button.astro';
 import { whatsappHref } from '../../lib/whatsapp';
-import menuData from '../../../../menu.json';
+import { urlFor } from '../../lib/sanity';
+import { getMenuCategories, getMenuSettings, formatPrice } from '../../lib/queries/menu';
 
-const { restaurant, categories } = menuData;
-type Dish = { id: string; name: string; description: string; price: number; image?: string };
-type Category = { id: string; name: string; order: number; dishes: Dish[] };
-const sortedCategories = ([...categories].sort((a, b) => a.order - b.order)) as Category[];
-
-const formatPrice = (price: number): string =>
-  '$' + price.toLocaleString('es-CO');
+const [sortedCategories, { businessName, menuTagline }] = await Promise.all([
+  getMenuCategories(),
+  getMenuSettings(),
+]);
 
 const waMessage = 'Hola, quiero reservar una mesa en el restaurante de Laguna Escondida';
 const waHref = whatsappHref(waMessage);
@@ -36,9 +34,9 @@ const waHref = whatsappHref(waMessage);
       <div class="hero-content">
         <Eyebrow text="Carta · Cocina campestre" inverse />
         <h1 class="hero-title">
-          {restaurant.name}
+          {businessName}
         </h1>
-        <p class="hero-lead">{restaurant.tagline}</p>
+        <p class="hero-lead">{menuTagline}</p>
       </div>
     </div>
   </header>
@@ -49,9 +47,9 @@ const waHref = whatsappHref(waMessage);
         {sortedCategories.map((cat, i) => (
           <button
             role="tab"
-            data-target={cat.id}
+            data-target={cat.slug.current}
             data-event="menu_category_view"
-            data-location={cat.id}
+            data-location={cat.slug.current}
             aria-selected={i === 0 ? 'true' : 'false'}
             class:list={['tab-btn', i === 0 && 'is-active']}
           >
@@ -65,7 +63,7 @@ const waHref = whatsappHref(waMessage);
   <main class="menu-main">
     <div class="menu-container">
       {sortedCategories.map((cat, i) => (
-        <section id={cat.id} data-section={`menu-${cat.id}`} class="menu-category">
+        <section id={cat.slug.current} data-section={`menu-${cat.slug.current}`} class="menu-category">
           <header class="category-head">
             <p class="category-index">{String(i + 1).padStart(2, '0')}</p>
             <h2 class="category-title">{cat.name}</h2>
@@ -74,9 +72,15 @@ const waHref = whatsappHref(waMessage);
           <ul class="dishes-list">
             {cat.dishes.map((dish) => (
               <li class="dish-item">
-                {dish.image && (
+                {dish.image?.asset && (
                   <div class="dish-media">
-                    <img src={dish.image} alt={dish.name} width="128" height="128" loading="lazy" />
+                    <img
+                      src={urlFor(dish.image).width(192).height(192).quality(80).auto('format').url()}
+                      alt={dish.image.alt ?? dish.name}
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                    />
                   </div>
                 )}
                 <div class="dish-body">
