@@ -168,8 +168,9 @@ async function assertExpectedEvents(page, expected) {
     return;
   }
   for (const ev of expected) {
+    // Minifiers may emit any quote style (Vite 8 / Oxc prefers backticks).
     const present =
-      hay.includes(`data-event="${ev}"`) || hay.includes(`'${ev}'`) || hay.includes(`"${ev}"`);
+      hay.includes(`data-event="${ev}"`) || ['\'', '"', '`'].some((q) => hay.includes(q + ev + q));
     if (!present) errors.push(`${page}: expected event "${ev}" not found`);
   }
 }
@@ -250,7 +251,7 @@ for (const page of CONVERSION_PAGES) {
   }
   const hay = await pageHaystack(page);
   const fires =
-    hay.includes('generate_lead') || hay.includes('SubmitForm') || /['"]Lead['"]/.test(hay);
+    hay.includes('generate_lead') || hay.includes('SubmitForm') || /['"`]Lead['"`]/.test(hay);
   if (!fires) errors.push(`${page}: no conversion event (generate_lead / Lead / SubmitForm) on load`);
 }
 
