@@ -32,11 +32,11 @@ import { socialProof } from '../data/funnel';
     <!-- Testimonials -->
     <div class="grid md:grid-cols-3 gap-6">
       {socialProof.testimonials.map((t) => (
-        <div class="flex flex-col p-6 rounded-2xl"
-          style="border: 1px solid var(--color-neutral-200); background: white;">
+        <div class="flex flex-col p-6 rounded-lg"
+          style="border: 1px solid var(--color-border); background: var(--color-card);">
 
           <div class="flex gap-1 mb-4" role="img" aria-label="5 de 5 estrellas"
-            style="color: var(--color-accent);">
+            style="color: var(--color-gold);">
             {Array.from({ length: 5 }, () => <Icon name="star" size={18} fill="currentColor" />)}
           </div>
 

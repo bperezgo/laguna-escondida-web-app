@@ -25,9 +25,9 @@ const sizes: Record<string, string> = {
 };
 
 const variants: Record<string, string> = {
-  primary: 'btn-primary',
-  whatsapp: 'btn-whatsapp',
-  secondary: 'border-2 font-semibold transition-colors hover:bg-neutral-50',
+  primary: 'btn-primary rounded-lg',
+  whatsapp: 'btn-whatsapp rounded-full',
+  secondary: 'border-2 rounded-lg font-semibold transition-colors hover:bg-neutral-50',
   ghost: 'font-medium underline-offset-4 hover:underline',
 };
 ---
@@ -36,7 +36,7 @@ const variants: Record<string, string> = {
   href={href}
   target={target}
   rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-  class={`inline-flex items-center justify-center gap-2 font-semibold rounded-full
+  class={`inline-flex items-center justify-center gap-2 font-semibold
           cursor-pointer
           ${sizes[size]} ${variants[variant]} ${className}`}
   {...rest}

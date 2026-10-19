@@ -1,27 +1,37 @@
 /* src/styles/tokens.css
-   Laguna Escondida — Campestre / Nature / Lake experience
-   Custom palette: deep greens (nature, lake) + warm earth (guadua, rustic)
-   Token structure follows design-system/laguna-escondida/MASTER.md
-   (semantic roles, spacing, shadows); colors stay on the brand palette. */
+   Laguna Escondida — "Lago & Tierra"
+   Same palette and type as the main site (site/src/styles/theme.css):
+   lake greens, sand off-whites, earth gold, clay as the warm accent.
+   Token structure follows design-system/laguna-escondida/MASTER.md.
+   Every text pair below is measured ≥ 4.5:1 on the surfaces it's used on. */
 
 :root {
   /* ── Brand colors ──────────────────────────────── */
-  --color-primary:        #166534;   /* deep forest green — nature, lake, CTA */
-  --color-primary-dark:   #14532d;   /* darker green — CTA hover */
-  --color-primary-light:  #dcfce7;   /* soft mint — subtle backgrounds, badges */
+  --color-primary:        #2d5a50;   /* lake-500 — CTA, links, icons */
+  --color-primary-dark:   #1f4339;   /* lake-600 — hover */
+  --color-primary-light:  #ecf2f0;   /* lake-50 — badges, tinted bands */
 
-  --color-accent:         #b45309;   /* warm amber — guadua, rustic, warmth */
-  --color-accent-dark:    #92400e;
+  --color-accent:         #b25335;   /* clay — prices, "Más popular" fill (white on it 5.0:1) */
+  --color-accent-dark:    #9a4529;   /* clay for small text on sand (clay alone is 4.4:1 there) */
 
-  /* ── Neutral scale (warm stone) ──────────────── */
-  --color-neutral-900:    #1c1917;   /* headings */
-  --color-neutral-700:    #44403c;   /* body text */
-  --color-neutral-600:    #57534e;   /* secondary body text */
-  --color-neutral-500:    #78716c;   /* muted text — 4.5:1 only on neutral-50/white */
-  --color-neutral-300:    #d6d3d1;   /* text on dark surfaces */
-  --color-neutral-200:    #e7e5e4;   /* borders, dividers */
-  --color-neutral-100:    #f5f5f4;   /* subtle section backgrounds */
-  --color-neutral-50:     #fafaf9;   /* page background */
+  --color-gold:           #a98a42;   /* earth-400 — decorative only (rules, stars): 3.2:1 */
+  --color-gold-light:     #dcc896;   /* earth-200 — text/figures on dark bands (8.6:1) */
+  --color-line-gold:      #c5a961;   /* earth-300 — eyebrow hairline */
+
+  /* ── Neutral scale (sand → olive → lake ink) ───── */
+  --color-neutral-900:    #0e2019;   /* lake-800 — headings */
+  --color-neutral-700:    #413e2d;   /* olive-600 — body text */
+  --color-neutral-600:    #5f5a41;   /* olive-500 — secondary text */
+  --color-neutral-500:    #6b664c;   /* small muted text — ≥ 5.1:1 on every light surface */
+  --color-neutral-300:    #d9cfb5;   /* sand-300 */
+  --color-neutral-200:    #ebe4d3;   /* sand-200 */
+  --color-neutral-100:    #f4f0e7;   /* sand-100 — alternate section band */
+  --color-neutral-50:     #faf8f3;   /* sand-50 — page background */
+
+  /* ── Dark band (hero, final CTA, cookie banner) ─── */
+  --color-surface-inverse:     #163028;   /* lake-700 */
+  --color-on-inverse:          #f4f0e7;   /* 12.4:1 */
+  --color-on-inverse-muted:    rgb(244 240 231 / 0.75);   /* 7.6:1 */
 
   /* ── Semantic ───────────────────────────────────── */
   --color-success:        #16a34a;
@@ -35,11 +45,11 @@
   --color-secondary:          var(--color-primary-light);
   --color-on-secondary:       var(--color-primary);
   --color-on-accent:          #ffffff;
-  --color-card:               #ffffff;
+  --color-card:               #fffdf9;   /* warm white, lifts off sand bands */
   --color-card-foreground:    var(--color-neutral-900);
   --color-muted:              var(--color-neutral-100);
   --color-muted-foreground:   var(--color-neutral-600);   /* 7:1 on muted */
-  --color-border:             var(--color-neutral-200);
+  --color-border:             rgb(22 48 40 / 0.12);   /* lake hairline, as on the main site */
   --color-destructive:        var(--color-error);
   --color-on-destructive:     #ffffff;
   --color-ring:               var(--color-primary);
@@ -51,8 +61,8 @@
   --color-on-whatsapp:        var(--color-neutral-900);  /* white fails (1.98:1) */
 
   /* ── Typography ─────────────────────────────────── */
-  --font-heading:  'Plus Jakarta Sans', sans-serif;
-  --font-body:     'Plus Jakarta Sans', sans-serif;
+  --font-heading:  'Lora', Georgia, serif;
+  --font-body:     'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
 
   --text-xs:    0.75rem;
   --text-sm:    0.875rem;
@@ -78,17 +88,17 @@
   --space-content:  var(--space-xl);
 
   /* ── Radius ─────────────────────────────────────── */
-  --radius-sm:  0.375rem;
-  --radius-md:  0.75rem;
-  --radius-lg:  1rem;
-  --radius-xl:  1.5rem;
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.75rem;   /* 12px — main-site --radius-brand */
+  --radius-xl:  1rem;
   --radius-full: 9999px;
 
   /* ── Shadows ────────────────────────────────────── */
-  --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.08);
-  --shadow-md:  0 4px 16px 0 rgb(0 0 0 / 0.10);
-  --shadow-lg:  0 8px 32px 0 rgb(0 0 0 / 0.12);
-  --shadow-xl:  0 20px 40px 0 rgb(0 0 0 / 0.15);
+  --shadow-sm:  0 1px 3px 0 rgb(14 32 25 / 0.06);
+  --shadow-md:  0 4px 18px 0 rgb(14 32 25 / 0.08);   /* main-site --shadow-brand */
+  --shadow-lg:  0 24px 60px -20px rgb(14 32 25 / 0.22);   /* --shadow-brand-lg */
+  --shadow-xl:  0 30px 70px -20px rgb(14 32 25 / 0.28);
 
   /* ── Motion ─────────────────────────────────────── */
   --duration-fast:  150ms;

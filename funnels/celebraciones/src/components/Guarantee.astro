@@ -14,8 +14,8 @@ import { guarantee } from '../data/funnel';
 
     <div class="grid md:grid-cols-2 gap-6">
       {guarantee.guarantees.map((g) => (
-        <div class="p-6 rounded-2xl"
-          style="background: white; border: 1px solid var(--color-neutral-200);">
+        <div class="p-6 rounded-lg"
+          style="background: var(--color-card); border: 1px solid var(--color-border);">
           <h3 class="flex items-center gap-2 text-xl font-bold mb-3" style="color: var(--color-neutral-900);">
             <span style="color: var(--color-primary);"><Icon name={g.icon} size={24} /></span>
             {g.title}

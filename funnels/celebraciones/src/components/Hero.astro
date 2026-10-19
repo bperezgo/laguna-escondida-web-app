@@ -4,27 +4,29 @@ import Icon from './ui/Icon.astro';
 import { hero } from '../data/funnel';
 ---
 
-<section data-section="hero" class="relative w-full overflow-hidden"
-  style="background-color: var(--color-neutral-50); padding: 4rem 0 5rem;">
+<!-- Dark lake band. When the hero photo lands, it goes behind the glow layer
+     as a full-bleed image; the glow becomes the scrim that keeps text legible. -->
+<section data-section="hero" class="on-dark relative w-full overflow-hidden"
+  style="background-color: var(--color-surface-inverse); padding: 4.5rem 0 4rem;">
 
-  <!-- Subtle leaf pattern -->
-  <div class="absolute inset-0 opacity-[0.03]"
-    style="background-image: radial-gradient(var(--color-primary) 1px, transparent 1px);
-           background-size: 32px 32px;">
+  <div class="absolute inset-0" aria-hidden="true"
+    style="background:
+             radial-gradient(ellipse 80% 60% at 50% 0%, rgb(79 132 120 / 0.35), transparent 70%),
+             linear-gradient(180deg, transparent 60%, rgb(7 19 14 / 0.45));">
   </div>
 
-  <div class="section-wrapper relative">
+  <div class="section-wrapper relative" style="padding-top: 0; padding-bottom: 0;">
     <div class="max-w-3xl mx-auto text-center">
 
       {hero.credibilityPill && (
         <div class="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4 py-2
-                    rounded-full text-sm font-medium mb-6"
-          style="background: var(--color-primary-light); color: var(--color-primary);">
+                    rounded-full text-sm font-medium mb-7"
+          style="border: 1px solid rgb(244 240 231 / 0.25); color: var(--color-on-inverse);">
           {hero.credibilityPill.map((item, i) => (
             <>
-              {i > 0 && <span aria-hidden="true">·</span>}
+              {i > 0 && <span aria-hidden="true" style="color: var(--color-gold-light);">·</span>}
               <span class="inline-flex items-center gap-1.5">
-                <Icon name={item.icon} size={16} />
+                <span style="color: var(--color-gold-light);"><Icon name={item.icon} size={16} /></span>
                 {item.text}
               </span>
             </>
@@ -32,14 +34,13 @@ import { hero } from '../data/funnel';
         </div>
       )}
 
-      <h1 class="font-bold leading-tight mb-6"
-        style="font-size: clamp(2rem, 5vw, var(--text-5xl));
-               color: var(--color-neutral-900);">
+      <h1 class="mb-6"
+        style="font-size: clamp(2.25rem, 6vw, 3.75rem); line-height: 1.08;">
         {hero.headline}
       </h1>
 
-      <p class="mb-8 max-w-2xl mx-auto"
-        style="font-size: var(--text-xl); color: var(--color-neutral-700); line-height: 1.6;">
+      <p class="mb-9 max-w-2xl mx-auto"
+        style="font-size: var(--text-xl); color: var(--color-on-inverse-muted); line-height: 1.6;">
         {hero.subheadline}
       </p>
 
@@ -50,14 +51,15 @@ import { hero } from '../data/funnel';
           {hero.ctaText}
         </Button>
         {hero.secondaryCta && (
-          <Button href={hero.secondaryHref} variant="ghost" size="lg">
+          <Button href={hero.secondaryHref} variant="ghost" size="lg"
+            class="text-[var(--color-on-inverse)] underline decoration-[var(--color-gold)] decoration-1 underline-offset-8">
             {hero.secondaryCta}
           </Button>
         )}
       </div>
 
       {hero.trustNote && (
-        <p class="mt-4 text-sm inline-flex items-center gap-1.5" style="color: var(--color-neutral-600);">
+        <p class="mt-5 text-sm inline-flex items-center gap-1.5" style="color: var(--color-on-inverse-muted);">
           <Icon name="shield-check" size={16} />
           {hero.trustNote}
         </p>
@@ -66,14 +68,15 @@ import { hero } from '../data/funnel';
     </div>
 
     {hero.stats && hero.stats.length > 0 && (
-      <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+      <div class="mt-14 pt-10 grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-6 max-w-3xl mx-auto"
+        style="border-top: 1px solid rgb(197 169 97 / 0.35);">
         {hero.stats.map((stat) => (
           <div class="text-center">
-            <div class="text-3xl font-bold mb-1"
-              style="color: var(--color-primary);">
+            <div class="text-3xl mb-1"
+              style="font-family: var(--font-heading); font-weight: 600; color: var(--color-gold-light);">
               {stat.value}
             </div>
-            <div class="text-sm" style="color: var(--color-neutral-500);">
+            <div class="text-sm" style="color: var(--color-on-inverse-muted);">
               {stat.label}
             </div>
           </div>

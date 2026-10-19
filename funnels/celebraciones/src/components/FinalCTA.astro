@@ -9,11 +9,11 @@ import { finalCta } from '../data/funnel';
   <div class="max-w-3xl mx-auto text-center">
 
     <h2 class="text-3xl md:text-5xl font-bold mb-6"
-      style="color: white; line-height: 1.1;">
+      style="line-height: 1.1;">
       {finalCta.headline}
     </h2>
 
-    <p class="text-lg mb-10" style="color: rgb(255 255 255 / 0.75);">
+    <p class="text-lg mb-10" style="color: var(--color-on-inverse-muted);">
       {finalCta.subheadline}
     </p>
 
@@ -24,7 +24,7 @@ import { finalCta } from '../data/funnel';
     </Button>
 
     {finalCta.guarantee && (
-      <p class="mt-6 text-sm inline-flex items-center gap-1.5" style="color: rgb(255 255 255 / 0.6);">
+      <p class="mt-6 text-sm inline-flex items-center gap-1.5" style="color: var(--color-on-inverse-muted);">
         <Icon name="shield-check" size={16} />
         {finalCta.guarantee}
       </p>
