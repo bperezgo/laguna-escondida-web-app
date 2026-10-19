@@ -11,7 +11,8 @@
  *   1b. No data-event value that isn't in the event registry (typo guard).
  *   2.  Key pages have a WhatsApp CTA.
  *   3.  Home exposes its required data-sections.
- *   4.  Funnel pages ship tracking + enough tracked sections.
+ *   4.  Funnel pages ship tracking + enough tracked sections, and route
+ *       WhatsApp clicks to /gracias (where the lead conversion fires).
  *   5.  Conversion pages fire a conversion on load.
  *   6.  Per-page "expected events" manifest — the events that MUST be present.
  *
@@ -239,6 +240,11 @@ for (const page of FUNNEL_PAGES) {
   const sectionCount = (html.match(/data-section=/g) || []).length;
   if (sectionCount < 5) {
     errors.push(`${page}: only ${sectionCount} tracked section(s), expected at least 5`);
+  }
+  // WhatsApp clicks must route the tab to /gracias, where the lead conversion
+  // fires — otherwise generate_lead / Lead never fire at all.
+  if (!hay.includes('/gracias/')) {
+    errors.push(`${page}: WhatsApp clicks don't route to /gracias/ (lead conversion would never fire)`);
   }
 }
 

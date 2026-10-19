@@ -183,8 +183,11 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght
 
   <CookieConsent />
 
-  <!-- CTA click tracking -->
+  <!-- CTA click tracking. Clicks are engagement events; the lead conversion
+       fires once on /gracias (see src/lib/leads.ts). -->
   <script>
+    import { newLeadId, thankYouUrl } from '../lib/leads';
+
     document.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('[data-event]') as HTMLElement | null;
       if (!target) return;
@@ -206,11 +209,12 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght
         });
       }
 
-      if (typeof (window as any).fbq === 'function') {
-        (window as any).fbq('track', 'Lead', { funnel_name: 'celebraciones', event_location: location });
-      }
-      if (typeof (window as any).ttq !== 'undefined') {
-        (window as any).ttq.track('Contact', { funnel_name: 'celebraciones', event_location: location });
+      // WhatsApp opens in a new tab (the link's target=_blank); send this tab to
+      // the thank-you page, which records the lead. Already there → nothing to do.
+      const isNewTab = target instanceof HTMLAnchorElement && target.target === '_blank';
+      if (eventName === 'funnel_whatsapp_click' && isNewTab && location !== 'gracias') {
+        const url = thankYouUrl(newLeadId(), location);
+        setTimeout(() => window.location.assign(url), 300);
       }
     });
   </script>

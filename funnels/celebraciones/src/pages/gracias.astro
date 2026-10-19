@@ -59,19 +59,9 @@ import { whatsappLink } from '../data/funnel';
   </section>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // GA4
-      if (typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'generate_lead', { funnel_name: 'celebraciones' });
-      }
-      // Meta
-      if (typeof (window as any).fbq === 'function') {
-        (window as any).fbq('track', 'Lead', { funnel_name: 'celebraciones' });
-      }
-      // TikTok
-      if (typeof (window as any).ttq !== 'undefined') {
-        (window as any).ttq.track('SubmitForm', { funnel_name: 'celebraciones' });
-      }
-    });
+    // Conversion: generate_lead (GA4) + Lead (Meta) + Contact (TikTok), once per lead.
+    import { fireLeadConversion } from '../lib/leads';
+
+    fireLeadConversion();
   </script>
 </FunnelLayout>

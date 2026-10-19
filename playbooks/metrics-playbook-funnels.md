@@ -106,19 +106,21 @@ El funnel actual no tiene **ningún** evento de tracking. Los CTAs de WhatsApp n
 | Sección del funnel | Evento dataLayer | Evento Meta | Evento TikTok | Evento GA4 |
 |-------------------|-----------------|-------------|---------------|------------|
 | Hero (carga) | `funnel_page_view` | `PageView` (auto) | `PageView` (auto) | `page_view` (auto) |
-| Hero → WhatsApp CTA | `funnel_whatsapp_click` location:hero | `Lead` | `Contact` | `generate_lead` |
+| Hero → WhatsApp CTA | `funnel_whatsapp_click` location:hero | — | — | `funnel_whatsapp_click` |
 | Hero → Ver paquetes | `funnel_scroll_to_packages` | — | — | `select_content` |
 | Problem (vista) | `funnel_section_view` section:problem | — | — | custom event |
 | Solution (vista) | `funnel_section_view` section:solution | — | — | custom event |
 | HowItWorks (vista) | `funnel_section_view` section:how-it-works | — | — | custom event |
 | SocialProof (vista) | `funnel_section_view` section:social-proof | `ViewContent` | `ViewContent` | custom event |
 | Offer/Paquetes (vista) | `funnel_section_view` section:offer | `ViewContent` | `ViewContent` | `view_item` |
-| Offer → WhatsApp CTA (por paquete) | `funnel_whatsapp_click` location:offer-{paquete} | `Lead` | `Contact` | `generate_lead` |
+| Offer → WhatsApp CTA (por paquete) | `funnel_whatsapp_click` location:offer-{paquete} | — | — | `funnel_whatsapp_click` |
 | ForWho (vista) | `funnel_section_view` section:for-who | — | — | custom event |
 | Guarantee (vista) | `funnel_section_view` section:guarantee | — | — | custom event |
 | FAQ (vista) | `funnel_section_view` section:faq | — | — | custom event |
-| FinalCTA → WhatsApp | `funnel_whatsapp_click` location:final-cta | `Lead` | `Contact` | `generate_lead` |
-| Página gracias (carga) | `funnel_thank_you` | `Lead` (confirmation) | `SubmitForm` | `generate_lead` (confirmation) |
+| FinalCTA → WhatsApp | `funnel_whatsapp_click` location:final-cta | — | — | `funnel_whatsapp_click` |
+| Página gracias (carga, con lead id nuevo) | `generate_lead` location:{cta} | `Lead` (eventID = lead id) | `Contact` (event_id = lead id) | `generate_lead` (**key event**) |
+
+> **Una conversión por lead (actualizado 2026-10-19).** El clic en WhatsApp abre WhatsApp en otra pestaña y lleva la pestaña del funnel a `/gracias/?lead=<id>&loc=<cta>`. La conversión se dispara **solo ahí, una vez por lead id**: recargas, links compartidos y visitas directas a `/gracias` no cuentan. Antes se disparaba `Lead`/`Contact` en cada clic (un usuario con 3 clics = 3 leads) y `/gracias` nunca se visitaba, así que `generate_lead` nunca llegaba a GA4. Implementación: `funnels/celebraciones/src/lib/leads.ts`.
 
 ### Métricas que debes monitorear
 
@@ -147,7 +149,7 @@ El funnel actual no tiene **ningún** evento de tracking. Los CTAs de WhatsApp n
 | CTA que más convierte | WhatsApp clicks por location | Identificar el CTA ganador |
 | Conversión por paquete | Clicks en cada paquete / views de Offer | Qué paquete atrae más |
 | Costo por lead (CPL) | Gasto en ads / WhatsApp clicks | **< $5 USD** para local services |
-| Thank you page rate | Visitas a `/gracias` / WhatsApp clicks | % que realmente escribe por WhatsApp |
+| Leads por clic | `generate_lead` / `funnel_whatsapp_click` | Cuántos clics son personas distintas (el resto son clics repetidos) |
 
 #### Métricas de ROI
 
@@ -234,7 +236,7 @@ Ejemplos:
 1. **Verificar dominio** en Meta Business Manager
 2. **Configurar pixel** con env var `PUBLIC_META_PIXEL_ID`
 3. **Agregar Aggregated Event Measurement**: Priorizar `Lead` como evento #1
-4. **Crear Custom Conversion**: URL contains `/f/celebraciones/gracias` = Lead
+4. **Optimizar por el evento `Lead`** (no por una Custom Conversion de URL: una conversión por URL `/gracias` también contaría recargas y visitas directas, que el evento ya descarta)
 5. **En la campaña**: Optimizar por evento `Lead`
 
 ### TikTok Ads
@@ -267,8 +269,8 @@ Cuando crees un nuevo funnel, asegúrate de que incluya:
 |-------------------|-----------|------|--------|-----|
 | Llega al funnel | — | PageView | PageView | page_view |
 | Ve la oferta | funnel_section_view | ViewContent | ViewContent | view_item |
-| Clic en WhatsApp | funnel_whatsapp_click | Lead | Contact | generate_lead |
-| Llega a /gracias | funnel_thank_you | Lead | SubmitForm | generate_lead |
+| Clic en WhatsApp | funnel_whatsapp_click | — | — | funnel_whatsapp_click |
+| Llega a /gracias (lead id nuevo) | generate_lead | Lead | Contact | generate_lead (key event) |
 
 ---
 

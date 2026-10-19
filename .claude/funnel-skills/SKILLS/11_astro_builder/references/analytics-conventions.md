@@ -101,8 +101,8 @@ per-business dashboard config, which fights reproducibility).
 Load each only when its ID is set, and **only after consent** (section 5):
 
 - **GA4** via `gtag` — `PUBLIC_GA_MEASUREMENT_ID`
-- **Meta Pixel** — `PUBLIC_META_PIXEL_ID` → `PageView`, `Lead` (on WA click / gracias)
-- **TikTok Pixel** — `PUBLIC_TIKTOK_PIXEL_ID` → `PageView`, `Contact` / `SubmitForm`
+- **Meta Pixel** — `PUBLIC_META_PIXEL_ID` → `PageView`, `Lead` (on `/gracias`, once per lead)
+- **TikTok Pixel** — `PUBLIC_TIKTOK_PIXEL_ID` → `PageView`, `Contact` (on `/gracias`, once per lead)
 
 > The laguna-escondida **site** uses GTM because it's one long-lived property with
 > many tags. Generated **funnels** are short-lived, single-purpose, one-per-client
@@ -133,8 +133,27 @@ first tag; pixels expose `window.__initXxxPixel()` called on grant).
 |---|---|---|---|---|
 | `funnel_section_view` | `funnel_section_view` | ViewContent | ViewContent | section enters viewport |
 | `funnel_cta_click` | `funnel_cta_click` | — | — | any non-WA CTA |
-| `funnel_whatsapp_click` | `funnel_whatsapp_click` | Lead | Contact | WhatsApp CTA click |
-| `generate_lead` | `generate_lead` (key event) | Lead | SubmitForm | `/gracias` on load |
+| `funnel_whatsapp_click` | `funnel_whatsapp_click` | — | — | WhatsApp CTA click (engagement only) |
+| `generate_lead` | `generate_lead` (key event) | Lead | Contact | `/gracias` load with a fresh lead id |
+
+### Lead flow — one conversion per lead
+
+Fire the conversion **once, on `/gracias`**, never on the click (reference:
+`funnels/celebraciones/src/lib/leads.ts`):
+
+1. WhatsApp CTAs keep `target="_blank"`. The click handler pushes
+   `funnel_whatsapp_click`, then sends the funnel tab to
+   `<base>/gracias/?lead=<uuid>&loc=<data-location>` after ~300ms.
+2. `/gracias` calls `fireLeadConversion()`: strips `lead`/`loc` from the URL,
+   skips ids already fired (localStorage) and direct visits (no id), then sends
+   GA4 `generate_lead` (`event_location`, `lead_id`), Meta `Lead` with
+   `eventID = lead id`, TikTok `Contact` with `event_id = lead id`.
+3. If consent isn't granted yet, pixel calls wait in `window.__afterConsent`;
+   `CookieConsent` flushes them on Accept.
+
+Why: firing on the click counts every repeat click as a lead, and a `/gracias`
+nothing links to never fires. The lead id is the dedupe key a server-side
+CAPI / Events API call must reuse.
 
 ---
 
@@ -164,6 +183,7 @@ It fails the deploy if:
 - a page in the expected-events manifest is missing an event it must have
   (e.g. the funnel index must have `funnel_whatsapp_click` + `funnel_section_view`;
   `/gracias` must fire `generate_lead`);
+- the funnel index doesn't route WhatsApp clicks to `/gracias/`;
 - the funnel ships no tracking script or fewer than 5 tracked sections.
 
 Wire it into the deploy gate (git `pre-push` hook or CI) alongside `astro check`:
