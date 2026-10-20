@@ -1,0 +1,208 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { whatsappHref } from '../lib/whatsapp';
+
+const lastUpdated = '20 de octubre de 2026';
+const email = 'lagunaescondida234@gmail.com';
+
+const waHref = whatsappHref('Hola, tengo una consulta sobre los términos y condiciones.');
+---
+
+<LegalLayout
+  title="Términos y Condiciones — Laguna Escondida | Marinilla, Antioquia"
+  description="Términos y condiciones del sitio web, el asistente de WhatsApp, las reservas y los pedidos a domicilio de Laguna Escondida Restaurante y Pesca S.A.S."
+  eyebrow="Legal · Condiciones del servicio"
+  heading="Términos y Condiciones"
+  lead="Las reglas que aplican cuando usas nuestro sitio web, nos escribes por WhatsApp, haces una reserva o pides a domicilio."
+  breadcrumb="Términos"
+  section="terminos"
+  lastUpdated={lastUpdated}
+>
+  <section class="legal-block" id="quienes-somos">
+    <h2>1. Quiénes somos</h2>
+    <p>
+      Estos términos regulan la relación entre tú y <strong>Laguna Escondida Restaurante y Pesca
+      S.A.S.</strong>, NIT 902.000.215-9, con domicilio en la Vereda La Primavera, Marinilla,
+      Antioquia, Colombia («Laguna Escondida», «nosotros»).
+    </p>
+    <p>
+      Al usar este sitio web, escribirnos por WhatsApp, hacer una reserva o realizar un pedido,
+      aceptas estos términos. Si no estás de acuerdo con ellos, por favor no uses nuestros canales.
+    </p>
+  </section>
+
+  <section class="legal-block" id="servicios">
+    <h2>2. Nuestros servicios</h2>
+    <p>
+      Ofrecemos restaurante campestre, pesca deportiva, eventos y celebraciones, y pedidos a
+      domicilio dentro de nuestra zona de cobertura. La información publicada en el sitio y en
+      nuestras redes (menú, precios, horarios, fotos) es informativa y puede cambiar sin previo
+      aviso.
+    </p>
+  </section>
+
+  <section class="legal-block" id="asistente-whatsapp">
+    <h2>3. Asistente automatizado de WhatsApp</h2>
+    <p>
+      Nuestro canal de WhatsApp es atendido inicialmente por un
+      <strong>asistente automatizado que utiliza inteligencia artificial</strong>. Al usarlo,
+      ten en cuenta que:
+    </p>
+    <ul>
+      <li>
+        El asistente puede cometer errores. Si una respuesta sobre precios, disponibilidad u
+        horarios no coincide con lo que confirme nuestro equipo, prevalece lo que confirme nuestro
+        equipo.
+      </li>
+      <li>
+        El asistente no puede ofrecer descuentos, precios ni condiciones distintas a las publicadas.
+        Cualquier excepción debe confirmarla una persona de nuestro equipo.
+      </li>
+      <li>
+        Puedes pedir en cualquier momento hablar con una persona, y el asistente trasladará la
+        conversación.
+      </li>
+      <li>
+        Te pedimos usar el canal de forma respetuosa y solo para asuntos relacionados con nuestros
+        servicios. Podemos dejar de atender conversaciones abusivas, ofensivas o que busquen
+        manipular al asistente.
+      </li>
+    </ul>
+    <p>
+      El tratamiento de tus mensajes y datos se rige por nuestra
+      <a href="/privacidad/">Política de Privacidad</a>.
+    </p>
+  </section>
+
+  <section class="legal-block" id="reservas">
+    <h2>4. Reservas, cotizaciones y eventos</h2>
+    <ul>
+      <li>
+        Una reserva o cotización queda confirmada solo cuando te la confirmamos de forma expresa por
+        WhatsApp.
+      </li>
+      <li>
+        Los eventos y celebraciones se rigen además por las condiciones particulares (anticipo,
+        número de personas, menú, cancelación) indicadas en la cotización que te enviemos.
+      </li>
+    </ul>
+  </section>
+
+  <section class="legal-block" id="domicilios">
+    <h2>5. Pedidos a domicilio</h2>
+    <ul>
+      <li>
+        Los domicilios solo están disponibles dentro de nuestra zona de cobertura. Para verificarla
+        te pediremos tu ubicación (un pin de WhatsApp o un enlace de Google Maps). Eres responsable
+        de que la ubicación y los datos de entrega sean correctos.
+      </li>
+      <li>
+        Antes de confirmar el pedido te informaremos su valor total en pesos colombianos (COP),
+        incluido el costo del domicilio cuando aplique.
+      </li>
+      <li>
+        Un pedido queda confirmado cuando te lo confirmamos y, si el medio de pago es anticipado,
+        cuando recibimos el pago.
+      </li>
+      <li>
+        Los tiempos de entrega son estimados y pueden variar por clima, estado de las vías o
+        demanda.
+      </li>
+      <li>
+        Si no es posible entregar el pedido por datos de entrega incorrectos o porque nadie lo
+        recibe, el pedido se considera entregado.
+      </li>
+    </ul>
+  </section>
+
+  <section class="legal-block" id="pagos">
+    <h2>6. Medios de pago</h2>
+    <ul>
+      <li>
+        <strong>Enlace de pago (Wompi):</strong> te enviamos un enlace para pagar antes del
+        despacho. El pago se procesa en la plataforma de Wompi bajo sus propios términos; nosotros
+        no recibimos ni almacenamos los datos de tu tarjeta o cuenta.
+      </li>
+      <li>
+        <strong>Transferencia:</strong> envíanos el comprobante por WhatsApp. El pedido se despacha
+        cuando verificamos el pago.
+      </li>
+      <li><strong>Efectivo:</strong> contra entrega, cuando esté disponible para tu pedido.</li>
+    </ul>
+  </section>
+
+  <section class="legal-block" id="cancelaciones">
+    <h2>7. Cancelaciones y reembolsos</h2>
+    <ul>
+      <li>Puedes cancelar un pedido sin costo mientras no lo hayas pagado.</li>
+      <li>
+        Una vez realizado el pago, el pedido entra en preparación y
+        <strong>no se aceptan cancelaciones ni reembolsos</strong>. Por tratarse de alimentos
+        perecederos, no aplica el derecho de retracto (artículo 47 de la Ley 1480 de 2011).
+      </li>
+      <li>
+        Si tu pedido no fue entregado por causas atribuibles a nosotros, o recibiste un producto en
+        mal estado o distinto al que pediste, escríbenos el mismo día con fotos y el detalle del
+        pedido. Revisaremos el caso y, si corresponde, repondremos el producto o te devolveremos el
+        dinero.
+      </li>
+    </ul>
+    <p>
+      Lo anterior no limita los derechos que te reconoce el Estatuto del Consumidor (Ley 1480 de
+      2011).
+    </p>
+  </section>
+
+  <section class="legal-block" id="uso-del-sitio">
+    <h2>8. Uso del sitio y propiedad intelectual</h2>
+    <p>
+      Las fotos, textos, logotipos y demás contenidos de este sitio y de nuestras redes son de
+      Laguna Escondida o se usan con autorización. No puedes reproducirlos con fines comerciales
+      sin nuestro permiso escrito.
+    </p>
+  </section>
+
+  <section class="legal-block" id="responsabilidad">
+    <h2>9. Responsabilidad</h2>
+    <ul>
+      <li>
+        Dentro de nuestras instalaciones, las actividades de pesca deportiva y el uso de las zonas
+        cercanas al lago deben seguir las indicaciones de nuestro personal. Los menores de edad
+        deben estar acompañados y bajo la supervisión de un adulto responsable en todo momento.
+      </li>
+      <li>
+        No respondemos por fallas de WhatsApp, de las redes de telecomunicaciones o de proveedores
+        de pago que estén fuera de nuestro control.
+      </li>
+      <li>
+        Si tienes alergias o restricciones alimentarias, infórmalas antes de confirmar tu pedido o
+        reserva.
+      </li>
+    </ul>
+  </section>
+
+  <section class="legal-block" id="cambios">
+    <h2>10. Cambios a estos términos</h2>
+    <p>
+      Podemos actualizar estos términos. La versión vigente es la publicada en esta página, con su
+      fecha de actualización. Los pedidos y reservas ya confirmados se rigen por los términos
+      vigentes al momento de su confirmación.
+    </p>
+  </section>
+
+  <section class="legal-block" id="ley-aplicable">
+    <h2>11. Ley aplicable</h2>
+    <p>
+      Estos términos se rigen por las leyes de la República de Colombia. Cualquier controversia se
+      intentará resolver primero de forma directa con nosotros.
+    </p>
+  </section>
+
+  <section class="legal-block" id="contacto">
+    <h2>12. Contacto</h2>
+    <p>
+      Para preguntas, quejas o reclamos, escríbenos a <a href={`mailto:${email}`}>{email}</a> o por
+      <a href={waHref} target="_blank" rel="noopener">WhatsApp</a>.
+    </p>
+  </section>
+</LegalLayout>

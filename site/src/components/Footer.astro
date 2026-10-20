@@ -115,7 +115,10 @@ const experienceLinks = [
     <div class="footer-bottom">
       <span>{t.footer.copyright}</span>
       <span class="designed-note">{t.footer.designedNote}</span>
-      <a href="/politica-de-privacidad/" class="privacy-link">{t.footer.privacy}</a>
+      <span class="legal-links">
+        <a href="/privacidad/" class="privacy-link">{t.footer.privacy}</a>
+        <a href="/terminos/" class="privacy-link">{t.footer.terms}</a>
+      </span>
     </div>
   </div>
 </footer>
@@ -272,6 +275,12 @@ const experienceLinks = [
 
   .footer-bottom .designed-note {
     font-style: normal;
+  }
+
+  .legal-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .privacy-link {

@@ -1,266 +1,293 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import Eyebrow from '../components/ui/Eyebrow.astro';
+import LegalLayout from '../layouts/LegalLayout.astro';
 import { whatsappHref } from '../lib/whatsapp';
 
-const lastUpdated = 'Agosto de 2026';
+const lastUpdated = '20 de octubre de 2026';
+const email = 'lagunaescondida234@gmail.com';
 
-const waMessage = 'Hola, tengo una consulta sobre el tratamiento de mis datos personales.';
-const waHref = whatsappHref(waMessage);
+const waHref = whatsappHref('Hola, tengo una consulta sobre el tratamiento de mis datos personales.');
+const waDeleteHref = whatsappHref('Hola, quiero solicitar la eliminación de mis datos personales.');
 ---
 
-<BaseLayout
+<LegalLayout
   title="Política de Privacidad — Laguna Escondida | Marinilla, Antioquia"
-  description="Política de privacidad y tratamiento de datos personales de Laguna Escondida, conforme a la Ley 1581 de 2012 (Habeas Data, Colombia). Uso de cookies y analítica."
+  description="Política de tratamiento de datos personales de Laguna Escondida Restaurante y Pesca S.A.S., conforme a la Ley 1581 de 2012 (Habeas Data, Colombia). Sitio web, WhatsApp, cookies y domicilios."
+  eyebrow="Legal · Habeas Data"
+  heading="Política de Privacidad"
+  lead="Cómo recopilamos, usamos y protegemos tus datos personales en nuestro sitio web y en WhatsApp, conforme a la Ley 1581 de 2012 de Colombia."
+  breadcrumb="Privacidad"
+  section="privacidad"
+  lastUpdated={lastUpdated}
 >
-  <Navbar />
+  <section class="legal-block" id="responsable">
+    <h2>1. Responsable del tratamiento</h2>
+    <ul>
+      <li><strong>Razón social:</strong> Laguna Escondida Restaurante y Pesca S.A.S.</li>
+      <li><strong>NIT:</strong> 902.000.215-9</li>
+      <li><strong>Domicilio:</strong> Vereda La Primavera, Marinilla, Antioquia, Colombia.</li>
+      <li><strong>Correo electrónico:</strong> <a href={`mailto:${email}`}>{email}</a></li>
+      <li><strong>WhatsApp:</strong> <a href={waHref} target="_blank" rel="noopener">escríbenos aquí</a></li>
+    </ul>
+    <p>
+      Esta política aplica a los datos que recopilamos a través de este sitio web, de nuestro
+      canal de WhatsApp (incluido nuestro asistente automatizado), de nuestras redes sociales
+      (Instagram, Facebook y TikTok) y de nuestras instalaciones.
+    </p>
+  </section>
 
-  <header class="legal-hero" data-section="privacidad-hero" data-screen-label="Privacidad hero">
-    <div class="hero-container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Inicio</a>
-        <span aria-hidden="true">/</span>
-        <span class="is-current">Privacidad</span>
-      </nav>
+  <section class="legal-block" id="datos">
+    <h2>2. Datos que recopilamos</h2>
+    <h3>Cuando nos escribes por WhatsApp</h3>
+    <ul>
+      <li>Tu número de teléfono y el nombre que nos compartas.</li>
+      <li>El contenido de los mensajes que intercambiamos contigo.</li>
+      <li>
+        Los detalles de tus reservas, cotizaciones y pedidos (fecha, número de personas, productos,
+        valor, estado del pedido).
+      </li>
+      <li>
+        La ubicación o dirección que nos compartas para un pedido a domicilio (un pin de ubicación
+        de WhatsApp o un enlace de Google Maps).
+      </li>
+      <li>
+        Si llegaste desde un anuncio de Facebook o Instagram, el identificador del anuncio en el que
+        hiciste clic.
+      </li>
+    </ul>
+    <h3>Cuando navegas en este sitio</h3>
+    <ul>
+      <li>
+        Información de navegación de forma agregada: páginas visitadas, tiempo en el sitio,
+        dispositivo y fuente de tráfico, recopilada mediante cookies y herramientas de analítica
+        (ver sección 5).
+      </li>
+    </ul>
+    <h3>Pagos</h3>
+    <p>
+      No almacenamos datos de tarjetas ni credenciales bancarias. Los pagos con enlace se procesan
+      en la plataforma de <strong>Wompi</strong>, bajo sus propios términos y política de
+      privacidad. Si pagas por transferencia, conservamos el comprobante que nos envíes para
+      verificar el pago.
+    </p>
+    <p>
+      No solicitamos datos sensibles (como salud, origen étnico u opiniones políticas). Te pedimos
+      no compartirlos en tus mensajes.
+    </p>
+  </section>
 
-      <div class="hero-content">
-        <Eyebrow text="Legal · Habeas Data" inverse />
-        <h1 class="hero-title">Política de Privacidad</h1>
-        <p class="hero-lead">
-          Cómo recopilamos, usamos y protegemos tus datos personales, conforme a la
-          Ley 1581 de 2012 de Colombia.
-        </p>
-      </div>
-    </div>
-  </header>
+  <section class="legal-block" id="asistente-whatsapp">
+    <h2>3. Asistente automatizado de WhatsApp</h2>
+    <p>
+      Los mensajes que nos envías por WhatsApp son respondidos inicialmente por un
+      <strong>asistente automatizado que utiliza inteligencia artificial</strong>. El asistente
+      responde preguntas sobre nuestros servicios, horarios, menú y precios, y puede ayudarte a
+      tomar un pedido a domicilio. Cuando no puede resolver tu solicitud, o cuando lo pides,
+      traslada la conversación a una persona de nuestro equipo.
+    </p>
+    <p>
+      Para prestar este servicio, el contenido de tus mensajes se procesa con proveedores
+      tecnológicos que generan las respuestas (ver sección 6). El personal autorizado de Laguna
+      Escondida puede leer las conversaciones para atenderte, revisar pedidos y mejorar la calidad
+      de las respuestas del asistente.
+    </p>
+  </section>
 
-  <main class="legal-main" data-section="privacidad-contenido">
-    <div class="legal-container">
-      <p class="legal-updated">Última actualización: {lastUpdated}</p>
+  <section class="legal-block" id="finalidades">
+    <h2>4. Finalidad del tratamiento</h2>
+    <p>Utilizamos tus datos para:</p>
+    <ul>
+      <li>Responder tus consultas sobre el restaurante, la pesca deportiva, los eventos y los domicilios.</li>
+      <li>Gestionar reservas, cotizaciones, pedidos, pagos y entregas.</li>
+      <li>Verificar si tu dirección está dentro de nuestra zona de cobertura de domicilios.</li>
+      <li>Trasladar tu conversación a una persona de nuestro equipo cuando sea necesario.</li>
+      <li>
+        Supervisar el funcionamiento técnico del asistente y mejorar la calidad de nuestro servicio.
+      </li>
+      <li>Entender cómo se usa el sitio para mejorar el contenido y la experiencia.</li>
+      <li>
+        Medir el rendimiento de nuestras campañas publicitarias: en el sitio, solo si aceptas las
+        cookies; en WhatsApp, informando a Meta qué conversaciones iniciadas desde un anuncio
+        terminaron en una reserva o pedido.
+      </li>
+      <li>Cumplir obligaciones legales, contables y tributarias, como la facturación.</li>
+    </ul>
+    <p>No vendemos ni alquilamos tus datos personales.</p>
+  </section>
 
-      <section class="legal-block">
-        <h2>1. Responsable del tratamiento</h2>
-        <p>
-          <strong>Laguna Escondida</strong>, ubicada en la Vereda La Primavera, Marinilla,
-          Antioquia, Colombia, es responsable del tratamiento de los datos personales que
-          recopilamos a través de este sitio web y de nuestros canales de comunicación
-          (WhatsApp, Instagram, Facebook y TikTok).
-        </p>
-      </section>
+  <section class="legal-block" id="cookies">
+    <h2>5. Cookies y tecnologías de seguimiento</h2>
+    <p>
+      Este sitio usa cookies propias y de terceros. Distinguimos entre cookies
+      <strong>necesarias</strong> (imprescindibles para el funcionamiento del sitio) y cookies
+      de <strong>analítica y publicidad</strong>, que solo se activan si otorgas tu consentimiento.
+    </p>
+    <p>Los servicios de terceros que podemos utilizar son:</p>
+    <ul>
+      <li><strong>Google Analytics</strong> (a través de Google Tag Manager) — análisis de tráfico y comportamiento.</li>
+      <li><strong>Meta Pixel</strong> (Facebook / Instagram) — medición y optimización de campañas.</li>
+      <li><strong>TikTok Pixel</strong> — medición y optimización de campañas.</li>
+    </ul>
+    <p>
+      Al ingresar por primera vez verás un aviso de cookies. Implementamos el
+      <em>Consentimiento (Consent Mode)</em> de Google: hasta que hagas clic en
+      <strong>Aceptar</strong>, las cookies de analítica y publicidad permanecen desactivadas.
+      Si eliges <strong>Solo necesarias</strong>, no se activan dichas cookies y puedes seguir
+      navegando con normalidad.
+    </p>
+    <p>
+      Puedes <strong>retirar o cambiar tu consentimiento</strong> en cualquier momento borrando
+      las cookies y el almacenamiento local de este sitio desde la configuración de tu navegador;
+      al volver a ingresar se te mostrará nuevamente el aviso. También puedes bloquear las cookies
+      directamente desde tu navegador.
+    </p>
+  </section>
 
-      <section class="legal-block">
-        <h2>2. Datos que recopilamos</h2>
-        <p>Podemos recopilar la siguiente información:</p>
-        <ul>
-          <li>Nombre y número de teléfono (cuando nos escribes por WhatsApp).</li>
-          <li>Detalles de tu consulta o reserva (fecha, número de personas, tipo de plan o evento).</li>
-          <li>
-            Información de navegación de forma agregada y anónima: páginas visitadas, tiempo en el
-            sitio, dispositivo y fuente de tráfico, recopilada mediante cookies y herramientas de
-            analítica (ver sección 4).
-          </li>
-        </ul>
-      </section>
+  <section class="legal-block" id="proveedores">
+    <h2>6. Proveedores y transferencia internacional de datos</h2>
+    <p>
+      Compartimos tus datos únicamente con los proveedores que necesitamos para prestar el
+      servicio, quienes los tratan por cuenta nuestra y bajo sus propias obligaciones de seguridad
+      y confidencialidad:
+    </p>
+    <ul>
+      <li><strong>Meta Platforms</strong> — WhatsApp Business, medición de anuncios de Facebook e Instagram.</li>
+      <li><strong>Anthropic</strong> — modelo de inteligencia artificial que genera las respuestas del asistente.</li>
+      <li><strong>Amazon Web Services</strong> — servidores y base de datos donde funciona el asistente.</li>
+      <li><strong>Cloudflare</strong> — alojamiento de este sitio web.</li>
+      <li><strong>Herramientas de monitoreo técnico</strong> — supervisión del funcionamiento del asistente; los números de teléfono se enmascaran antes de enviarse.</li>
+      <li><strong>Wompi</strong> — procesamiento de pagos con enlace.</li>
+      <li><strong>Google y TikTok</strong> — analítica y publicidad del sitio, solo si aceptas las cookies.</li>
+    </ul>
+    <p>
+      Algunos de estos proveedores tienen sus servidores fuera de Colombia, principalmente en
+      Estados Unidos. Al usar nuestros canales autorizas que tus datos se transmitan y almacenen
+      en esos países para las finalidades descritas, conforme al artículo 26 de la Ley 1581 de 2012
+      y al Decreto 1377 de 2013.
+    </p>
+    <p>También podemos compartir tus datos cuando una autoridad competente lo exija legalmente.</p>
+  </section>
 
-      <section class="legal-block">
-        <h2>3. Finalidad del tratamiento</h2>
-        <p>Utilizamos tus datos para:</p>
-        <ul>
-          <li>Responder a tus consultas sobre el restaurante, la pesca deportiva y los eventos.</li>
-          <li>Gestionar reservas, cotizaciones y confirmaciones.</li>
-          <li>Entender cómo se usa el sitio para mejorar el contenido y la experiencia.</li>
-          <li>Medir el rendimiento de nuestras campañas publicitarias (solo si aceptas las cookies).</li>
-        </ul>
-      </section>
+  <section class="legal-block" id="conservacion">
+    <h2>7. Conservación de los datos</h2>
+    <ul>
+      <li>
+        <strong>Contenido de las conversaciones:</strong> lo conservamos hasta por doce (12) meses
+        para atender tu solicitud, dar seguimiento a tus pedidos y mejorar la calidad de las
+        respuestas de nuestro asistente. Después lo eliminamos o lo anonimizamos (retirando tu
+        número, nombre, dirección y ubicación), de modo que no sea posible identificarte; en esa
+        forma podemos conservarlo para evaluar y mejorar el asistente.
+      </li>
+      <li>
+        <strong>Pedidos, pagos y facturación:</strong> durante los plazos que exigen las normas
+        contables y tributarias colombianas.
+      </li>
+      <li>
+        <strong>Número de teléfono:</strong> mientras mantengamos una relación contigo o hasta que
+        solicites su eliminación.
+      </li>
+    </ul>
+    <p>
+      Podemos conservar estadísticas agregadas (por ejemplo, número de conversaciones o tiempos de
+      respuesta) que no permiten identificarte.
+    </p>
+  </section>
 
-      <section class="legal-block">
-        <h2>4. Cookies y tecnologías de seguimiento</h2>
-        <p>
-          Este sitio usa cookies propias y de terceros. Distinguimos entre cookies
-          <strong>necesarias</strong> (imprescindibles para el funcionamiento del sitio) y cookies
-          de <strong>analítica y publicidad</strong>, que solo se activan si otorgas tu consentimiento.
-        </p>
-        <p>Los servicios de terceros que podemos utilizar son:</p>
-        <ul>
-          <li><strong>Google Analytics</strong> (a través de Google Tag Manager) — análisis de tráfico y comportamiento.</li>
-          <li><strong>Meta Pixel</strong> (Facebook / Instagram) — medición y optimización de campañas.</li>
-          <li><strong>TikTok Pixel</strong> — medición y optimización de campañas.</li>
-        </ul>
-        <p>
-          Al ingresar por primera vez verás un aviso de cookies. Implementamos el
-          <em>Consentimiento (Consent Mode)</em> de Google: hasta que hagas clic en
-          <strong>Aceptar</strong>, las cookies de analítica y publicidad permanecen desactivadas.
-          Si eliges <strong>Solo necesarias</strong>, no se activan dichas cookies y puedes seguir
-          navegando con normalidad.
-        </p>
-        <p>
-          Puedes <strong>retirar o cambiar tu consentimiento</strong> en cualquier momento borrando
-          las cookies y el almacenamiento local de este sitio desde la configuración de tu navegador;
-          al volver a ingresar se te mostrará nuevamente el aviso. También puedes bloquear las cookies
-          directamente desde tu navegador.
-        </p>
-      </section>
+  <section class="legal-block" id="autorizacion">
+    <h2>8. Autorización</h2>
+    <p>
+      Al escribirnos por WhatsApp, enviarnos tu ubicación o realizar un pedido, nos autorizas a
+      tratar tus datos para las finalidades descritas en esta política. Puedes revocar esta
+      autorización en cualquier momento, salvo cuando exista un deber legal o contractual de
+      conservar la información.
+    </p>
+  </section>
 
-      <section class="legal-block">
-        <h2>5. Compartición de datos</h2>
-        <p>
-          No vendemos ni alquilamos tus datos personales. Solo se comparten con los proveedores
-          tecnológicos mencionados (Google, Meta, TikTok) en la medida necesaria para prestar el
-          servicio de analítica/publicidad, o cuando exista un requerimiento legal.
-        </p>
-      </section>
+  <section class="legal-block" id="derechos">
+    <h2>9. Derechos del titular</h2>
+    <p>
+      De acuerdo con la Ley 1581 de 2012 y el Decreto 1377 de 2013, como titular de los datos
+      tienes derecho a:
+    </p>
+    <ul>
+      <li>Conocer, actualizar y rectificar tus datos personales.</li>
+      <li>Solicitar prueba de la autorización otorgada.</li>
+      <li>Ser informado sobre el uso que les hemos dado a tus datos.</li>
+      <li>Revocar la autorización y solicitar la supresión de tus datos.</li>
+      <li>Acceder gratuitamente a tus datos personales.</li>
+      <li>
+        Presentar quejas ante la Superintendencia de Industria y Comercio (SIC), una vez agotado
+        el trámite de consulta o reclamo ante nosotros.
+      </li>
+    </ul>
+  </section>
 
-      <section class="legal-block">
-        <h2>6. Derechos del titular</h2>
-        <p>
-          De acuerdo con la Ley 1581 de 2012 y el Decreto 1377 de 2013, como titular de los datos
-          tienes derecho a <strong>conocer, actualizar, rectificar y suprimir</strong> tu información,
-          así como a revocar la autorización otorgada. Para ejercer estos derechos, contáctanos por
-          los medios indicados a continuación.
-        </p>
-      </section>
+  <section class="legal-block" id="procedimiento">
+    <h2>10. Cómo ejercer tus derechos</h2>
+    <p>
+      La administración de Laguna Escondida atiende las consultas y reclamos sobre datos
+      personales. Escríbenos a <a href={`mailto:${email}`}>{email}</a> o por
+      <a href={waHref} target="_blank" rel="noopener">WhatsApp</a>, indicando tu nombre, el número
+      de teléfono con el que nos contactaste y tu solicitud.
+    </p>
+    <ul>
+      <li>
+        <strong>Consultas:</strong> respondemos en un máximo de diez (10) días hábiles, prorrogables
+        por cinco (5) días hábiles más, informándote el motivo.
+      </li>
+      <li>
+        <strong>Reclamos</strong> (corrección, actualización, supresión o incumplimiento): respondemos
+        en un máximo de quince (15) días hábiles, prorrogables por ocho (8) días hábiles más,
+        informándote el motivo.
+      </li>
+    </ul>
+  </section>
 
-      <section class="legal-block">
-        <h2>7. Contacto</h2>
-        <p>
-          Para preguntas sobre esta política o para ejercer tus derechos, escríbenos por
-          <a href={waHref} target="_blank" rel="noopener">WhatsApp</a>
-          o a través de nuestras redes sociales (Instagram: @lagunaescondida).
-        </p>
-      </section>
-    </div>
-  </main>
+  <section class="legal-block" id="eliminacion-de-datos">
+    <h2>11. Eliminación de tus datos</h2>
+    <p>Para solicitar que eliminemos tus datos personales:</p>
+    <ol>
+      <li>
+        Escríbenos a <a href={`mailto:${email}`}>{email}</a> con el asunto
+        <strong>«Eliminación de datos»</strong>, o envíanos un mensaje por
+        <a href={waDeleteHref} target="_blank" rel="noopener">WhatsApp</a>.
+      </li>
+      <li>Indica el número de teléfono con el que nos contactaste.</li>
+      <li>
+        Eliminaremos tus conversaciones, tu número y tu ubicación en un plazo máximo de quince
+        (15) días hábiles, y te confirmaremos cuando esté hecho.
+      </li>
+    </ol>
+    <p>
+      Solo conservaremos la información que la ley nos obligue a mantener, como los registros
+      contables y de facturación de pedidos ya pagados.
+    </p>
+  </section>
 
-  <Footer />
-</BaseLayout>
+  <section class="legal-block" id="seguridad">
+    <h2>12. Seguridad</h2>
+    <p>
+      Aplicamos medidas técnicas y administrativas razonables para proteger tus datos: conexiones
+      cifradas, acceso restringido solo al personal que lo necesita y separación de los números de
+      teléfono del resto de la información operativa.
+    </p>
+  </section>
 
-<style>
-  .legal-hero {
-    position: relative;
-    padding-block: clamp(96px, 10vw, 140px) clamp(48px, 6vw, 80px);
-    background: var(--color-lake-800);
-    color: var(--color-sand-50);
-  }
+  <section class="legal-block" id="menores">
+    <h2>13. Menores de edad</h2>
+    <p>
+      Nuestros canales digitales están dirigidos a personas mayores de edad. Si eres menor de
+      18 años, pide a tu madre, padre o acudiente que se comunique con nosotros.
+    </p>
+  </section>
 
-  .hero-container {
-    max-width: 820px;
-    margin: 0 auto;
-    padding-inline: var(--gutter);
-  }
-
-  .breadcrumb {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(250, 248, 243, 0.55);
-    margin-bottom: 40px;
-  }
-
-  .breadcrumb a {
-    color: inherit;
-    text-decoration: none;
-    transition: color var(--duration-3, 200ms) var(--ease-out);
-  }
-
-  .breadcrumb a:hover {
-    color: var(--color-sand-50);
-  }
-
-  .breadcrumb .is-current {
-    color: var(--color-earth-300);
-  }
-
-  .hero-content {
-    display: grid;
-    gap: 16px;
-  }
-
-  .hero-title {
-    margin: 12px 0 0;
-    font-family: var(--font-display);
-    font-weight: 300;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.015em;
-    color: var(--color-sand-50);
-  }
-
-  .hero-lead {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-size: var(--text-body-lg);
-    line-height: 1.55;
-    color: rgba(250, 248, 243, 0.78);
-    max-width: 56ch;
-  }
-
-  .legal-main {
-    background: var(--color-surface);
-    padding-block: clamp(48px, 6vw, 80px) clamp(80px, 10vw, 140px);
-  }
-
-  .legal-container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding-inline: var(--gutter);
-  }
-
-  .legal-updated {
-    margin: 0 0 40px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    color: var(--color-ink-muted);
-  }
-
-  .legal-block {
-    margin-bottom: 40px;
-  }
-
-  .legal-block h2 {
-    margin: 0 0 16px;
-    font-family: var(--font-display);
-    font-weight: 300;
-    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
-    line-height: 1.15;
-    color: var(--color-ink);
-  }
-
-  .legal-block p {
-    margin: 0 0 16px;
-    font-family: var(--font-serif);
-    font-size: var(--text-body);
-    line-height: 1.7;
-    color: var(--color-ink);
-  }
-
-  .legal-block ul {
-    margin: 0 0 16px;
-    padding-left: 22px;
-    display: grid;
-    gap: 8px;
-  }
-
-  .legal-block li {
-    font-family: var(--font-serif);
-    font-size: var(--text-body);
-    line-height: 1.6;
-    color: var(--color-ink);
-  }
-
-  .legal-block a {
-    color: var(--color-accent-ink, var(--color-earth-500));
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  .legal-block a:hover {
-    color: var(--color-earth-400);
-  }
-</style>
+  <section class="legal-block" id="cambios">
+    <h2>14. Cambios y vigencia</h2>
+    <p>
+      Esta política rige desde el {lastUpdated}. Si la modificamos de forma sustancial,
+      publicaremos la nueva versión en esta página con su fecha de actualización.
+    </p>
+    <p>
+      Consulta también nuestros <a href="/terminos/">Términos y Condiciones</a>.
+    </p>
+  </section>
+</LegalLayout>
